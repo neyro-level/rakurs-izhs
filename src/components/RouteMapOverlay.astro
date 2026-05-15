@@ -7,6 +7,7 @@ const sections = [
   { num: '01', title: 'Ипотека', href: '#mortgage', desc: 'Проверка ипотечного сценария под строительство дома.' },
   { num: '02', title: 'Участки', href: '#land', desc: 'Проверим документы, коммуникации и ограничения.' },
   { num: '03', title: 'Дома', href: '#contractors', desc: 'Критерии выбора: аккредитация, опыт, смета, договор.' },
+  { num: '04', title: 'Ремонты', href: '#renovation', desc: 'Разбор сметы и контроль качества работ.' },
 ];
 
 const pages = [
@@ -15,7 +16,7 @@ const pages = [
   { title: 'Карта сайта', href: '/sitemap/' },
 ];
 
-const cardDelays = [80, 120, 160];
+const cardDelays = [80, 120, 160, 200];
 ---
 
 <div
@@ -196,6 +197,7 @@ const cardDelays = [80, 120, 160];
     grid-template-columns: 3fr 5fr 3fr;
     flex:       1;
     min-height: 0;
+    padding-top: 84px;
   }
 
   .ro-overlay-brand {
@@ -209,7 +211,7 @@ const cardDelays = [80, 120, 160];
     font-weight: 500;
     color:       rgba(255,255,255,0.85);
     line-height: 1.4;
-    margin-top:  16px;
+    margin-top:  0;
     white-space: nowrap;
   }
   .ro-overlay-brand-body {
