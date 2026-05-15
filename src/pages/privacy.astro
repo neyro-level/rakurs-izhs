@@ -1,18 +1,710 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import { COMPANY } from '@/lib/constants';
+import PageLayout from '@/layouts/PageLayout.astro';
+import { SITE, COMPANY } from '@/lib/constants';
+import { breadcrumbSchema } from '@/lib/seo';
+
+const primaryEmail = COMPANY.email;
+const effectiveDate = '12 мая 2026 г.';
+
+const tocItems = [
+  { num: '01', label: 'Общие положения', href: '#section-1' },
+  { num: '02', label: 'Цели обработки', href: '#section-2' },
+  { num: '03', label: 'Правовые основания', href: '#section-3' },
+  { num: '04', label: 'Состав категорий данных', href: '#section-4' },
+  { num: '05', label: 'Порядок и условия обработки', href: '#section-5' },
+  { num: '06', label: 'Локализация и хранение данных', href: '#section-6' },
+  { num: '07', label: 'Передача третьим лицам', href: '#section-7' },
+  { num: '08', label: 'Меры безопасности', href: '#section-8' },
+  { num: '09', label: 'Права субъектов', href: '#section-9' },
+  { num: '10', label: 'Заключительные положения', href: '#section-10' },
+];
+
+const schema = breadcrumbSchema([
+  { name: 'Главная', url: `${SITE.url}/` },
+  { name: 'Политика конфиденциальности', url: `${SITE.url}/privacy/` },
+]);
 ---
 
-<BaseLayout title="Политика конфиденциальности" noindex>
-  <div class="site-container py-16 md:py-24">
-    <article class="max-w-3xl mx-auto prose prose-lg">
-      <h1 class="text-3xl md:text-4xl font-bold text-[var(--color-text-primary)]">
-        Политика конфиденциальности
-      </h1>
-      <p class="mt-6 text-[var(--color-text-secondary)]">
-        Настоящая Политика конфиденциальности персональных данных действует в отношении всей информации, которую {COMPANY.legalName} (ИНН {COMPANY.inn}) может получить о пользователе во время использования сайта.
-      </p>
-      <!-- Полный текст политики требует юридической проверки -->
-    </article>
-  </div>
-</BaseLayout>
+<PageLayout
+  title="Политика конфиденциальности — Ракурс ИЖС"
+  description="Политика обработки персональных данных в соответствии с ФЗ-152."
+  canonical={`${SITE.url}/privacy/`}
+  schema={schema}
+>
+  {/* A. Document Cover */}
+  <section class="vn-section vn-section--dark vn-pp-cover" id="pp-cover">
+    <div class="vn-container">
+      <div class="vn-grid-12">
+        <div class="vn-pp-cover__left">
+          <span class="vn-label-mono vn-pp-cover__label">Юридический документ</span>
+          <h1 class="vn-pp-cover__title">Политика обработки персональных данных</h1>
+          <p class="vn-pp-cover__subtitle">
+            Определяет порядок обработки и меры по обеспечению безопасности персональных данных в соответствии с ФЗ-152.
+          </p>
+        </div>
+        <div class="vn-pp-cover__right">
+          <span class="vn-pp-cover__badge">Версия 1.0</span>
+          <div class="vn-pp-cover__meta">
+            <p>Дата вступления в силу: {effectiveDate}</p>
+            <p>Оператор: ООО «Ракурс»</p>
+            <p class="vn-pp-cover__inn">ИНН: 5933010486</p>
+          </div>
+        </div>
+      </div>
+      <div class="vn-pp-cover__divider"></div>
+      <div class="vn-pp-cover__strip">
+        Рег. № 5933010486 · ФЗ-152 «О персональных данных»
+      </div>
+    </div>
+  </section>
+
+  {/* B. Table of Contents */}
+  <section class="vn-section vn-section--secondary vn-pp-toc" id="pp-toc">
+    <div class="vn-container">
+      <h2 class="vn-pp-toc__title">Содержание документа</h2>
+      <div class="vn-grid-12 vn-pp-toc__grid">
+        {tocItems.map((item, i) => (
+          <a href={item.href} class="vn-pp-toc__item" style={`grid-column: ${i < 5 ? '1 / 6' : '6 / 12'};`}>
+            <span class="vn-pp-toc__dot" aria-hidden="true"></span>
+            <span class="vn-pp-toc__text">{item.num} · {item.label}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* C. Sections 1–10 */}
+  <section class="vn-section vn-pp-sections">
+    <div class="vn-container">
+      {/* Section 1 */}
+      <article class="vn-pp-card" id="section-1">
+        <span class="vn-pp-card__deco" aria-hidden="true">1</span>
+        <span class="vn-pp-card__badge">§ 1</span>
+        <h2 class="vn-pp-card__title">Общие положения</h2>
+        <div class="vn-pp-card__body">
+          <p><strong>1.1.</strong> Настоящая Политика обработки персональных данных (далее — Политика) определяет порядок обработки и меры по обеспечению безопасности персональных данных, осуществляемые Обществом с ограниченной ответственностью «Ракурс» (ИНН 5933010486, адрес: 614000, РОССИЯ, г. Пермь, ул. Чернышевского, 28, этаж 1), далее — Оператор.</p>
+          <p><strong>1.2.</strong> Политика разработана в соответствии с Федеральным законом от 27.07.2006 № 152-ФЗ «О персональных данных» (далее — Закон о персональных данных) и действует в отношении всех персональных данных, обрабатываемых Оператором.</p>
+          <p><strong>1.3.</strong> Политика распространяется на данные, получаемые через:</p>
+          <ul class="vn-pp-list">
+            <li>Официальный сайт Оператора;</li>
+            <li>Мессенджеры и Telegram по номеру +7 938 407 4457;</li>
+            <li>Электронную почту Оператора;</li>
+            <li>Телефонные звонки, SMS и иные каналы связи;</li>
+            <li>Заключение договоров на оказание услуг.</li>
+          </ul>
+          <p><strong>1.4.</strong> В соответствии с ч. 2 ст. 18.1 Закона о персональных данных Политика размещается в свободном доступе на сайте Оператора.</p>
+          <p><strong>1.5.</strong> Оператор подал уведомление об обработке персональных данных в Роскомнадзор и включён в реестр операторов (регистрационные данные уточняются на rkn.gov.ru).</p>
+        </div>
+      </article>
+
+      {/* Section 2 */}
+      <article class="vn-pp-card" id="section-2">
+        <span class="vn-pp-card__deco" aria-hidden="true">2</span>
+        <span class="vn-pp-card__badge">§ 2</span>
+        <h2 class="vn-pp-card__title">Цели обработки персональных данных</h2>
+        <div class="vn-pp-card__body">
+          <p>Оператор обрабатывает персональные данные в следующих целях:</p>
+          <p><strong>2.1. Оказание услуг:</strong></p>
+          <ul class="vn-pp-list">
+            <li>Консультирование по выбору и покупке недвижимости по программе военной ипотеки;</li>
+            <li>Сопровождение сделок по покупке квартир и новостроек;</li>
+            <li>Консультационная поддержка клиентов на всех этапах сделки.</li>
+          </ul>
+          <p><strong>2.2. Взаимодействие с клиентами:</strong></p>
+          <ul class="vn-pp-list">
+            <li>Обработка обращений через сайт, мессенджеры, электронную почту, телефон;</li>
+            <li>Информирование о новых услугах и предложениях;</li>
+            <li>Проведение маркетинговых мероприятий с согласия субъекта.</li>
+          </ul>
+          <p><strong>2.3. Исполнение договорных обязательств:</strong></p>
+          <ul class="vn-pp-list">
+            <li>Заключение и исполнение договоров на оказание услуг;</li>
+            <li>Ведение учёта оказанных услуг и расчётов.</li>
+          </ul>
+          <p><strong>2.4. Соблюдение требований законодательства:</strong></p>
+          <ul class="vn-pp-list">
+            <li>Ведение бухгалтерского и налогового учёта;</li>
+            <li>Предоставление информации государственным органам по запросам.</li>
+          </ul>
+          <p><strong>2.5. Аналитика сайта:</strong></p>
+          <ul class="vn-pp-list">
+            <li>Обработка данных посетителей веб-ресурсов с использованием технологий веб-аналитики (Яндекс.Метрика);</li>
+            <li>Формирование обезличенной статистики посещаемости.</li>
+          </ul>
+        </div>
+      </article>
+
+      {/* Section 3 */}
+      <article class="vn-pp-card" id="section-3">
+        <span class="vn-pp-card__deco" aria-hidden="true">3</span>
+        <span class="vn-pp-card__badge">§ 3</span>
+        <h2 class="vn-pp-card__title">Правовые основания обработки персональных данных</h2>
+        <div class="vn-pp-card__body">
+          <p><strong>3.1.</strong> Обработка персональных данных осуществляется на основании:</p>
+          <ul class="vn-pp-list">
+            <li>Конституции Российской Федерации;</li>
+            <li>Гражданского кодекса Российской Федерации;</li>
+            <li>Закона о персональных данных;</li>
+            <li>Федерального закона от 13.03.2006 № 38-ФЗ «О рекламе»;</li>
+            <li>Иных нормативных правовых актов.</li>
+          </ul>
+          <p><strong>3.2.</strong> Дополнительными правовыми основаниями являются:</p>
+          <ul class="vn-pp-list">
+            <li>Согласие субъекта персональных данных (ст. 9 Закона о персональных данных);</li>
+            <li>Договоры между Оператором и субъектами персональных данных;</li>
+            <li>Законный интерес Оператора (п. 5 ч. 1 ст. 6 Закона о персональных данных).</li>
+          </ul>
+        </div>
+      </article>
+
+      {/* Section 4 */}
+      <article class="vn-pp-card" id="section-4">
+        <span class="vn-pp-card__deco" aria-hidden="true">4</span>
+        <span class="vn-pp-card__badge">§ 4</span>
+        <h2 class="vn-pp-card__title">Состав и категории обрабатываемых персональных данных</h2>
+        <div class="vn-pp-card__body">
+          <p><strong>4.1. Клиенты (физические лица):</strong></p>
+          <ul class="vn-pp-list">
+            <li>Фамилия, имя, отчество;</li>
+            <li>Контактные данные (телефон, email, мессенджеры);</li>
+            <li>Регион проживания и воинской службы;</li>
+            <li>История взаимодействия и оказанных услуг.</li>
+          </ul>
+          <p><strong>4.2. Посетители сайта:</strong></p>
+          <ul class="vn-pp-list">
+            <li>Фамилия, имя (при заполнении форм);</li>
+            <li>Контактные данные (при заполнении форм);</li>
+            <li>IP-адрес, данные cookie;</li>
+            <li>Информация об устройстве и браузере;</li>
+            <li>История действий на сайте.</li>
+          </ul>
+          <div class="vn-pp-highlight">
+            <p>Оператор НЕ обрабатывает специальные категории персональных данных и биометрические персональные данные, за исключением случаев, предусмотренных законодательством.</p>
+          </div>
+        </div>
+      </article>
+
+      {/* Section 5 */}
+      <article class="vn-pp-card" id="section-5">
+        <span class="vn-pp-card__deco" aria-hidden="true">5</span>
+        <span class="vn-pp-card__badge">§ 5</span>
+        <h2 class="vn-pp-card__title">Порядок и условия обработки</h2>
+        <div class="vn-pp-card__body">
+          <p><strong>5.1. Способы обработки:</strong></p>
+          <ul class="vn-pp-list">
+            <li>Автоматизированная (сайт, аналитические сервисы);</li>
+            <li>Неавтоматизированная (переписка в мессенджерах, телефонные переговоры).</li>
+          </ul>
+          <p><strong>5.2.</strong> Действия с персональными данными: Сбор, запись, систематизация, накопление, хранение, уточнение, извлечение, использование, передача, обезличивание, блокирование, удаление, уничтожение.</p>
+          <p><strong>5.3. Использование cookie-файлов:</strong> На сайте используются:</p>
+          <ul class="vn-pp-list">
+            <li>Обязательные cookie: для обеспечения работы сайта;</li>
+            <li>Аналитические cookie: для сбора статистики (Яндекс.Метрика);</li>
+          </ul>
+          <p>Согласие на аналитические cookie запрашивается при первом посещении через баннер. Подробнее: <a href="/cookies/" class="vn-pp-link">/cookies/</a>.</p>
+          <p><strong>5.4. Сроки хранения:</strong></p>
+          <ul class="vn-pp-list">
+            <li>Данные клиентов: 3 года с последнего взаимодействия;</li>
+            <li>Договорная документация: 5 лет после окончания договора;</li>
+            <li>Cookie и согласия: 1 год.</li>
+          </ul>
+          <p><strong>5.5. Уничтожение:</strong> Данные уничтожаются в течение 30 дней после достижения целей обработки или отзыва согласия.</p>
+        </div>
+      </article>
+
+      {/* Section 6 */}
+      <article class="vn-pp-card" id="section-6">
+        <span class="vn-pp-card__deco" aria-hidden="true">6</span>
+        <span class="vn-pp-card__badge">§ 6</span>
+        <h2 class="vn-pp-card__title">Локализация и хранение данных</h2>
+        <div class="vn-pp-card__body">
+          <p><strong>6.1.</strong> Персональные данные граждан РФ хранятся на серверах, расположенных на территории Российской Федерации.</p>
+          <p><strong>6.2. Используемые сервисы:</strong></p>
+          <ul class="vn-pp-list">
+            <li>Сервис веб-аналитики Яндекс.Метрика;</li>
+            <li>Vercel (хостинг) — статический сайт без серверной обработки ПД;</li>
+            <li>Уведомления через Telegram Bot API (только для внутреннего оповещения).</li>
+          </ul>
+          <p><strong>6.3.</strong> Трансграничная передача персональных данных НЕ осуществляется.</p>
+        </div>
+      </article>
+
+      {/* Section 7 */}
+      <article class="vn-pp-card" id="section-7">
+        <span class="vn-pp-card__deco" aria-hidden="true">7</span>
+        <span class="vn-pp-card__badge">§ 7</span>
+        <h2 class="vn-pp-card__title">Передача персональных данных третьим лицам</h2>
+        <div class="vn-pp-card__body">
+          <p><strong>7.1.</strong> Передача персональных данных третьим лицам осуществляется в следующих случаях:</p>
+          <ul class="vn-pp-list">
+            <li>При наличии согласия субъекта персональных данных;</li>
+            <li>По требованию государственных органов в рамках их полномочий.</li>
+          </ul>
+          <div class="vn-pp-highlight">
+            <p>Оператор не продаёт и не передаёт персональные данные третьим лицам в коммерческих целях.</p>
+          </div>
+        </div>
+      </article>
+
+      {/* Section 8 */}
+      <article class="vn-pp-card" id="section-8">
+        <span class="vn-pp-card__deco" aria-hidden="true">8</span>
+        <span class="vn-pp-card__badge">§ 8</span>
+        <h2 class="vn-pp-card__title">Меры безопасности</h2>
+        <div class="vn-pp-card__body">
+          <p><strong>8.1. Технические меры:</strong></p>
+          <ul class="vn-pp-list">
+            <li>Использование защищённого протокола TLS (HTTPS);</li>
+            <li>Ограниченный доступ к данным клиентов;</li>
+            <li>Антивирусная защита на устройствах оператора.</li>
+          </ul>
+          <p><strong>8.2. Организационные меры:</strong></p>
+          <ul class="vn-pp-list">
+            <li>Назначение ответственного за обработку ПД;</li>
+            <li>Соблюдение требований законодательства о персональных данных.</li>
+          </ul>
+          <p><strong>8.3.</strong> При нарушении безопасности Оператор уведомляет Роскомнадзор в течение 24 часов и субъектов в течение 72 часов.</p>
+        </div>
+      </article>
+
+      {/* Section 9 */}
+      <article class="vn-pp-card" id="section-9">
+        <span class="vn-pp-card__deco" aria-hidden="true">9</span>
+        <span class="vn-pp-card__badge">§ 9</span>
+        <h2 class="vn-pp-card__title">Права субъектов персональных данных</h2>
+        <div class="vn-pp-card__body">
+          <p><strong>9.1.</strong> Субъект имеет право:</p>
+          <ul class="vn-pp-list">
+            <li>Получать информацию об обработке своих персональных данных;</li>
+            <li>Требовать уточнения, блокирования или удаления неточных данных;</li>
+            <li>Отозвать согласие на обработку персональных данных;</li>
+            <li>Возражать против обработки в маркетинговых целях;</li>
+            <li>Обжаловать действия Оператора в Роскомнадзоре или суде.</li>
+          </ul>
+          <div class="vn-pp-highlight">
+            <p>Вы вправе запросить доступ, исправление или удаление своих персональных данных. Для этого обратитесь по адресу: {primaryEmail}</p>
+          </div>
+          <p><strong>9.2. Порядок обращения:</strong> Запросы направляются:</p>
+          <ul class="vn-pp-list">
+            <li>Email: {primaryEmail}</li>
+            <li>Почтовый адрес: 614000, РОССИЯ, г. Пермь, ул. Чернышевского, 28, этаж 1</li>
+          </ul>
+          <p><strong>9.3. Сроки рассмотрения:</strong> 10 рабочих дней (возможное продление +5 рабочих дней с уведомлением).</p>
+          <p><strong>9.4. Контакты для жалоб:</strong> Роскомнадзор: 109097, г. Москва, Китайгородский проезд, д. 7, стр. 2, info@rkn.gov.ru</p>
+        </div>
+      </article>
+
+      {/* Section 10 */}
+      <article class="vn-pp-card" id="section-10">
+        <span class="vn-pp-card__deco" aria-hidden="true">10</span>
+        <span class="vn-pp-card__badge">§ 10</span>
+        <h2 class="vn-pp-card__title">Заключительные положения</h2>
+        <div class="vn-pp-card__body">
+          <p><strong>10.1.</strong> Оператор вправе вносить изменения в Политику путём размещения новой редакции на сайте.</p>
+          <p><strong>10.2.</strong> Новая редакция вступает в силу с момента размещения.</p>
+          <p><strong>10.3.</strong> К отношениям по обработке персональных данных применяется законодательство Российской Федерации.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  {/* D. Contact Card */}
+  <section class="vn-section vn-section--dark vn-pp-contacts" id="pp-contacts">
+    <div class="vn-container">
+      <div class="vn-pp-contacts__card">
+        <span class="vn-label-mono vn-pp-contacts__label">Реквизиты оператора</span>
+        <div class="vn-grid-12 vn-pp-contacts__grid">
+          <div class="vn-pp-contacts__col">
+            <div class="vn-pp-contacts__field">
+              <span class="vn-pp-contacts__field-label">Наименование</span>
+              <span class="vn-pp-contacts__field-value">ООО «Ракурс»</span>
+            </div>
+            <div class="vn-pp-contacts__field">
+            <div class="vn-pp-contacts__field">
+              <span class="vn-pp-contacts__field-label">ОГРНИП</span>
+              <span class="vn-pp-contacts__field-value">—</span>
+            </div>
+            <div class="vn-pp-contacts__field">
+              <span class="vn-pp-contacts__field-label">Адрес</span>
+              <span class="vn-pp-contacts__field-value">614000, г. Пермь, ул. Чернышевского, 28, этаж 1</span>
+            </div>
+          </div>
+          <div class="vn-pp-contacts__col">
+            <div class="vn-pp-contacts__field">
+              <span class="vn-pp-contacts__field-label">ИНН</span>
+              <span class="vn-pp-contacts__field-value">5933010486</span>
+            </div>
+          </div>
+          <div class="vn-pp-contacts__col">
+            <div class="vn-pp-contacts__field">
+              <span class="vn-pp-contacts__field-label">Телефон</span>
+              <span class="vn-pp-contacts__field-value">+7 938 407 4457</span>
+            </div>
+            <div class="vn-pp-contacts__field">
+              <span class="vn-pp-contacts__field-label">Контактное лицо</span>
+              <span class="vn-pp-contacts__field-value">Александр Юрьевич Бутаков</span>
+            </div>
+            <div class="vn-pp-contacts__field">
+              <span class="vn-pp-contacts__field-label">Email</span>
+              <span class="vn-pp-contacts__field-value">{primaryEmail}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="vn-pp-contacts__back">
+        <a href="/" class="vn-pp-contacts__back-link">← Вернуться на главную</a>
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  /* ─── A. Document Cover ─── */
+  .vn-pp-cover {
+    padding-block: 80px;
+  }
+
+  .vn-pp-cover__left {
+    grid-column: 1 / 8;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .vn-pp-cover__label {
+    color: var(--color-accent-cta);
+  }
+
+  .vn-pp-cover__title {
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--color-text-ondark);
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  .vn-pp-cover__subtitle {
+    font-size: 16px;
+    color: var(--color-text-ondark-mute);
+    max-width: 520px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .vn-pp-cover__right {
+    grid-column: 8 / 13;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding-top: 8px;
+  }
+
+  .vn-pp-cover__badge {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: rgba(37, 99, 235, 0.2);
+    color: var(--color-accent-cta);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: 4px;
+  }
+
+  .vn-pp-cover__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .vn-pp-cover__meta p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--color-text-ondark-mute);
+  }
+
+  .vn-pp-cover__inn {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-text-ondark-mute);
+  }
+
+  .vn-pp-cover__divider {
+    margin-top: 48px;
+    height: 1px;
+    background-color: var(--color-border-ondark);
+  }
+
+  .vn-pp-cover__strip {
+    margin-top: 16px;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-text-ondark-mute);
+    opacity: 0.5;
+  }
+
+  /* ─── B. Table of Contents ─── */
+  .vn-pp-toc {
+    padding-block: 40px;
+  }
+
+  .vn-pp-toc__title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0 0 24px;
+  }
+
+  .vn-pp-toc__grid {
+    row-gap: 12px;
+  }
+
+  .vn-pp-toc__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 0;
+    text-decoration: none;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+    transition: color 0.15s ease;
+  }
+
+  .vn-pp-toc__item:hover {
+    color: var(--color-accent-cta);
+  }
+
+  .vn-pp-toc__dot {
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--color-accent-cta);
+    flex-shrink: 0;
+  }
+
+  /* ─── C. Sections ─── */
+  .vn-pp-sections {
+    padding-block: 96px;
+  }
+
+  .vn-pp-card {
+    position: relative;
+    background-color: var(--color-bg-surface);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-border);
+    padding: 40px 48px;
+    margin-bottom: 32px;
+    overflow: hidden;
+  }
+
+  .vn-pp-card:last-child {
+    margin-bottom: 0;
+  }
+
+  .vn-pp-card__deco {
+    position: absolute;
+    right: 32px;
+    top: 24px;
+    font-size: 80px;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--color-deco-marker);
+    opacity: 0.05;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .vn-pp-card__badge {
+    display: inline-block;
+    padding: 4px 10px;
+    background-color: var(--color-accent-soft);
+    color: var(--color-accent-primary);
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+  }
+
+  .vn-pp-card__title {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 12px 0 20px;
+    line-height: 1.3;
+  }
+
+  .vn-pp-card__body {
+    font-size: 15px;
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+  }
+
+  .vn-pp-card__body p {
+    margin: 0 0 12px;
+  }
+
+  .vn-pp-card__body p:last-child {
+    margin-bottom: 0;
+  }
+
+  .vn-pp-list {
+    margin: 8px 0 16px;
+    padding-left: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .vn-pp-list li {
+    position: relative;
+    padding-left: 18px;
+    color: var(--color-text-secondary);
+  }
+
+  .vn-pp-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--color-accent-cta);
+  }
+
+  .vn-pp-highlight {
+    background-color: var(--color-accent-cta-soft);
+    border-left: 3px solid var(--color-accent-cta);
+    border-radius: var(--radius-md);
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-size: 14px;
+    color: var(--color-text-primary);
+  }
+
+  .vn-pp-highlight p {
+    margin: 0;
+  }
+
+  .vn-pp-link {
+    color: var(--color-accent-cta);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .vn-pp-link:hover {
+    text-decoration: none;
+  }
+
+  /* ─── D. Contact Card ─── */
+  .vn-pp-contacts {
+    padding-block: 80px;
+  }
+
+  .vn-pp-contacts__card {
+    background-color: var(--color-bg-dark-elev);
+    border: 1px solid var(--color-border-ondark);
+    border-radius: var(--radius-xl);
+    padding: 40px;
+    max-width: 720px;
+    margin-inline: auto;
+  }
+
+  .vn-pp-contacts__label {
+    color: var(--color-accent-cta);
+    margin-bottom: 24px;
+  }
+
+  .vn-pp-contacts__grid {
+    row-gap: 24px;
+  }
+
+  .vn-pp-contacts__col {
+    grid-column: span 4;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .vn-pp-contacts__field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .vn-pp-contacts__field-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-text-ondark-mute);
+  }
+
+  .vn-pp-contacts__field-value {
+    font-size: 13px;
+    color: var(--color-text-ondark);
+    line-height: 1.5;
+  }
+
+  .vn-pp-contacts__back {
+    text-align: center;
+    margin-top: 32px;
+  }
+
+  .vn-pp-contacts__back-link {
+    font-size: 14px;
+    color: var(--color-text-ondark-mute);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .vn-pp-contacts__back-link:hover {
+    color: var(--color-text-ondark);
+  }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 1023px) {
+    .vn-pp-cover__left,
+    .vn-pp-cover__right {
+      grid-column: 1 / -1;
+    }
+
+    .vn-pp-cover__right {
+      padding-top: 24px;
+    }
+
+    .vn-pp-cover__title {
+      font-size: clamp(28px, 6vw, 48px);
+    }
+
+    .vn-pp-toc__item {
+      grid-column: 1 / -1 !important;
+    }
+
+    .vn-pp-card {
+      padding: 28px 24px;
+    }
+
+    .vn-pp-card__deco {
+      font-size: 56px;
+      right: 16px;
+      top: 16px;
+    }
+
+    .vn-pp-contacts__col {
+      grid-column: 1 / -1;
+    }
+
+    .vn-pp-contacts__card {
+      padding: 28px 24px;
+    }
+  }
+</style>

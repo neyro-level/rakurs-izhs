@@ -2,17 +2,271 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Страница не найдена" noindex>
-  <div class="min-h-screen flex items-center justify-center bg-[var(--color-bg-primary)]">
-    <div class="text-center px-4">
-      <h1 class="text-6xl md:text-8xl font-extrabold text-[var(--color-text-primary)]">404</h1>
-      <p class="mt-4 text-xl text-[var(--color-text-secondary)]">Страница не найдена</p>
-      <a
-        href="/"
-        class="mt-8 inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-accent-primary)] text-white px-7 py-3 text-base font-medium hover:bg-[var(--color-accent-hover)] transition-colors"
-      >
-        На главную
+<BaseLayout
+  title="Страница не найдена — Ракурс ИЖС"
+  description="Эта страница не существует."
+  noindex={true}
+>
+  <div class="vn-404">
+    <!-- Decorative bg grid -->
+    <div class="vn-404__grid" aria-hidden="true"></div>
+
+    <!-- Giant 404 background number -->
+    <span class="vn-404__num-bg" aria-hidden="true">404</span>
+
+    <div class="vn-404__content">
+      <!-- Logo with seeking dot animation -->
+      <div class="vn-404__logo" aria-hidden="true">
+        <svg width="64" height="64" viewBox="0 0 40 40" fill="none">
+          <!-- Dashed circle -->
+          <circle cx="20" cy="20" r="10"
+            stroke="currentColor" stroke-width="0.7"
+            stroke-dasharray="2.5 2.5" style="color: var(--color-text-ondark); opacity: 0.15"/>
+          <!-- Corner brackets -->
+          <path d="M5 13 L5 5 L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-text-ondark); opacity: 0.5"/>
+          <path d="M27 5 L35 5 L35 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-text-ondark); opacity: 0.5"/>
+          <path d="M5 27 L5 35 L13 35" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-text-ondark); opacity: 0.5"/>
+          <path d="M27 35 L35 35 L35 27" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-text-ondark); opacity: 0.5"/>
+          <!-- Animated blue dot -->
+          <circle class="vn-404__seeking-dot" cx="20" cy="20" r="3.5" fill="var(--color-accent-cta)"/>
+        </svg>
+      </div>
+
+      <!-- Eyebrow with accent lines -->
+      <p class="vn-404__eyebrow">
+        <span class="vn-404__eyebrow-line" aria-hidden="true"></span>
+        Маршрут не найден
+        <span class="vn-404__eyebrow-line" aria-hidden="true"></span>
+      </p>
+
+      <h1 class="vn-404__title">Страница не существует</h1>
+
+      <p class="vn-404__sub">
+        Возможно, ссылка устарела или адрес введён с&nbsp;ошибкой.<br>
+        Нужный маршрут найдём — выберите направление ниже.
+      </p>
+
+      <a href="/" class="vn-btn-primary vn-404__cta">
+        ← Вернуться на главную
       </a>
+
+      <!-- 4 nav cards -->
+      <nav class="vn-404__cards" aria-label="Доступные разделы">
+        <a href="/" class="vn-404__card">
+          <span class="vn-404__card-num">01</span>
+          <span class="vn-404__card-title">Пермь</span>
+          <span class="vn-404__card-sub">Военная ипотека</span>
+        </a>
+        <a href="/etapy-pokupki/" class="vn-404__card">
+          <span class="vn-404__card-num">04</span>
+          <span class="vn-404__card-title">Этапы покупки</span>
+          <span class="vn-404__card-sub">Маршрут сделки</span>
+        </a>
+        <a href="/contacts/" class="vn-404__card">
+          <span class="vn-404__card-num">05</span>
+          <span class="vn-404__card-title">Контакты</span>
+          <span class="vn-404__card-sub">Офисы и связь</span>
+        </a>
+      </nav>
     </div>
   </div>
 </BaseLayout>
+
+<style>
+  .vn-404 {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100dvh;
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-ondark);
+    overflow: hidden;
+    padding: 48px 24px;
+  }
+
+  .vn-404__grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        var(--color-deco-grid-dark) 0px,
+        var(--color-deco-grid-dark) 1px,
+        transparent 1px,
+        transparent 64px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        var(--color-deco-grid-dark) 0px,
+        var(--color-deco-grid-dark) 1px,
+        transparent 1px,
+        transparent 64px
+      );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .vn-404__num-bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 280px;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--color-text-ondark);
+    opacity: 0.03;
+    user-select: none;
+    pointer-events: none;
+    z-index: 0;
+    white-space: nowrap;
+  }
+
+  .vn-404__content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 720px;
+    width: 100%;
+  }
+
+  .vn-404__logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 32px;
+  }
+
+  .vn-404__seeking-dot {
+    animation: vn-seek 3s ease-in-out infinite;
+    transform-origin: center;
+  }
+
+  @keyframes vn-seek {
+    0%   { transform: translate(0, 0); }
+    20%  { transform: translate(3px, -2px); }
+    40%  { transform: translate(-2px, 3px); }
+    60%  { transform: translate(2px, 2px); }
+    80%  { transform: translate(-3px, -1px); }
+    100% { transform: translate(0, 0); }
+  }
+
+  .vn-404__eyebrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: var(--fs-label);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-text-ondark-mute);
+    margin-bottom: 16px;
+  }
+
+  .vn-404__eyebrow-line {
+    display: block;
+    width: 24px;
+    height: 1px;
+    background-color: var(--color-accent-cta);
+    opacity: 0.6;
+  }
+
+  .vn-404__title {
+    font-size: var(--fs-h1);
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--color-text-ondark);
+    margin: 0 0 16px;
+    text-wrap: balance;
+  }
+
+  .vn-404__sub {
+    font-size: var(--fs-lead);
+    line-height: 1.6;
+    color: var(--color-text-ondark-mute);
+    margin: 0 0 32px;
+    text-wrap: pretty;
+  }
+
+  .vn-404__cta {
+    padding: 12px 24px;
+    font-size: 14px;
+    margin-bottom: 48px;
+  }
+
+  .vn-404__cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .vn-404__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 4px;
+    padding: 20px 12px;
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--color-border-ondark);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .vn-404__card:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+    border-color: var(--color-accent-cta);
+    transform: translateY(-2px);
+  }
+
+  .vn-404__card-num {
+    font-size: var(--fs-caption);
+    font-weight: 500;
+    color: var(--color-accent-cta);
+    letter-spacing: 0.05em;
+  }
+
+  .vn-404__card-title {
+    font-size: var(--fs-body);
+    font-weight: 500;
+    color: var(--color-text-ondark);
+  }
+
+  .vn-404__card-sub {
+    font-size: var(--fs-body-sm);
+    color: var(--color-text-ondark-mute);
+  }
+
+  @media (max-width: 640px) {
+    .vn-404__num-bg {
+      font-size: 180px;
+    }
+
+    .vn-404__cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .vn-404__cta {
+      margin-bottom: 32px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vn-404__seeking-dot {
+      animation: none;
+    }
+
+    .vn-404__card {
+      transition: none;
+    }
+
+    .vn-404__card:hover {
+      transform: none;
+    }
+  }
+</style>

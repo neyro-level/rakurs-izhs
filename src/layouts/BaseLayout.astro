@@ -12,6 +12,8 @@ interface Props {
   description?: string;
   noindex?: boolean;
   ogImage?: string;
+  canonical?: string;
+  schema?: object | object[];
 }
 
 const {
@@ -19,9 +21,11 @@ const {
   description = SITE.description,
   noindex = false,
   ogImage,
+  canonical,
+  schema,
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site || SITE.url).toString();
+const canonicalURL = canonical || new URL(Astro.url.pathname, Astro.site || SITE.url).toString();
 const fullTitle = title === SITE.shortName ? title : `${title} — ${SITE.shortName}`;
 ---
 
@@ -53,6 +57,7 @@ const fullTitle = title === SITE.shortName ? title : `${title} — ${SITE.shortN
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <!-- Yandex.Metrika will be injected here after setup -->
+    {schema && <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />}
   </head>
 
   <body class="min-h-screen antialiased">
