@@ -146,10 +146,6 @@ export default function RequestModal({ isOpen, onClose, prefillScenario }: Reque
               Согласен на обработку персональных данных.{' '}
               <a href="/privacy/" className="text-[var(--color-accent-primary)] hover:underline">
                 Политика конфиденциальности
-              </a>{' '}
-              и{' '}
-              <a href="/soglasie/" className="text-[var(--color-accent-primary)] hover:underline">
-                согласие
               </a>.
             </span>
           </label>
