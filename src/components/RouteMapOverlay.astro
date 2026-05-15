@@ -4,16 +4,9 @@ import { EXPERT, COMPANY } from '@/lib/constants';
 const phoneClean = EXPERT.phone.replace(/[^\d+]/g, '');
 
 const sections = [
-  { num: '01', title: 'Главная', href: '#hero', desc: 'Какой дом реально построить по ипотеке 6% в Перми.' },
-  { num: '02', title: 'Ипотека 6%', href: '#mortgage', desc: 'Проверка ипотечного сценария под строительство дома.' },
-  { num: '03', title: 'Участки', href: '#land', desc: 'Проверим документы, коммуникации и ограничения.' },
-  { num: '04', title: 'Дома', href: '#contractors', desc: 'Критерии выбора: аккредитация, опыт, смета, договор.' },
-  { num: '05', title: 'Ремонты', href: '#renovation', desc: 'Разбор сметы и контроль качества работ.' },
-  { num: '06', title: 'Смета', href: '#estimate', desc: 'Разберём смету до договора — что скрыто в цене.' },
-  { num: '07', title: 'Эксперт', href: '#expert', desc: 'Артемий Никулин — эксперт по ИЖС.' },
-  { num: '08', title: 'Отзывы', href: '#reviews', desc: 'Реальные кейсы клиентов Ракурс.' },
-  { num: '09', title: 'FAQ', href: '#faq', desc: 'Ответы на главные вопросы про ИЖС.' },
-  { num: '10', title: 'Форма', href: '#lead-form', desc: 'Отправьте заявку — разберём ваш сценарий.' },
+  { num: '01', title: 'Ипотека', href: '#mortgage', desc: 'Проверка ипотечного сценария под строительство дома.' },
+  { num: '02', title: 'Участки', href: '#land', desc: 'Проверим документы, коммуникации и ограничения.' },
+  { num: '03', title: 'Дома', href: '#contractors', desc: 'Критерии выбора: аккредитация, опыт, смета, договор.' },
 ];
 
 const pages = [
@@ -22,7 +15,7 @@ const pages = [
   { title: 'Карта сайта', href: '/sitemap/' },
 ];
 
-const cardDelays = [80, 120, 160, 200, 240, 280, 320, 360, 400, 440];
+const cardDelays = [80, 120, 160];
 ---
 
 <div
@@ -37,31 +30,19 @@ const cardDelays = [80, 120, 160, 200, 240, 280, 320, 360, 400, 440];
   <div class="ro-overlay-grid" aria-hidden="true"></div>
   <div class="ro-overlay-radial" aria-hidden="true"></div>
 
-  <!-- Header -->
-  <div class="ro-overlay-header">
-    <a href="/" class="ro-overlay-logo" aria-label="На главную">
-      <span class="ro-overlay-logo-brand">РАКУРС ИЖС</span>
-    </a>
-    <span class="ro-overlay-header-label">КАРТА САЙТА</span>
-    <button type="button" data-nav-close class="ro-overlay-close" aria-label="Закрыть">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-      <span>Закрыть</span>
-    </button>
-  </div>
-
   <!-- Body: 3 zones -->
   <div class="ro-overlay-body">
 
     <!-- Left: Brand -->
     <aside class="ro-overlay-brand">
       <div class="ro-overlay-brand-desc">
-        Центр недвижимости «Ракурс»<br/>в Перми
+        Центр недвижимости «Ракурс» в Перми
       </div>
       <p class="ro-overlay-brand-body">
-        Помогаем построить дом: подобрать участок, проверить смету и выбрать подрядчика. Ипотека 6%, реальные расходы до договора.
+        Помогаем построить дом: подобрать участок, проверить смету и выбрать подрядчика. Реальные расходы до договора.
       </p>
       <button type="button" data-open-modal class="ro-overlay-brand-cta">
-        Понять, с чего начать →
+        Получить консультацию
       </button>
       <div class="ro-overlay-legal">
         {pages.map((p) => <a href={p.href} class="ro-overlay-legal-link">{p.title}</a>)}
@@ -112,8 +93,7 @@ const cardDelays = [80, 120, 160, 200, 240, 280, 320, 360, 400, 440];
       <div class="ro-overlay-office">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
         <div>
-          <p class="ro-overlay-office-city">Пермь</p>
-          <p class="ro-overlay-office-addr">{COMPANY.address}</p>
+          <p class="ro-overlay-office-addr">Пермь, ул. Чернышевского, 28, этаж 1</p>
         </div>
       </div>
     </aside>
@@ -209,57 +189,6 @@ const cardDelays = [80, 120, 160, 200, 240, 280, 320, 360, 400, 440];
     z-index:          0;
   }
 
-  .ro-overlay-header {
-    position:       relative;
-    z-index:        2;
-    display:        flex;
-    align-items:    center;
-    justify-content: space-between;
-    height:         72px;
-    padding-inline: 48px;
-    border-bottom:  1px solid rgba(255,255,255,0.08);
-    flex-shrink:    0;
-  }
-  .ro-overlay-logo {
-    display:         flex;
-    align-items:     center;
-    gap:             10px;
-    text-decoration: none;
-  }
-  .ro-overlay-logo-brand {
-    font-size:      18px;
-    font-weight:    700;
-    letter-spacing: 0.06em;
-    color:          var(--color-text-ondark);
-  }
-  .ro-overlay-header-label {
-    position:       absolute;
-    left:           50%;
-    transform:      translateX(-50%);
-    font-size:      11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color:          rgba(255,255,255,0.35);
-  }
-  .ro-overlay-close {
-    display:      inline-flex;
-    align-items:  center;
-    gap:          8px;
-    padding:      8px 16px;
-    background:   transparent;
-    border:       1px solid rgba(255,255,255,0.12);
-    border-radius: var(--radius-md);
-    color:        rgba(255,255,255,0.6);
-    font-size:    14px;
-    font-family:  var(--font-family-base);
-    cursor:       pointer;
-    transition:   background 150ms ease, border-color 150ms ease;
-  }
-  .ro-overlay-close:hover {
-    background:   rgba(255,255,255,0.06);
-    border-color: rgba(255,255,255,0.2);
-  }
-
   .ro-overlay-body {
     position:   relative;
     z-index:    2;
@@ -281,6 +210,7 @@ const cardDelays = [80, 120, 160, 200, 240, 280, 320, 360, 400, 440];
     color:       rgba(255,255,255,0.85);
     line-height: 1.4;
     margin-top:  16px;
+    white-space: nowrap;
   }
   .ro-overlay-brand-body {
     font-size:  14px;
@@ -459,6 +389,7 @@ const cardDelays = [80, 120, 160, 200, 240, 280, 320, 360, 400, 440];
     color:       rgba(255,255,255,0.5);
     margin:      0;
     line-height: 1.4;
+    white-space: nowrap;
   }
 
   .ro-overlay-footer {
@@ -488,8 +419,6 @@ const cardDelays = [80, 120, 160, 200, 240, 280, 320, 360, 400, 440];
   }
 
   @media (max-width: 1023px) {
-    .ro-overlay-header { padding-inline: 20px; }
-    .ro-overlay-header-label { display: none; }
     .ro-overlay-body {
       grid-template-columns: 1fr;
       padding-top:           60px;
