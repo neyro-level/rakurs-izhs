@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /thanks
+Disallow: /privacy
+Disallow: /soglasie
+Disallow: /404
+
+Sitemap: https://an-rakurs.ru/sitemap-index.xml

@@ -1,0 +1,18 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { COMPANY } from '@/lib/constants';
+---
+
+<BaseLayout title="Политика конфиденциальности" noindex>
+  <div class="site-container py-16 md:py-24">
+    <article class="max-w-3xl mx-auto prose prose-lg">
+      <h1 class="text-3xl md:text-4xl font-bold text-[var(--color-text-primary)]">
+        Политика конфиденциальности
+      </h1>
+      <p class="mt-6 text-[var(--color-text-secondary)]">
+        Настоящая Политика конфиденциальности персональных данных действует в отношении всей информации, которую {COMPANY.legalName} (ИНН {COMPANY.inn}) может получить о пользователе во время использования сайта.
+      </p>
+      <!-- TODO: replace with legally verified privacy policy text -->
+    </article>
+  </div>
+</BaseLayout>

@@ -1,0 +1,57 @@
+---
+import { COMPANY, EXPERT, SITE } from '@/lib/constants';
+
+const navLinks = [
+  { label: 'Проверить ипотеку 6%', href: '#mortgage' },
+  { label: 'Разобрать смету', href: '#estimate' },
+  { label: 'Выбрать строителя', href: '#contractors' },
+  { label: 'Что будет после заявки', href: '#path' },
+  { label: 'Доверие', href: '#reviews' },
+  { label: 'FAQ', href: '#faq' },
+];
+---
+
+<header id="site-header" class="bg-[var(--color-bg-dark)] text-[var(--color-text-ondark)]">
+  <div class="site-container flex items-center justify-between py-4">
+    <a href="/" class="flex items-center gap-3">
+      <img
+        src="/logo_rakurs_izhs_white.png"
+        alt={SITE.shortName}
+        width="140"
+        height="40"
+        class="h-10 w-auto"
+      />
+      <span class="hidden text-sm text-[var(--color-text-ondark-soft)] md:block">
+        поможем с участком, ипотекой и подрядчиком
+      </span>
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-6">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="text-sm text-[var(--color-text-ondark-mute)] hover:text-[var(--color-text-ondark)] transition-colors"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="flex items-center gap-4">
+      <a
+        href={`tel:${EXPERT.phone.replace(/\s/g, '')}`}
+        class="hidden md:inline-flex text-sm text-[var(--color-text-ondark)] hover:text-[var(--color-accent-cyan)] transition-colors"
+      >
+        {EXPERT.phone}
+      </a>
+      <button
+        type="button"
+        class="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-white text-[var(--color-bg-dark)] px-5 py-2.5 text-sm font-medium hover:bg-[var(--color-bg-secondary)] transition-colors"
+      >
+        Понять, с чего начать
+      </button>
+    </div>
+  </div>
+</header>

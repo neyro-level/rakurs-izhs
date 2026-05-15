@@ -1,0 +1,53 @@
+---
+import '@/styles/global.css';
+import { SITE } from '@/lib/constants';
+
+interface Props {
+  title: string;
+  description?: string;
+  noindex?: boolean;
+  ogImage?: string;
+}
+
+const {
+  title,
+  description = SITE.description,
+  noindex = false,
+  ogImage,
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || SITE.url).toString();
+const fullTitle = title === SITE.shortName ? title : `${title} — ${SITE.shortName}`;
+---
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="ru_RU" />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Yandex.Metrika will be injected here after setup -->
+  </head>
+
+  <body class="min-h-screen antialiased">
+    <slot />
+  </body>
+</html>

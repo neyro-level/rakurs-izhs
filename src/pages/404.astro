@@ -1,0 +1,18 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Страница не найдена" noindex>
+  <div class="min-h-screen flex items-center justify-center bg-[var(--color-bg-primary)]">
+    <div class="text-center px-4">
+      <h1 class="text-6xl md:text-8xl font-extrabold text-[var(--color-text-primary)]">404</h1>
+      <p class="mt-4 text-xl text-[var(--color-text-secondary)]">Страница не найдена</p>
+      <a
+        href="/"
+        class="mt-8 inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-accent-primary)] text-white px-7 py-3 text-base font-medium hover:bg-[var(--color-accent-hover)] transition-colors"
+      >
+        На главную
+      </a>
+    </div>
+  </div>
+</BaseLayout>

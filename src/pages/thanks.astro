@@ -1,0 +1,31 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { EXPERT } from '@/lib/constants';
+---
+
+<BaseLayout title="Спасибо за заявку" noindex>
+  <div class="min-h-screen flex items-center justify-center bg-[var(--color-bg-primary)]">
+    <div class="text-center px-4 max-w-xl">
+      <h1 class="text-3xl md:text-4xl font-bold text-[var(--color-text-primary)]">
+        Спасибо за заявку
+      </h1>
+      <p class="mt-4 text-lg text-[var(--color-text-secondary)]">
+        Артемий Никулин свяжется с вами в ближайшее время, уточнит ситуацию и подскажет следующий шаг.
+      </p>
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a
+          href="/"
+          class="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-accent-primary)] text-white px-7 py-3 text-base font-medium hover:bg-[var(--color-accent-hover)] transition-colors"
+        >
+          На главную
+        </a>
+        <a
+          href={`tel:${EXPERT.phone.replace(/\s/g, '')}`}
+          class="inline-flex items-center justify-center rounded-[var(--radius-md)] border border-[var(--color-border)] text-[var(--color-text-primary)] px-7 py-3 text-base font-medium hover:bg-[var(--color-bg-secondary)] transition-colors"
+        >
+          Позвонить Артемию
+        </a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

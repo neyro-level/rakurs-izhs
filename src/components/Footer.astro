@@ -1,0 +1,110 @@
+---
+import { COMPANY, EXPERT, SITE } from '@/lib/constants';
+
+const navLinks = [
+  { label: 'Ипотека 6%', href: '#mortgage' },
+  { label: 'Смета', href: '#estimate' },
+  { label: 'Подрядчики', href: '#contractors' },
+  { label: 'Как работаем', href: '#path' },
+  { label: 'Отзывы', href: '#reviews' },
+  { label: 'Вопросы', href: '#faq' },
+];
+---
+
+<footer class="bg-[var(--color-bg-deep)] text-[var(--color-text-ondark)]">
+  <div class="site-container py-16 md:py-20">
+    <div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
+      <!-- Brand -->
+      <div>
+        <p class="text-lg font-semibold text-[var(--color-text-ondark)]">{SITE.name}</p>
+        <p class="mt-3 text-sm text-[var(--color-text-ondark-soft)]">
+          Ракурс помогает клиентам в Перми разобраться с недвижимостью, ипотекой и сценарием
+          строительства частного дома
+        </p>
+        <a
+          href={COMPANY.vk}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-4 inline-block text-sm text-[var(--color-text-ondark-mute)] hover:text-[var(--color-accent-cyan)] transition-colors"
+        >
+          VK
+        </a>
+      </div>
+
+      <!-- Navigation -->
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-wider text-[var(--color-text-ondark-soft)]">
+          Навигация
+        </p>
+        <ul class="mt-4 space-y-2">
+          {
+            navLinks.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="text-sm text-[var(--color-text-ondark-mute)] hover:text-[var(--color-text-ondark)] transition-colors"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Contacts -->
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-wider text-[var(--color-text-ondark-soft)]">
+          Контакты
+        </p>
+        <address class="mt-4 not-italic space-y-2 text-sm text-[var(--color-text-ondark-mute)]">
+          <p>{COMPANY.address}</p>
+          <p>
+            <a href={`tel:${COMPANY.officePhone.replace(/[()\s-]/g, '')}`} class="hover:text-[var(--color-text-ondark)] transition-colors">
+              {COMPANY.officePhone}
+            </a>
+          </p>
+          <p>
+            <a href={`mailto:${COMPANY.email}`} class="hover:text-[var(--color-text-ondark)] transition-colors">
+              {COMPANY.email}
+            </a>
+          </p>
+        </address>
+      </div>
+
+      <!-- Expert -->
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-wider text-[var(--color-text-ondark-soft)]">
+          Эксперт по ИЖС
+        </p>
+        <div class="mt-4 space-y-2 text-sm text-[var(--color-text-ondark-mute)]">
+          <p class="text-[var(--color-text-ondark)] font-medium">{EXPERT.name}</p>
+          <p>{EXPERT.role}</p>
+          <p>
+            <a href={`tel:${EXPERT.phone.replace(/\s/g, '')}`} class="hover:text-[var(--color-text-ondark)] transition-colors">
+              {EXPERT.phone}
+            </a>
+          </p>
+          <p>
+            <a href={`https://t.me/${EXPERT.telegram.replace('@', '')}`} target="_blank" rel="noopener noreferrer" class="hover:text-[var(--color-text-ondark)] transition-colors">
+              {EXPERT.telegram}
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Legal -->
+    <div class="mt-12 pt-8 border-t border-[var(--color-border-ondark)]">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-xs text-[var(--color-text-ondark-soft)]">
+        <p>
+          © 2026 {SITE.name}. {COMPANY.legalName}, ИНН {COMPANY.inn}. Генеральный директор: {COMPANY.ceo}.
+        </p>
+        <div class="flex gap-4">
+          <a href="/privacy/" class="hover:text-[var(--color-text-ondark)] transition-colors">Политика конфиденциальности</a>
+          <a href="/soglasie/" class="hover:text-[var(--color-text-ondark)] transition-colors">Согласие на обработку ПД</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

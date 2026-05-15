@@ -1,0 +1,31 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+---
+
+<BaseLayout title="Дом по ипотеке 6% в Перми — проверка сценария">
+  <Header />
+  <main>
+    <!-- TODO: assemble landing blocks from PAGE_HOME.md -->
+    <section class="bg-[var(--color-bg-dark)] text-[var(--color-text-ondark)] vn-section-padding-lg">
+      <div class="site-container">
+        <h1 class="text-4xl md:text-5xl lg:text-[56px] font-extrabold leading-tight max-w-4xl">
+          Построить дом в Перми без ошибки в участке, подрядчике и смете
+        </h1>
+        <p class="mt-6 text-lg md:text-xl text-[var(--color-text-ondark-mute)] max-w-2xl">
+          Помогаем понять, какой дом можно построить по вашему бюджету: подбираем участок, проверяем подрядчика, сравниваем смету и показываем расходы до договора.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-4">
+          <button class="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-white text-[var(--color-bg-dark)] px-7 py-4 text-base font-medium hover:bg-[var(--color-bg-secondary)] transition-colors">
+            Понять, с чего начать
+          </button>
+          <button class="inline-flex items-center justify-center rounded-[var(--radius-md)] border border-[var(--color-border-ondark)] text-[var(--color-text-ondark)] px-7 py-4 text-base font-medium hover:bg-white/5 transition-colors">
+            Уже есть смета
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
