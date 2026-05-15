@@ -1,0 +1,52 @@
+---
+const steps = [
+  'Пройдёт ли сценарий по банку.',
+  'Хватает ли бюджета с учётом участка.',
+  'Подходит ли подрядчик.',
+  'Не выпадут ли расходы из сметы.',
+  'Что нужно уточнить до договора.',
+];
+---
+
+<section id="section-mortgage" class="bg-[var(--color-bg-surface)] vn-section-padding">
+  <div class="site-container">
+    <div class="grid-12">
+      <!-- Left: 4 cols -->
+      <div class="col-span-12 lg:col-span-4 flex flex-col gap-4">
+        <h2 class="text-3xl md:text-[42px] font-bold leading-tight text-[var(--color-text-primary)]">
+          Ипотека 6% не отвечает на главный вопрос: какой дом вы реально сможете построить?
+        </h2>
+        <p class="text-base text-[var(--color-text-secondary)] leading-relaxed">
+          Ставка помогает начать разговор, но сама по себе не показывает итоговый дом. Важно проверить бюджет, участок, подрядчика, смету и условия банка до договора.
+        </p>
+      </div>
+
+      <!-- Right: 8 cols -->
+      <div class="col-span-12 lg:col-span-8 mt-8 lg:mt-0">
+        <div class="rounded-[var(--radius-xl)] bg-[var(--color-bg-primary)] border border-[var(--color-border)] p-6 md:p-8">
+          <h3 class="text-lg font-semibold text-[var(--color-text-primary)]">Что проверяем в ипотечном сценарии</h3>
+
+          <div class="mt-6 space-y-4">
+            {steps.map((s, i) => (
+              <div class="flex items-start gap-4">
+                <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--color-accent-soft)] text-sm font-bold text-[var(--color-accent-primary)]">
+                  {i + 1}
+                </span>
+                <p class="text-base text-[var(--color-text-secondary)] leading-relaxed">{s}</p>
+              </div>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            data-open-modal
+            data-scenario="mortgage"
+            class="mt-8 inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-accent-primary)] text-white px-7 py-3 text-base font-medium hover:bg-[var(--color-accent-hover)] transition-colors"
+          >
+            Проверить мой ипотечный сценарий
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

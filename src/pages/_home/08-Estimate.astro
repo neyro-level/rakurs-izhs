@@ -1,0 +1,61 @@
+---
+const zones = [
+  { name: 'Фундамент', note: 'тип, подготовка участка, материалы, объём работ' },
+  { name: 'Коробка', note: 'стены, перекрытия, конструктив, утепление' },
+  { name: 'Кровля', note: 'материал, утепление, водостоки, доборные элементы' },
+  { name: 'Окна и двери', note: 'входят ли в цену, какие характеристики' },
+  { name: 'Инженерия', note: 'электрика, отопление, водоснабжение, канализация' },
+  { name: 'Отделка', note: 'черновая, предчистовая, чистовая, что включено' },
+  { name: 'Доставка и техника', note: 'включены ли доставка, кран, спецтехника' },
+  { name: 'Этапы оплаты', note: 'когда и за что клиент платит' },
+  { name: 'Исключения', note: 'что прямо не входит и может стать доплатой' },
+];
+---
+
+<section id="section-estimate" class="bg-[var(--color-bg-secondary)] vn-section-padding">
+  <div class="site-container">
+    <div class="grid-12">
+      <!-- Left: 4 cols -->
+      <div class="col-span-12 lg:col-span-4 flex flex-col gap-4">
+        <h2 class="text-3xl md:text-[42px] font-bold leading-tight text-[var(--color-text-primary)]">
+          Получили смету от строителя? Сначала проверьте, что в неё не вошло
+        </h2>
+        <p class="text-base text-[var(--color-text-secondary)] leading-relaxed">
+          Две сметы на одинаковую сумму могут означать разный дом. В одной цене могут быть учтены фундамент, окна и инженерия, а в другой часть работ будет вынесена отдельно.
+        </p>
+        <p class="text-sm text-[var(--color-text-tertiary)]">
+          Пришлите смету, Артемий покажет, какие вопросы задать строителю до подписания договора.
+        </p>
+        <button
+          type="button"
+          data-open-modal
+          data-scenario="estimate"
+          class="mt-2 inline-flex items-center justify-center self-start rounded-[var(--radius-md)] bg-[var(--color-accent-primary)] text-white px-7 py-3 text-base font-medium hover:bg-[var(--color-accent-hover)] transition-colors"
+        >
+          Разобрать мою смету
+        </button>
+      </div>
+
+      <!-- Right: 8 cols -->
+      <div class="col-span-12 lg:col-span-8 mt-8 lg:mt-0">
+        <div class="rounded-[var(--radius-xl)] bg-[var(--color-bg-surface)] border border-[var(--color-border)] p-6 md:p-8">
+          <h3 class="text-lg font-semibold text-[var(--color-text-primary)]">Зоны сметы, которые нужно сверить</h3>
+
+          <div class="mt-6 divide-y divide-[var(--color-border)]">
+            {zones.map((z) => (
+              <div class="flex items-start justify-between gap-4 py-4">
+                <div>
+                  <p class="text-sm font-medium text-[var(--color-text-primary)]">{z.name}</p>
+                  <p class="text-xs text-[var(--color-text-secondary)] mt-0.5">{z.note}</p>
+                </div>
+                <span class="shrink-0 mt-0.5 h-5 w-5 rounded-full border border-[var(--color-border-strong)] flex items-center justify-center">
+                  <span class="h-2.5 w-2.5 rounded-full bg-[var(--color-accent-primary)] opacity-0" />
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

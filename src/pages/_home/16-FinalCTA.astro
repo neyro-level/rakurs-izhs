@@ -1,0 +1,45 @@
+---
+import { EXPERT } from '@/lib/constants';
+---
+
+<section id="section-final-cta" class="relative bg-[var(--color-bg-dark)] text-[var(--color-text-ondark)] vn-section-padding-lg overflow-hidden">
+  <!-- Decorative gradient -->
+  <div class="absolute inset-0 opacity-50"
+    style="background-image: radial-gradient(circle at 50% 0%, rgba(8,116,196,0.20) 0%, transparent 70%);"
+  />
+  <div class="absolute inset-0"
+    style="background-image: linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px); background-size: 64px 64px;"
+  />
+
+  <div class="site-container relative text-center">
+    <h2 class="text-3xl md:text-4xl lg:text-[48px] font-bold leading-tight text-[var(--color-text-ondark)] max-w-4xl mx-auto">
+      Перед тем как подписывать договор со строителем, разберите смету, участок и ипотеку
+    </h2>
+
+    <p class="mt-6 text-lg text-[var(--color-text-ondark-mute)] max-w-2xl mx-auto leading-relaxed">
+      Артемий уточнит вашу ситуацию и покажет, что нужно проверить до решения: бюджет, участок, подрядчика, смету и возможные доплаты.
+    </p>
+
+    <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+      <button
+        type="button"
+        data-open-modal
+        class="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-white text-[var(--color-bg-dark)] px-8 py-4 text-base font-medium hover:bg-[var(--color-bg-secondary)] transition-colors"
+      >
+        Понять, с чего начать
+      </button>
+      <a
+        href={`tel:${EXPERT.phone.replace(/\s/g, '')}`}
+        class="inline-flex items-center justify-center rounded-[var(--radius-md)] border border-[var(--color-border-ondark)] text-[var(--color-text-ondark)] px-8 py-4 text-base font-medium hover:bg-white/5 transition-colors"
+      >
+        Позвонить Артемию
+      </a>
+    </div>
+
+    <div class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4 text-sm text-[var(--color-text-ondark-mute)]">
+      <a href={`https://t.me/${EXPERT.telegram.replace('@', '')}`} target="_blank" rel="noopener noreferrer" class="hover:text-[var(--color-accent-cyan)] transition-colors">
+        Написать в Telegram: {EXPERT.telegram}
+      </a>
+    </div>
+  </div>
+</section>

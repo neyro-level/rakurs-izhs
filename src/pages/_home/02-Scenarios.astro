@@ -1,0 +1,68 @@
+---
+const scenarios = [
+  {
+    title: 'Хотим дом по семейной ипотеке 6%',
+    desc: 'Проверим, какой дом можно построить по вашему бюджету и требованиям банка',
+    cta: 'Проверить, хватит ли бюджета',
+    scenario: 'mortgage',
+  },
+  {
+    title: 'Участка ещё нет',
+    desc: 'Поможем понять, какой участок подходит под дом, ипотеку и коммуникации',
+    cta: 'Понять, какой участок искать',
+    scenario: 'search_land',
+  },
+  {
+    title: 'Участок уже есть',
+    desc: 'Проверим, не ломает ли участок сценарий строительства и ипотеки',
+    cta: 'Проверить участок перед стройкой',
+    scenario: 'have_land',
+  },
+  {
+    title: 'Получили сметы от строителей',
+    desc: 'Сравним состав работ и покажем, где могут появиться доплаты',
+    cta: 'Найти доплаты в смете',
+    scenario: 'estimate',
+  },
+  {
+    title: 'Не знаем, с чего начать',
+    desc: 'Соберём маршрут: бюджет, участок, банк, подрядчик, смета',
+    cta: 'Разложить всё по шагам',
+    scenario: 'dont_know',
+  },
+];
+---
+
+<section id="section-scenarios" class="bg-[var(--color-bg-surface)] vn-section-padding">
+  <div class="site-container">
+    <div class="max-w-2xl">
+      <h2 class="text-3xl md:text-[42px] font-bold leading-tight text-[var(--color-text-primary)]">
+        Выберите, что сейчас про вас
+      </h2>
+      <p class="mt-4 text-lg text-[var(--color-text-secondary)]">
+        Каждый сценарий ведёт к разбору, но с разным фокусом
+      </p>
+    </div>
+
+    <div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      {scenarios.map((s) => (
+        <div class="flex flex-col rounded-[var(--radius-lg)] bg-[var(--color-bg-surface)] border border-transparent hover:border-[var(--color-border)] p-6 transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(7,27,58,0.08)]">
+          <h3 class="text-lg font-semibold text-[var(--color-text-primary)]">{s.title}</h3>
+          <p class="mt-2 text-sm text-[var(--color-text-secondary)] leading-relaxed flex-1">{s.desc}</p>
+          <button
+            type="button"
+            data-open-modal
+            data-scenario={s.scenario}
+            class="mt-5 inline-flex items-center gap-2 self-start text-sm font-medium text-[var(--color-accent-primary)] hover:text-[var(--color-accent-hover)] transition-colors"
+          >
+            {s.cta}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </button>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

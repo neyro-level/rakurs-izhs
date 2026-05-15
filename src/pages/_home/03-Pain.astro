@@ -1,0 +1,46 @@
+---
+const pains = [
+  {
+    title: 'Хочу дом по ипотеке 6%, но не понимаю, хватит ли бюджета',
+    text: 'Нужно проверить не только ставку, но и взнос, лимит, участок, смету и требования к подрядчику',
+  },
+  {
+    title: 'У двух строителей разные цены, а что входит — непонятно',
+    text: 'Без разбора состава работ сложно понять, где реальная экономия, а где будущие доплаты',
+  },
+  {
+    title: 'Участок может оказаться дороже после покупки',
+    text: 'Коммуникации, подъезд, документы, ограничения и подготовка земли могут изменить весь бюджет',
+  },
+  {
+    title: 'Боюсь, что мне советуют не лучший вариант, а выгодный продавцу',
+    text: 'Важно заранее понять, по каким критериям сравнивают подрядчиков и кто платит за сопровождение',
+  },
+];
+---
+
+<section id="section-pain" class="bg-[var(--color-bg-primary)] vn-section-padding">
+  <div class="site-container">
+    <div class="grid-12">
+      <div class="col-span-12 lg:col-span-4 flex flex-col gap-4">
+        <h2 class="text-3xl md:text-[42px] font-bold leading-tight text-[var(--color-text-primary)]">
+          Самая дорогая ошибка — подписать договор, не разобрав смету, участок и ипотеку
+        </h2>
+        <p class="text-base text-[var(--color-text-secondary)] leading-relaxed">
+          До договора важно понять, какой дом реально помещается в бюджет, что входит в смету, подходит ли участок и на каких условиях работает подрядчик. После подписания исправлять ошибки обычно дороже.
+        </p>
+      </div>
+
+      <div class="col-span-12 lg:col-span-8 mt-8 lg:mt-0">
+        <div class="grid gap-4 md:grid-cols-2">
+          {pains.map((p) => (
+            <div class="rounded-[var(--radius-lg)] bg-[var(--color-bg-surface)] p-6 border-l-2 border-[var(--color-accent-warm)]">
+              <h3 class="text-base font-semibold text-[var(--color-text-primary)]">{p.title}</h3>
+              <p class="mt-2 text-sm text-[var(--color-text-secondary)] leading-relaxed">{p.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

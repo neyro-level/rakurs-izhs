@@ -1,0 +1,68 @@
+---
+const fits = [
+  { title: 'Семья хочет дом по ипотеке 6%', desc: 'Нужно собрать банк, участок, подрядчика и смету' },
+  { title: 'Участка ещё нет', desc: 'Можно не ошибиться с землёй до покупки' },
+  { title: 'Участок уже есть', desc: 'Нужно проверить, подходит ли он' },
+  { title: 'Есть сметы от строителей', desc: 'Можно сравнить состав и понять риски' },
+  { title: 'Боишься скрытых расходов', desc: 'Разбор показывает, где могут появиться доплаты' },
+];
+
+const notFits = [
+  { title: 'Если выбираете только минимальную цену', desc: 'Ракурс помогает проверить сценарий, а не найти самый дешёвый вариант любой ценой' },
+  { title: 'Если нужен только список ставок по ипотеке', desc: 'Здесь разбирают весь сценарий: бюджет, участок, подрядчика, смету и требования банка' },
+  { title: 'Если вы уже всё решили и не хотите ничего проверять', desc: 'Разбор полезен, когда есть готовность сверить решение до договора' },
+  { title: 'Если нужен строительный надзор', desc: 'Ракурс помогает на этапе выбора сценария, подрядчика, сметы и договора' },
+  { title: 'Если хотите, чтобы всё решили за вас', desc: 'Решение остаётся за клиентом, а Ракурс помогает увидеть риски и варианты' },
+];
+---
+
+<section id="section-fit" class="bg-[var(--color-bg-primary)] vn-section-padding">
+  <div class="site-container">
+    <h2 class="text-3xl md:text-[42px] font-bold leading-tight text-[var(--color-text-primary)] max-w-3xl">
+      Кому подходит разбор сценария дома, а когда он может быть не нужен
+    </h2>
+
+    <div class="mt-10 grid gap-8 md:grid-cols-2">
+      <!-- Fit -->
+      <div>
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-[var(--color-success)] mb-4">Подходит</h3>
+        <div class="space-y-3">
+          {fits.map((f) => (
+            <div class="flex items-start gap-3 rounded-[var(--radius-lg)] bg-[var(--color-bg-surface)] p-4">
+              <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--color-success-container)] text-[var(--color-success)]">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </span>
+              <div>
+                <p class="text-sm font-medium text-[var(--color-text-primary)]">{f.title}</p>
+                <p class="text-xs text-[var(--color-text-secondary)] mt-0.5">{f.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Not fit -->
+      <div>
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-[var(--color-warning)] mb-4">Не подходит</h3>
+        <div class="space-y-3">
+          {notFits.map((f) => (
+            <div class="flex items-start gap-3 rounded-[var(--radius-lg)] bg-[var(--color-bg-surface)] p-4">
+              <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--color-warning-container)] text-[var(--color-warning)]">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </span>
+              <div>
+                <p class="text-sm font-medium text-[var(--color-text-primary)]">{f.title}</p>
+                <p class="text-xs text-[var(--color-text-secondary)] mt-0.5">{f.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

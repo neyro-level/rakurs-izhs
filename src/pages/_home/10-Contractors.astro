@@ -1,0 +1,55 @@
+---
+const criteria = [
+  { name: 'Банковская аккредитация', desc: 'Подрядчик может участвовать в ипотечном сценарии', status: '✓' },
+  { name: 'Опыт', desc: 'Есть выполненные проекты, а не только обещания', status: '✓' },
+  { name: 'Подтверждённые проекты', desc: 'Добавлять только после получения материалов, фото или ссылок', status: '?' },
+  { name: 'Активная стройка', desc: 'Добавлять только если можно показать фото, ссылки или разрешённые объекты', status: '?' },
+  { name: 'Прозрачная смета', desc: 'Понятно, что входит и что не входит', status: '✓' },
+  { name: 'Договор и ответственность', desc: 'Границы обязательств понятны до подписания', status: '?' },
+];
+---
+
+<section id="section-contractors" class="bg-[var(--color-bg-primary)] vn-section-padding">
+  <div class="site-container">
+    <div class="grid-12">
+      <!-- Left: 4 cols -->
+      <div class="col-span-12 lg:col-span-4 flex flex-col gap-4">
+        <h2 class="text-3xl md:text-[42px] font-bold leading-tight text-[var(--color-text-primary)]">
+          Показываем, по каким критериям сравнивать подрядчиков
+        </h2>
+        <p class="text-base text-[var(--color-text-secondary)] leading-relaxed">
+          Строители часто говорят похожими обещаниями: быстро, надёжно, с гарантией. Для клиента важнее: можно ли проверить опыт, смету, договор, активные стройки и совместимость с ипотекой.
+        </p>
+        <button
+          type="button"
+          data-open-modal
+          data-scenario="dont_know"
+          class="mt-2 inline-flex items-center justify-center self-start rounded-[var(--radius-md)] bg-[var(--color-accent-primary)] text-white px-7 py-3 text-base font-medium hover:bg-[var(--color-accent-hover)] transition-colors"
+        >
+          Понять, какого подрядчика можно рассматривать
+        </button>
+      </div>
+
+      <!-- Right: 8 cols -->
+      <div class="col-span-12 lg:col-span-8 mt-8 lg:mt-0">
+        <div class="rounded-[var(--radius-xl)] bg-[var(--color-bg-surface)] border border-[var(--color-border)] p-6 md:p-8">
+          <div class="mt-2 divide-y divide-[var(--color-border)]">
+            {criteria.map((c) => (
+              <div class="flex items-start justify-between gap-4 py-4">
+                <div>
+                  <div class="flex items-center gap-3">
+                    <h3 class="text-sm font-semibold text-[var(--color-text-primary)]">{c.name}</h3>
+                    <span class={`text-xs font-bold px-2 py-0.5 rounded-[var(--radius-sm)] ${c.status === '✓' ? 'bg-[var(--color-success-container)] text-[var(--color-success)]' : 'bg-[var(--color-warning-container)] text-[var(--color-warning)]'}`}>
+                      {c.status}
+                    </span>
+                  </div>
+                  <p class="text-xs text-[var(--color-text-secondary)] mt-1">{c.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

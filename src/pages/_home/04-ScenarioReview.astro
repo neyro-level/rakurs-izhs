@@ -1,0 +1,86 @@
+---
+const components = [
+  { name: 'Ипотека', desc: 'Проверяем ставку, взнос, лимит, банк, требования к подрядчику и эскроу', status: 'проверить' },
+  { name: 'Участок', desc: 'Смотрим локацию, документы, коммуникации, подъезд, ограничения', status: 'проверить' },
+  { name: 'Подрядчик', desc: 'Подбираем или проверяем строительную компанию по критериям', status: 'сравнить' },
+  { name: 'Смета', desc: 'Сравниваем состав работ, комплектацию, исключения и возможные доплаты', status: 'сравнить' },
+  { name: 'Реальные расходы', desc: 'Показываем, что кроме дома может потребоваться: участок, коммуникации, подготовка, оформление', status: 'уточнить' },
+  { name: 'Ответственность', desc: 'Объясняем, кто за что отвечает: клиент, Ракурс, подрядчик, банк', status: 'зафиксировать' },
+];
+
+const outcomes = [
+  'Понимание, какой дом реален в вашем бюджете.',
+  'Список вопросов к строителю.',
+  'Понимание, что в смете не видно сразу.',
+  'Проверка, подходит ли участок под сценарий.',
+  'Следующий шаг: ипотека, участок, смета или подрядчик.',
+];
+---
+
+<section id="section-scenario-review" class="bg-[var(--color-bg-surface)] vn-section-padding">
+  <div class="site-container">
+    <div class="grid-12">
+      <!-- Left: 4 cols -->
+      <div class="col-span-12 lg:col-span-4 flex flex-col gap-4">
+        <h2 class="text-3xl md:text-[42px] font-bold leading-tight text-[var(--color-text-primary)]">
+          Что Ракурс разбирает до выбора подрядчика и договора
+        </h2>
+        <p class="text-base text-[var(--color-text-secondary)] leading-relaxed">
+          Главная задача разбора — не выбрать красивый проект, а понять, какой сценарий дома реален именно для клиента.
+        </p>
+
+        <div class="mt-4 space-y-3">
+          {outcomes.map((o, i) => (
+            <div class="flex items-start gap-3">
+              <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--color-accent-soft)] text-xs font-semibold text-[var(--color-accent-primary)]">
+                {i + 1}
+              </span>
+              <span class="text-sm text-[var(--color-text-secondary)]">{o}</span>
+            </div>
+          ))}
+        </div>
+
+        <button
+          type="button"
+          data-open-modal
+          class="mt-4 inline-flex items-center justify-center self-start rounded-[var(--radius-md)] bg-[var(--color-accent-primary)] text-white px-7 py-3 text-base font-medium hover:bg-[var(--color-accent-hover)] transition-colors"
+        >
+          Понять, с чего начать
+        </button>
+      </div>
+
+      <!-- Right: 8 cols — Dashboard -->
+      <div class="col-span-12 lg:col-span-8 mt-8 lg:mt-0">
+        <div class="rounded-[var(--radius-xl)] bg-[var(--color-bg-surface-low)] border border-[var(--color-border)] p-6 md:p-8">
+          <div class="flex items-center justify-between gap-4">
+            <div>
+              <h3 class="text-lg font-semibold text-[var(--color-text-primary)]">Сценарий дома до договора</h3>
+              <p class="text-sm text-[var(--color-text-secondary)]">Что нужно проверить до решения</p>
+            </div>
+            <span class="shrink-0 rounded-[var(--radius-sm)] bg-[var(--color-accent-soft)] px-3 py-1 text-xs font-semibold uppercase tracking-wider text-[var(--color-accent-primary)]">
+              Разбор
+            </span>
+          </div>
+
+          <div class="mt-6 divide-y divide-[var(--color-border)]">
+            {components.map((c) => (
+              <div class="flex items-center justify-between gap-4 py-4">
+                <div class="min-w-0">
+                  <p class="text-sm font-medium text-[var(--color-text-primary)]">{c.name}</p>
+                  <p class="text-xs text-[var(--color-text-secondary)] mt-0.5">{c.desc}</p>
+                </div>
+                <span class="shrink-0 rounded-[var(--radius-sm)] bg-[var(--color-bg-secondary)] px-2 py-1 text-xs font-medium text-[var(--color-text-secondary)]">
+                  {c.status}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <div class="mt-4 rounded-[var(--radius-md)] bg-[var(--color-bg-primary)] px-4 py-3 text-sm text-[var(--color-text-secondary)]">
+            <span class="font-medium text-[var(--color-text-primary)]">Следующий шаг:</span> ипотека / участок / смета / подрядчик
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

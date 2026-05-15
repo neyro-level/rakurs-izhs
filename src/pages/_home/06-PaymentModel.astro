@@ -1,0 +1,60 @@
+---
+const blocks = [
+  {
+    title: 'Кто платит',
+    text: 'Вознаграждение Ракурс выплачивает подрядчик после сделки',
+  },
+  {
+    title: 'За что платит',
+    text: 'За приведённого и сопровождённого клиента, а не за скрытую наценку',
+  },
+  {
+    title: 'Почему клиенту это важно',
+    text: 'Чтобы понимать интересы сторон до подписания договора',
+  },
+  {
+    title: 'Как снижается конфликт',
+    text: 'Через сравнение смет, критерии подрядчиков, границы ответственности',
+  },
+  {
+    title: 'Чего Ракурс не обещает',
+    text: 'Не гарантирует работу подрядчика за него и не подменяет строительный надзор',
+  },
+];
+---
+
+<section id="section-payment-model" class="relative bg-[var(--color-bg-dark)] text-[var(--color-text-ondark)] vn-section-padding overflow-hidden">
+  <!-- Decorative gradient -->
+  <div class="absolute inset-0 opacity-40"
+    style="background-image: radial-gradient(circle at 50% 0%, rgba(8,116,196,0.20) 0%, transparent 70%);"
+  />
+  <div class="absolute inset-0"
+    style="background-image: linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px); background-size: 64px 64px;"
+  />
+
+  <div class="site-container relative">
+    <div class="grid-12">
+      <!-- Left: 5 cols -->
+      <div class="col-span-12 lg:col-span-5 flex flex-col gap-4">
+        <h2 class="text-3xl md:text-[42px] font-bold leading-tight text-[var(--color-text-ondark)]">
+          Клиент не платит отдельно. Но мы сразу объясняем, кто оплачивает работу Ракурс
+        </h2>
+        <p class="text-base text-[var(--color-text-ondark-mute)] leading-relaxed">
+          Ракурс получает вознаграждение от подрядчика после сделки. Поэтому мы не скрываем модель оплаты: показываем, по каким критериям сравниваются подрядчики, что входит в смету и где заканчивается ответственность Ракурс.
+        </p>
+      </div>
+
+      <!-- Right: 7 cols -->
+      <div class="col-span-12 lg:col-span-7 mt-8 lg:mt-0">
+        <div class="grid gap-4 md:grid-cols-2">
+          {blocks.map((b) => (
+            <div class="rounded-[var(--radius-xl)] bg-[var(--color-bg-dark-elev)] border border-[var(--color-border-ondark)] p-6">
+              <h3 class="text-base font-semibold text-[var(--color-text-ondark)]">{b.title}</h3>
+              <p class="mt-2 text-sm text-[var(--color-text-ondark-mute)] leading-relaxed">{b.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

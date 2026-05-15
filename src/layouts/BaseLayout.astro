@@ -1,6 +1,7 @@
 ---
 import '@/styles/global.css';
 import { SITE } from '@/lib/constants';
+import ModalShell from '@/components/shared/ModalShell';
 
 interface Props {
   title: string;
@@ -49,5 +50,6 @@ const fullTitle = title === SITE.shortName ? title : `${title} — ${SITE.shortN
 
   <body class="min-h-screen antialiased">
     <slot />
+    <ModalShell client:load />
   </body>
 </html>

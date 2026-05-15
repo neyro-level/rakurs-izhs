@@ -1,0 +1,46 @@
+---
+const checks = [
+  { name: 'Документы', note: 'назначение земли, ограничения, собственность, обременения' },
+  { name: 'Коммуникации', note: 'электричество, вода, канализация, газ, возможность подключения' },
+  { name: 'Подъезд', note: 'дорога, сезонность, доступ техники' },
+  { name: 'География', note: 'расстояние до Перми, инфраструктура, школы, магазины' },
+  { name: 'Стройка', note: 'можно ли реально построить выбранный дом на этом участке' },
+  { name: 'Ипотека', note: 'подходит ли участок под ипотечный сценарий' },
+];
+---
+
+<section id="section-land" class="bg-[var(--color-bg-surface)] vn-section-padding">
+  <div class="site-container">
+    <div class="grid-12">
+      <!-- Left: 4 cols -->
+      <div class="col-span-12 lg:col-span-4 flex flex-col gap-4">
+        <h2 class="text-3xl md:text-[42px] font-bold leading-tight text-[var(--color-text-primary)]">
+          Дешёвый участок может сделать дом дороже
+        </h2>
+        <p class="text-base text-[var(--color-text-secondary)] leading-relaxed">
+          Перед покупкой участка важно проверить документы, коммуникации, подъезд, ограничения и совместимость с ипотекой. Иначе расходы появятся уже после сделки.
+        </p>
+        <button
+          type="button"
+          data-open-modal
+          data-scenario="search_land"
+          class="mt-2 inline-flex items-center justify-center self-start rounded-[var(--radius-md)] bg-[var(--color-accent-primary)] text-white px-7 py-3 text-base font-medium hover:bg-[var(--color-accent-hover)] transition-colors"
+        >
+          Проверить участок перед покупкой
+        </button>
+      </div>
+
+      <!-- Right: 8 cols -->
+      <div class="col-span-12 lg:col-span-8 mt-8 lg:mt-0">
+        <div class="grid gap-4 md:grid-cols-2">
+          {checks.map((c) => (
+            <div class="rounded-[var(--radius-lg)] bg-[var(--color-bg-primary)] p-6 border-l-2 border-[var(--color-accent-primary)]">
+              <h3 class="text-base font-semibold text-[var(--color-text-primary)]">{c.name}</h3>
+              <p class="mt-2 text-sm text-[var(--color-text-secondary)] leading-relaxed">{c.note}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

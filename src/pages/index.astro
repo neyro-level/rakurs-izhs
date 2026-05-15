@@ -2,30 +2,115 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
+
+import Hero from './_home/01-Hero.astro';
+import Scenarios from './_home/02-Scenarios.astro';
+import Pain from './_home/03-Pain.astro';
+import ScenarioReview from './_home/04-ScenarioReview.astro';
+import Expert from './_home/05-Expert.astro';
+import PaymentModel from './_home/06-PaymentModel.astro';
+import Mortgage from './_home/07-Mortgage.astro';
+import Estimate from './_home/08-Estimate.astro';
+import Land from './_home/09-Land.astro';
+import Contractors from './_home/10-Contractors.astro';
+import Path from './_home/11-Path.astro';
+import Reviews from './_home/12-Reviews.astro';
+import Fit from './_home/13-Fit.astro';
+import LeadForm from './_home/14-LeadForm.astro';
+import FAQ from './_home/15-FAQ.astro';
+import FinalCTA from './_home/16-FinalCTA.astro';
+
+import { COMPANY, EXPERT, SITE } from '@/lib/constants';
+
+const faqItems = [
+  { q: 'Ракурс сам строит дома?', a: 'Нет. Ракурс не строительная компания. Ракурс помогает до договора разобраться со сценарием: ипотека, участок, подрядчик, смета и возможные расходы.' },
+  { q: 'Почему для клиента без отдельной оплаты?', a: 'Клиент не платит Ракурс отдельно. Вознаграждение выплачивает подрядчик после сделки.' },
+  { q: 'Можно ли построить дом по семейной ипотеке 6%?', a: 'Иногда да, но это зависит от требований банка, участка, подрядчика, договора, сметы и эскроу. Условия нужно проверять на дату обращения.' },
+  { q: 'Что я получу после разбора?', a: 'Понимание следующего шага: что проверить по ипотеке, участку, смете и подрядчику, где могут быть риски и какие вопросы задать до договора.' },
+  { q: 'Можно ли обратиться без участка?', a: 'Да. Можно начать с бюджета, ипотечного сценария и требований к участку.' },
+  { q: 'Можно ли разобрать уже полученную смету?', a: 'Да. Можно посмотреть, что входит в цену, чего не хватает и где могут появиться доплаты после подписания договора.' },
+  { q: 'Что будет после заявки?', a: 'Артемий Никулин свяжется, уточнит этап, бюджет, участок, ипотеку или смету и предложит понятный следующий шаг.' },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      name: SITE.name,
+      url: SITE.url,
+      logo: `${SITE.url}/logo_rakurs_izhs_white.png`,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'ул. Чернышевского, 28, этаж 1',
+        addressLocality: 'Пермь',
+        addressCountry: 'RU',
+      },
+      contactPoint: {
+        '@type': 'ContactPoint',
+        telephone: COMPANY.officePhone,
+        contactType: 'customer service',
+      },
+    },
+    {
+      '@type': 'WebSite',
+      name: SITE.shortName,
+      url: SITE.url,
+    },
+    {
+      '@type': 'Person',
+      name: EXPERT.name,
+      jobTitle: EXPERT.role,
+      worksFor: { '@type': 'Organization', name: SITE.name },
+    },
+    {
+      '@type': 'Service',
+      name: 'Разбор сценария дома',
+      provider: { '@type': 'Organization', name: SITE.name },
+      areaServed: { '@type': 'City', name: 'Пермь' },
+      description: SITE.description,
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: faqItems.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: f.a,
+        },
+      })),
+    },
+  ],
+};
 ---
 
-<BaseLayout title="Дом по ипотеке 6% в Перми — проверка сценария">
+<BaseLayout
+  title="Дом по ипотеке 6% в Перми — проверка сценария"
+  description={SITE.description}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
   <Header />
+
   <main>
-    <!-- TODO: assemble landing blocks from PAGE_HOME.md -->
-    <section class="bg-[var(--color-bg-dark)] text-[var(--color-text-ondark)] vn-section-padding-lg">
-      <div class="site-container">
-        <h1 class="text-4xl md:text-5xl lg:text-[56px] font-extrabold leading-tight max-w-4xl">
-          Построить дом в Перми без ошибки в участке, подрядчике и смете
-        </h1>
-        <p class="mt-6 text-lg md:text-xl text-[var(--color-text-ondark-mute)] max-w-2xl">
-          Помогаем понять, какой дом можно построить по вашему бюджету: подбираем участок, проверяем подрядчика, сравниваем смету и показываем расходы до договора.
-        </p>
-        <div class="mt-8 flex flex-wrap gap-4">
-          <button class="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-white text-[var(--color-bg-dark)] px-7 py-4 text-base font-medium hover:bg-[var(--color-bg-secondary)] transition-colors">
-            Понять, с чего начать
-          </button>
-          <button class="inline-flex items-center justify-center rounded-[var(--radius-md)] border border-[var(--color-border-ondark)] text-[var(--color-text-ondark)] px-7 py-4 text-base font-medium hover:bg-white/5 transition-colors">
-            Уже есть смета
-          </button>
-        </div>
-      </div>
-    </section>
+    <Hero />
+    <Scenarios />
+    <Pain />
+    <ScenarioReview />
+    <Expert />
+    <PaymentModel />
+    <Mortgage />
+    <Estimate />
+    <Land />
+    <Contractors />
+    <Path />
+    <Reviews />
+    <Fit />
+    <LeadForm />
+    <FAQ />
+    <FinalCTA />
   </main>
+
   <Footer />
 </BaseLayout>

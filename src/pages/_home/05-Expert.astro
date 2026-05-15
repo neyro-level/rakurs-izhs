@@ -1,0 +1,88 @@
+---
+import { EXPERT } from '@/lib/constants';
+
+const checks = [
+  'на каком этапе клиент сейчас',
+  'есть ли участок и подходит ли он',
+  'как выглядит ипотечный сценарий',
+  'что входит и не входит в смету',
+  'какие вопросы задать подрядчику до договора',
+];
+---
+
+<section id="section-expert" class="bg-[var(--color-bg-secondary)] vn-section-padding">
+  <div class="site-container">
+    <div class="grid-12 items-center">
+      <!-- Left: 6 cols — Photo -->
+      <div class="col-span-12 lg:col-span-6">
+        <div class="relative rounded-[var(--radius-xl)] overflow-hidden bg-[var(--color-bg-surface)] aspect-[4/5] max-w-md mx-auto lg:mx-0">
+          <img
+            src="/artemiy-nikulin.jpg"
+            alt={`${EXPERT.name}, ${EXPERT.role}`}
+            class="absolute inset-0 w-full h-full object-cover"
+            loading="lazy"
+            width="600"
+            height="750"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-[var(--color-bg-dark)]/60 to-transparent" />
+          <div class="absolute bottom-6 left-6 right-6">
+            <p class="text-lg font-semibold text-white">{EXPERT.name}</p>
+            <p class="text-sm text-white/80">{EXPERT.role} Ракурс</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: 6 cols -->
+      <div class="col-span-12 lg:col-span-6 mt-8 lg:mt-0 flex flex-col gap-5">
+        <h2 class="text-3xl md:text-[42px] font-bold leading-tight text-[var(--color-text-primary)]">
+          Разбор ведёт {EXPERT.name}
+        </h2>
+
+        <p class="text-lg text-[var(--color-text-secondary)] leading-relaxed">
+          Разбирает ипотеку, участок, подрядчика и смету до договора.
+        </p>
+
+        <div class="space-y-3">
+          <p class="text-sm font-semibold uppercase tracking-wider text-[var(--color-text-tertiary)]">
+            Что проверяет лично
+          </p>
+          {checks.map((c) => (
+            <div class="flex items-start gap-3">
+              <span class="mt-1 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[var(--color-accent-soft)]">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-primary)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </span>
+              <span class="text-base text-[var(--color-text-secondary)]">{c}</span>
+            </div>
+          ))}
+        </div>
+
+        <div class="mt-2 flex flex-wrap gap-3">
+          <a
+            href={`tel:${EXPERT.phone.replace(/\s/g, '')}`}
+            class="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-accent-primary)] text-white px-6 py-3 text-sm font-medium hover:bg-[var(--color-accent-hover)] transition-colors"
+          >
+            Позвонить
+          </a>
+          <a
+            href={`https://t.me/${EXPERT.telegram.replace('@', '')}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center rounded-[var(--radius-md)] border border-[var(--color-border)] text-[var(--color-text-primary)] px-6 py-3 text-sm font-medium hover:bg-[var(--color-bg-secondary)] transition-colors"
+          >
+            Написать в Telegram
+          </a>
+          <button
+            type="button"
+            data-open-modal
+            data-scenario="expert"
+            class="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-bg-surface)] text-[var(--color-text-primary)] px-6 py-3 text-sm font-medium hover:bg-[var(--color-bg-secondary)] transition-colors"
+          >
+            Понять, с чего начать
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

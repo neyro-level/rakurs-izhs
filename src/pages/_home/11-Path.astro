@@ -1,0 +1,47 @@
+---
+const steps = [
+  {
+    num: '01',
+    title: 'Вы оставляете заявку',
+    desc: 'Указываете, на каком этапе вы сейчас',
+  },
+  {
+    num: '02',
+    title: 'Артемий уточняет ситуацию',
+    desc: 'Бюджет, ипотека, участок, сметы, подрядчики',
+  },
+  {
+    num: '03',
+    title: 'Ракурс показывает риски',
+    desc: 'Что проверить до договора и где могут быть доплаты',
+  },
+  {
+    num: '04',
+    title: 'Вы понимаете следующий шаг',
+    desc: 'Ипотека, участок, смета, подрядчик или договор',
+  },
+];
+---
+
+<section id="section-path" class="bg-[var(--color-bg-surface)] vn-section-padding">
+  <div class="site-container">
+    <div class="max-w-3xl">
+      <h2 class="text-3xl md:text-[42px] font-bold leading-tight text-[var(--color-text-primary)]">
+        Что будет после заявки
+      </h2>
+      <p class="mt-4 text-lg text-[var(--color-text-secondary)]">
+        Клиенту важно понимать не только результат, но и порядок действий.
+      </p>
+    </div>
+
+    <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      {steps.map((s) => (
+        <div class="relative flex flex-col gap-3 rounded-[var(--radius-lg)] bg-[var(--color-bg-primary)] p-6">
+          <span class="text-4xl font-extrabold text-[var(--color-deco-marker)]">{s.num}</span>
+          <h3 class="text-base font-semibold text-[var(--color-text-primary)]">{s.title}</h3>
+          <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">{s.desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
