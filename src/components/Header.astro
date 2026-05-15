@@ -1,70 +1,377 @@
 ---
-import { EXPERT, SITE } from '@/lib/constants';
-
-const navLinks = [
-  { label: 'Проверить ипотеку 6%', href: '#mortgage' },
-  { label: 'Разобрать смету', href: '#estimate' },
-  { label: 'Выбрать строителя', href: '#contractors' },
+const navItems = [
+  { label: 'ИПОТЕКА', href: '#mortgage' },
+  { label: 'УЧАСТКИ', href: '#land' },
+  { label: 'ДОМА', href: '#contractors' },
+  { label: 'РЕМОНТЫ', href: '#renovation' },
 ];
+
+
 ---
 
-<header id="site-header" class="sticky top-0 z-[100] bg-[var(--color-bg-dark)]/85 backdrop-blur-xl border-b border-transparent transition-colors duration-200">
-  <div class="site-container flex items-center justify-between h-16 md:h-[72px]">
-    <a href="/" class="flex items-center" aria-label={`${SITE.shortName} — на главную`}>
-      <img
-        src="/logo_rakurs_izhs_white.png"
-        alt={SITE.shortName}
-        width="180"
-        height="48"
-        class="h-12 md:h-14 w-auto"
-      />
+<header
+  id="site-header"
+  class="vn-header"
+  role="banner"
+  data-state="top"
+  data-overlay="false"
+>
+  <div class="vn-header__inner">
+
+    <!-- Logo -->
+    <a href="/" class="vn-header__logo" aria-label="Ракурс ИЖС — на главную">
+      <span class="vn-header__brand">РАКУРС</span>
+      <span class="vn-header__brand-suffix">ИЖС</span>
     </a>
 
-    <nav class="hidden lg:flex items-center gap-7" aria-label="Основная навигация">
-      {navLinks.map((link) => (
+    <!-- Desktop nav -->
+    <nav class="vn-header__nav" aria-label="Основная навигация">
+      {navItems.map((item) => (
         <a
-          href={link.href}
-          class="text-[15px] font-medium text-[var(--color-text-ondark-mute)] hover:text-[var(--color-text-ondark)] transition-colors"
+          href={item.href}
+          class="vn-header__nav-link"
         >
-          {link.label}
+          {item.label}
         </a>
       ))}
     </nav>
 
-    <div class="flex items-center gap-4">
-      <a
-        href={`tel:${EXPERT.phone.replace(/\s/g, '')}`}
-        class="hidden md:inline-flex text-sm font-semibold text-[var(--color-text-ondark)] hover:text-[var(--color-accent-cyan)] transition-colors"
-      >
-        {EXPERT.phone}
-      </a>
+    <!-- Right controls -->
+    <div class="vn-header__controls">
+
+      <!-- Карта сайта -->
       <button
         type="button"
-        data-open-modal
-        class="hidden md:inline-flex items-center justify-center rounded-[var(--radius-md)] bg-white text-[var(--color-bg-dark)] px-5 py-2.5 text-sm font-medium hover:bg-[var(--color-bg-secondary)] transition-colors"
-      >
-        Понять, с чего начать
-      </button>
-      <button
-        type="button"
-        id="mobile-menu-toggle"
-        class="lg:hidden flex flex-col justify-center items-center gap-[5px] w-11 h-11 bg-transparent border-0 cursor-pointer"
-        aria-label="Открыть меню"
+        id="nav-toggle"
+        data-nav-toggle
+        class="vn-header__map-btn"
         aria-expanded="false"
+        aria-controls="route-map-overlay"
+        aria-label="Открыть карту сайта"
       >
-        <span class="w-[22px] h-0.5 bg-white rounded-full transition-transform" />
-        <span class="w-[22px] h-0.5 bg-white rounded-full transition-opacity" />
-        <span class="w-[22px] h-0.5 bg-white rounded-full transition-transform" />
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.5"
+             stroke-linecap="round" stroke-linejoin="round"
+             class="vn-map-icon" aria-hidden="true">
+          <rect x="3" y="3" width="7" height="7" rx="1"/>
+          <rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="3" y="14" width="7" height="7" rx="1"/>
+          <rect x="14" y="14" width="7" height="7" rx="1"/>
+        </svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.5"
+             stroke-linecap="round" stroke-linejoin="round"
+             class="vn-map-icon-menu" aria-hidden="true">
+          <line x1="4" y1="6" x2="20" y2="6"/>
+          <line x1="4" y1="12" x2="20" y2="12"/>
+          <line x1="4" y1="18" x2="20" y2="18"/>
+        </svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.5"
+             stroke-linecap="round" stroke-linejoin="round"
+             class="vn-map-icon-close" aria-hidden="true">
+          <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+        </svg>
+        <span class="vn-map-divider" aria-hidden="true"></span>
+        <span class="vn-map-label">Карта сайта</span>
+        <span class="vn-map-label-close">Закрыть</span>
       </button>
+
     </div>
   </div>
 </header>
 
+<style is:global>
+  /* ── Header base ── */
+  #site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    height: 84px;
+    display: flex;
+    align-items: center;
+    border: 1px solid transparent;
+    transition:
+      background     350ms cubic-bezier(0.4, 0, 0.2, 1),
+      height         350ms cubic-bezier(0.4, 0, 0.2, 1),
+      top            350ms cubic-bezier(0.4, 0, 0.2, 1),
+      left           350ms cubic-bezier(0.4, 0, 0.2, 1),
+      right          350ms cubic-bezier(0.4, 0, 0.2, 1),
+      border-radius  350ms cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow     350ms cubic-bezier(0.4, 0, 0.2, 1),
+      border-color   350ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* State: top of page */
+  #site-header[data-state="top"] {
+    background:    linear-gradient(180deg, rgba(4,18,38,0.85) 0%, rgba(4,18,38,0.45) 60%, transparent 100%);
+    height:        84px;
+    top:           0;
+    left:          0;
+    right:         0;
+    border-radius: 0;
+    box-shadow:    none;
+    border-color:  transparent;
+  }
+
+  /* State: floating dock */
+  #site-header[data-state="dock"] {
+    background:
+      linear-gradient(135deg, rgba(8,116,196,0.14) 0%, transparent 50%),
+      linear-gradient(225deg, rgba(91,199,242,0.08) 0%, transparent 50%),
+      linear-gradient(180deg, rgba(11,32,64,0.88) 0%, rgba(7,27,58,0.82) 100%);
+    backdrop-filter:     blur(20px) saturate(1.5);
+    -webkit-backdrop-filter: blur(20px) saturate(1.5);
+    height:        56px;
+    top:           14px;
+    left:          20px;
+    right:         20px;
+    border-radius: 12px;
+    border-color:  rgba(255,255,255,0.08);
+    box-shadow:
+      0 1px 2px rgba(0,0,0,0.08),
+      0 8px 24px rgba(0,0,0,0.18);
+  }
+
+  /* State: overlay open */
+  #site-header[data-overlay="true"] {
+    background:   transparent !important;
+    box-shadow:   none !important;
+    border-color: transparent !important;
+    z-index:      201;
+  }
+
+  /* ── Inner container ── */
+  #site-header[data-state="dock"] .vn-header__inner {
+    padding-inline: 24px;
+  }
+
+  /* Dock center on large screens */
+  @media (min-width: 1408px) {
+    #site-header[data-state="dock"] {
+      left:  calc((100% - 1360px) / 2);
+      right: calc((100% - 1360px) / 2);
+    }
+  }
+
+  /* ── Mobile: always 60px ── */
+  @media (max-width: 1023px) {
+    #site-header,
+    #site-header[data-state="top"],
+    #site-header[data-state="dock"] {
+      height: 60px;
+    }
+  }
+
+  /* ── Logo text ── */
+  #site-header .vn-header__brand {
+    color: var(--color-text-ondark);
+    transition: color 250ms ease;
+  }
+  #site-header .vn-header__name {
+    color: var(--color-text-ondark-mute);
+    transition: color 250ms ease, opacity 300ms ease, height 300ms ease, margin-top 300ms ease;
+  }
+  #site-header[data-overlay="true"] .vn-header__brand,
+  #site-header[data-overlay="true"] .vn-header__name {
+    color: color-mix(in srgb, var(--color-text-ondark) 85%, transparent);
+  }
+  #site-header[data-state="dock"] .vn-header__name {
+    opacity:    0;
+    height:     0;
+    overflow:   hidden;
+    margin-top: 0;
+  }
+
+  /* ── Nav links ── */
+  #site-header .vn-header__nav-link {
+    color: var(--color-text-ondark-mute);
+    transition: color 200ms ease, background 200ms ease, padding 200ms ease;
+  }
+  #site-header[data-overlay="true"] .vn-header__nav-link {
+    color: color-mix(in srgb, var(--color-text-ondark) 75%, transparent);
+  }
+  #site-header[data-overlay="true"] .vn-header__nav-link:hover {
+    color: var(--color-text-ondark);
+    background: color-mix(in srgb, var(--color-text-ondark) 8%, transparent);
+  }
+
+  /* ── Map button states ── */
+  #site-header .vn-map-icon-menu { display: none; }
+  #site-header .vn-map-icon-close { display: none; }
+  #site-header .vn-map-label-close { display: none; }
+  #site-header[data-overlay="true"] .vn-map-icon       { display: none; }
+  #site-header[data-overlay="true"] .vn-map-icon-menu  { display: none; }
+  #site-header[data-overlay="true"] .vn-map-icon-close { display: block; }
+  #site-header[data-overlay="true"] .vn-map-label      { display: none; }
+  #site-header[data-overlay="true"] .vn-map-label-close { display: inline; }
+  #site-header[data-overlay="true"] .vn-header__map-btn {
+    border-color: color-mix(in srgb, var(--color-text-ondark) 20%, transparent);
+    color:        color-mix(in srgb, var(--color-text-ondark) 80%, transparent);
+  }
+
+  /* ── Mobile: header is brand + menu only ── */
+  @media (max-width: 1023px) {
+    #site-header .vn-header__name { display: none; }
+    #site-header .vn-map-icon { display: none; }
+    #site-header .vn-map-icon-menu { display: block; }
+    #site-header .vn-map-label,
+    #site-header .vn-map-label-close,
+    #site-header .vn-map-divider { display: none; }
+    #site-header[data-overlay="true"] .vn-map-label-close { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #site-header,
+    #site-header .vn-header__brand,
+    #site-header .vn-header__name {
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+
+<style>
+  .vn-header__inner {
+    display:        flex;
+    align-items:    center;
+    width:          100%;
+    max-width:      1360px;
+    margin-inline:  auto;
+    padding-inline: 48px;
+    gap:            24px;
+    height:         100%;
+    transition:     padding-inline 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Logo */
+  .vn-header__logo {
+    display:         inline-flex;
+    align-items:     baseline;
+    gap:             6px;
+    text-decoration: none;
+    flex-shrink:     0;
+  }
+  .vn-header__brand {
+    font-size:      20px;
+    font-weight:    700;
+    letter-spacing: 0.06em;
+    line-height:    1;
+    text-transform: uppercase;
+    color:          var(--color-text-ondark);
+  }
+  .vn-header__brand-suffix {
+    font-size:      18px;
+    font-weight:    300;
+    letter-spacing: 0.08em;
+    line-height:    1;
+    text-transform: uppercase;
+    color:          var(--color-text-ondark-mute);
+  }
+
+  /* Nav */
+  .vn-header__nav {
+    display:         flex;
+    align-items:     center;
+    gap:             8px;
+    flex:            1;
+    justify-content: center;
+  }
+  .vn-header__nav-link {
+    display:         inline-flex;
+    align-items:     center;
+    gap:             6px;
+    padding:         8px 16px;
+    font-size:       12px;
+    font-weight:     400;
+    letter-spacing:  0.12em;
+    text-decoration: none;
+    border-radius:   10px;
+    white-space:     nowrap;
+    border:          1px solid transparent;
+    transition:      color 200ms ease, background 200ms ease, border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+  }
+  .vn-header__nav-link:hover {
+    color:           var(--color-text-ondark);
+    background:      rgba(255,255,255,0.08);
+    border-color:    rgba(255,255,255,0.12);
+    box-shadow:      inset 0 1px 0 rgba(255,255,255,0.06), 0 2px 8px rgba(0,0,0,0.15);
+    transform:       translateY(-1px);
+  }
+
+  /* Controls */
+  .vn-header__controls {
+    display:     flex;
+    align-items: center;
+    gap:         10px;
+    flex-shrink: 0;
+  }
+  /* Map button */
+  .vn-header__map-btn {
+    display:      inline-flex;
+    align-items:  center;
+    gap:          7px;
+    height:       36px;
+    padding:      0 14px;
+    background:   transparent;
+    border:       1px solid var(--color-border-ondark);
+    border-radius: var(--radius-md);
+    cursor:       pointer;
+    font-size:    13px;
+    font-weight:  500;
+    color:        var(--color-text-ondark-mute);
+    font-family:  var(--font-family-base);
+    transition:   background 150ms ease, border-color 150ms ease, color 150ms ease;
+  }
+  .vn-header__map-btn:hover {
+    background:   color-mix(in srgb, var(--color-brand-racurs) 5%, transparent);
+    border-color: color-mix(in srgb, var(--color-brand-racurs) 20%, transparent);
+  }
+  .vn-map-divider {
+    width:      1px;
+    height:     12px;
+    background: color-mix(in srgb, var(--color-brand-racurs) 15%, transparent);
+    flex-shrink: 0;
+  }
+
+  /* Mobile adaptations */
+  @media (max-width: 1023px) {
+    .vn-header__nav    { display: none; }
+    .vn-header__controls { margin-left: auto; }
+    .vn-header__map-btn {
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      padding: 0;
+    }
+  }
+  @media (max-width: 767px) {
+    .vn-header__inner { padding-inline: 20px; }
+    .vn-header__brand { font-size: 18px; }
+  }
+  @media (max-width: 480px) {
+    .vn-header__inner { padding-inline: 16px; gap: 12px; }
+    .vn-header__brand { font-size: 16px; }
+  }
+</style>
+
 <script>
-  const header = document.getElementById('site-header');
-  const onScroll = () => {
-    if (header) header.classList.toggle('border-[var(--color-border-ondark)]', window.scrollY > 8);
-  };
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+  (function() {
+    const header = document.getElementById('site-header');
+    if (!header) return;
+
+    const dockThreshold = 120;
+
+    const onScroll = () => {
+      const scrollY = window.scrollY;
+      const state = scrollY > dockThreshold ? 'dock' : 'top';
+      if (header.dataset.state !== state) {
+        header.dataset.state = state;
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
 </script>

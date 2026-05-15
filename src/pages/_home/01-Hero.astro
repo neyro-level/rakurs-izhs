@@ -1,5 +1,5 @@
 ---
-import { EXPERT } from '@/lib/constants';
+
 
 const checks = [
   { label: 'Бюджет и ипотека', status: 'проверяем' },
@@ -14,7 +14,6 @@ const trusts = [
   'Сравниваем сметы до договора',
   'Помогаем с участком и подрядчиком',
   'Для клиента без отдельной оплаты',
-  `Ответственный эксперт — ${EXPERT.name}`,
 ];
 ---
 
@@ -27,20 +26,15 @@ const trusts = [
     style="background-image: linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px); background-size: 64px 64px;"
   />
 
-  <div class="site-container relative vn-section-padding-lg">
+  <div class="site-container relative vn-section-padding-lg pt-28 md:pt-36 lg:pt-44">
     <div class="grid-12 items-center">
       <!-- Left: 7 cols -->
       <div class="col-span-12 lg:col-span-7 flex flex-col gap-6">
-        <span class="inline-flex items-center gap-2 self-start rounded-[var(--radius-sm)] bg-[rgba(255,255,255,0.08)] border border-[rgba(255,255,255,0.14)] px-3 py-1.5 text-xs font-medium uppercase tracking-wider text-[var(--color-text-ondark)]">
-          <span class="h-1.5 w-1.5 rounded-full bg-[var(--color-accent-cyan)]" />
-          Ракурс ИЖС — Пермь
-        </span>
-
-        <h1 class="text-4xl md:text-5xl lg:text-[56px] font-extrabold leading-[1.08] tracking-[-0.02em]">
+        <h1 class="text-4xl md:text-[44px] lg:text-[52px] font-extrabold leading-[1.08] tracking-[-0.02em]">
           Построить дом в Перми <span class="text-[var(--color-accent-cyan)]">без ошибки</span> в участке, подрядчике и смете
         </h1>
 
-        <p class="text-lg md:text-xl text-[var(--color-text-ondark-mute)] max-w-2xl leading-relaxed">
+        <p class="text-base md:text-lg text-[var(--color-text-ondark-mute)] max-w-2xl leading-relaxed">
           Помогаем понять, какой дом можно построить по вашему бюджету: подбираем участок, проверяем подрядчика, сравниваем смету и показываем расходы до договора.
         </p>
 

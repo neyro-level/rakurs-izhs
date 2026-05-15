@@ -1,0 +1,514 @@
+---
+import { EXPERT, COMPANY } from '@/lib/constants';
+
+const phoneClean = EXPERT.phone.replace(/[^\d+]/g, '');
+
+const sections = [
+  { num: '01', title: 'Главная', href: '#hero', desc: 'Какой дом реально построить по ипотеке 6% в Перми.' },
+  { num: '02', title: 'Ипотека 6%', href: '#mortgage', desc: 'Проверка ипотечного сценария под строительство дома.' },
+  { num: '03', title: 'Участки', href: '#land', desc: 'Проверим документы, коммуникации и ограничения.' },
+  { num: '04', title: 'Дома', href: '#contractors', desc: 'Критерии выбора: аккредитация, опыт, смета, договор.' },
+  { num: '05', title: 'Ремонты', href: '#renovation', desc: 'Разбор сметы и контроль качества работ.' },
+  { num: '06', title: 'Смета', href: '#estimate', desc: 'Разберём смету до договора — что скрыто в цене.' },
+  { num: '07', title: 'Эксперт', href: '#expert', desc: 'Артемий Никулин — эксперт по ИЖС.' },
+  { num: '08', title: 'Отзывы', href: '#reviews', desc: 'Реальные кейсы клиентов Ракурс.' },
+  { num: '09', title: 'FAQ', href: '#faq', desc: 'Ответы на главные вопросы про ИЖС.' },
+  { num: '10', title: 'Форма', href: '#lead-form', desc: 'Отправьте заявку — разберём ваш сценарий.' },
+];
+
+const pages = [
+  { title: 'Политика конфиденциальности', href: '/privacy/' },
+  { title: 'Согласие на обработку ПД', href: '/soglasie/' },
+  { title: 'Карта сайта', href: '/sitemap/' },
+];
+
+const cardDelays = [80, 120, 160, 200, 240, 280, 320, 360, 400, 440];
+---
+
+<div
+  id="route-map-overlay"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Карта сайта"
+  data-open="false"
+  inert
+>
+  <!-- Decorative layers -->
+  <div class="ro-overlay-grid" aria-hidden="true"></div>
+  <div class="ro-overlay-radial" aria-hidden="true"></div>
+
+  <!-- Header -->
+  <div class="ro-overlay-header">
+    <a href="/" class="ro-overlay-logo" aria-label="На главную">
+      <span class="ro-overlay-logo-brand">РАКУРС ИЖС</span>
+    </a>
+    <span class="ro-overlay-header-label">КАРТА САЙТА</span>
+    <button type="button" data-nav-close class="ro-overlay-close" aria-label="Закрыть">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      <span>Закрыть</span>
+    </button>
+  </div>
+
+  <!-- Body: 3 zones -->
+  <div class="ro-overlay-body">
+
+    <!-- Left: Brand -->
+    <aside class="ro-overlay-brand">
+      <div class="ro-overlay-brand-desc">
+        Центр недвижимости «Ракурс»<br/>в Перми
+      </div>
+      <p class="ro-overlay-brand-body">
+        Помогаем построить дом: подобрать участок, проверить смету и выбрать подрядчика. Ипотека 6%, реальные расходы до договора.
+      </p>
+      <button type="button" data-open-modal class="ro-overlay-brand-cta">
+        Понять, с чего начать →
+      </button>
+      <div class="ro-overlay-legal">
+        {pages.map((p) => <a href={p.href} class="ro-overlay-legal-link">{p.title}</a>)}
+      </div>
+    </aside>
+
+    <!-- Center: Sections -->
+    <section class="ro-overlay-routes" aria-label="Разделы">
+      <div class="ro-route-cards">
+        {sections.map((s, i) => (
+          <a
+            href={s.href}
+            class="ro-route-card"
+            style={`transition-delay: ${cardDelays[i]}ms`}
+          >
+            <span class="ro-route-card-label">{s.num}</span>
+            <h3 class="ro-route-card-title">{s.title}</h3>
+            <p class="ro-route-card-body">{s.desc}</p>
+            <span class="ro-route-card-arrow" aria-hidden="true">→</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- Right: Contacts -->
+    <aside class="ro-overlay-contacts">
+      <p class="ro-overlay-contacts-header">СВЯЗАТЬСЯ</p>
+      <div class="ro-overlay-contact-list">
+        <a href={`tel:${phoneClean}`} class="ro-overlay-contact-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 9.82 19.79 19.79 0 0 1 1.61 1.24 2 2 0 0 1 3.6 0h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 7.91a16 16 0 0 0 6.1 6.1l.88-.88a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.72 15.3"/></svg>
+          <span>{EXPERT.phone}</span>
+        </a>
+        <a href={`https://t.me/${EXPERT.telegram.replace('@', '')}`} target="_blank" rel="noopener noreferrer" class="ro-overlay-contact-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m22 2-7 20-4-9-9-4 20-7z"/><path d="M22 2 11 13"/></svg>
+          <span>Telegram</span>
+        </a>
+        <a href={EXPERT.max} target="_blank" rel="noopener noreferrer" class="ro-overlay-contact-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+          <span>Max</span>
+        </a>
+        <a href={COMPANY.vk} target="_blank" rel="noopener noreferrer" class="ro-overlay-contact-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>
+          <span>ВКонтакте</span>
+        </a>
+      </div>
+      <hr class="ro-overlay-divider" aria-hidden="true" />
+      <p class="ro-overlay-offices-header">ОФИС</p>
+      <div class="ro-overlay-office">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div>
+          <p class="ro-overlay-office-city">Пермь</p>
+          <p class="ro-overlay-office-addr">{COMPANY.address}</p>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- Footer strip -->
+  <div class="ro-overlay-footer">
+    <a href="/" class="ro-overlay-footer-back">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m15 18-6-6 6-6"/></svg>
+      Вернуться на главную
+    </a>
+    <span class="ro-overlay-footer-legal">© 2026 {COMPANY.legalName} · ИНН {COMPANY.inn}</span>
+  </div>
+</div>
+
+<style is:global>
+  #route-map-overlay {
+    position:       fixed;
+    inset:          0;
+    z-index:        200;
+    background:     var(--color-bg-dark);
+    opacity:        0;
+    pointer-events: none;
+    transition:     opacity 200ms ease;
+    overflow-y:     auto;
+    display:        flex;
+    flex-direction: column;
+  }
+  #route-map-overlay[data-open="true"] {
+    opacity:        1;
+    pointer-events: auto;
+  }
+
+  .ro-route-card {
+    opacity:    0;
+    transform:  translateY(16px);
+    transition: opacity 350ms ease-out, transform 350ms ease-out, background 150ms ease, border-color 150ms ease;
+  }
+  #route-map-overlay[data-open="true"] .ro-route-card {
+    opacity:   1;
+    transform: translateY(0);
+  }
+
+  .ro-overlay-brand {
+    opacity:    0;
+    transform:  translateX(-16px);
+    transition: opacity 350ms ease-out 50ms, transform 350ms ease-out 50ms;
+  }
+  #route-map-overlay[data-open="true"] .ro-overlay-brand {
+    opacity:   1;
+    transform: translateX(0);
+  }
+  .ro-overlay-contacts {
+    opacity:    0;
+    transition: opacity 300ms ease 150ms;
+  }
+  #route-map-overlay[data-open="true"] .ro-overlay-contacts {
+    opacity: 1;
+  }
+  .ro-overlay-footer {
+    opacity:    0;
+    transition: opacity 250ms ease 320ms;
+  }
+  #route-map-overlay[data-open="true"] .ro-overlay-footer {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #route-map-overlay, .ro-route-card, .ro-overlay-brand, .ro-overlay-contacts, .ro-overlay-footer {
+      transition-duration: 0.01ms !important;
+      transition-delay: 0ms !important;
+    }
+  }
+</style>
+
+<style>
+  .ro-overlay-grid {
+    position:         absolute;
+    inset:            0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size:  64px 64px;
+    pointer-events:   none;
+    z-index:          0;
+  }
+  .ro-overlay-radial {
+    position:         absolute;
+    inset:            0;
+    background:       radial-gradient(ellipse 1200px 1200px at top right, rgba(8,116,196,0.08), transparent);
+    pointer-events:   none;
+    z-index:          0;
+  }
+
+  .ro-overlay-header {
+    position:       relative;
+    z-index:        2;
+    display:        flex;
+    align-items:    center;
+    justify-content: space-between;
+    height:         72px;
+    padding-inline: 48px;
+    border-bottom:  1px solid rgba(255,255,255,0.08);
+    flex-shrink:    0;
+  }
+  .ro-overlay-logo {
+    display:         flex;
+    align-items:     center;
+    gap:             10px;
+    text-decoration: none;
+  }
+  .ro-overlay-logo-brand {
+    font-size:      18px;
+    font-weight:    700;
+    letter-spacing: 0.06em;
+    color:          var(--color-text-ondark);
+  }
+  .ro-overlay-header-label {
+    position:       absolute;
+    left:           50%;
+    transform:      translateX(-50%);
+    font-size:      11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color:          rgba(255,255,255,0.35);
+  }
+  .ro-overlay-close {
+    display:      inline-flex;
+    align-items:  center;
+    gap:          8px;
+    padding:      8px 16px;
+    background:   transparent;
+    border:       1px solid rgba(255,255,255,0.12);
+    border-radius: var(--radius-md);
+    color:        rgba(255,255,255,0.6);
+    font-size:    14px;
+    font-family:  var(--font-family-base);
+    cursor:       pointer;
+    transition:   background 150ms ease, border-color 150ms ease;
+  }
+  .ro-overlay-close:hover {
+    background:   rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.2);
+  }
+
+  .ro-overlay-body {
+    position:   relative;
+    z-index:    2;
+    display:    grid;
+    grid-template-columns: 3fr 5fr 3fr;
+    flex:       1;
+    min-height: 0;
+  }
+
+  .ro-overlay-brand {
+    padding:     48px 32px 48px 48px;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    display:     flex;
+    flex-direction: column;
+  }
+  .ro-overlay-brand-desc {
+    font-size:   18px;
+    font-weight: 500;
+    color:       rgba(255,255,255,0.85);
+    line-height: 1.4;
+    margin-top:  16px;
+  }
+  .ro-overlay-brand-body {
+    font-size:  14px;
+    color:      rgba(255,255,255,0.55);
+    max-width:  260px;
+    line-height: 1.6;
+    margin-top: 12px;
+    margin-bottom: 0;
+  }
+  .ro-overlay-brand-cta {
+    display:        inline-flex;
+    align-items:    center;
+    padding:        12px 20px;
+    margin-top:     24px;
+    background:     var(--color-brand-racurs);
+    color:          var(--color-text-ondark);
+    font-size:      15px;
+    font-weight:    500;
+    border:         none;
+    border-radius:  var(--radius-md);
+    font-family:    var(--font-family-base);
+    cursor:         pointer;
+    transition:     background 150ms ease, transform 150ms ease;
+    align-self:     flex-start;
+  }
+  .ro-overlay-brand-cta:hover {
+    background: var(--color-accent-hover);
+    transform:  translateY(-1px);
+  }
+  .ro-overlay-legal {
+    margin-top: auto;
+    padding-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .ro-overlay-legal-link {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    transition: color 150ms ease;
+  }
+  .ro-overlay-legal-link:hover {
+    color: rgba(255,255,255,0.75);
+  }
+
+  .ro-overlay-routes {
+    padding:      48px;
+    border-right: 1px solid rgba(255,255,255,0.06);
+  }
+  .ro-route-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap:     12px;
+  }
+  .ro-route-card {
+    display:         flex;
+    flex-direction:  column;
+    padding:         18px;
+    background:      rgba(255,255,255,0.04);
+    border:          1px solid rgba(255,255,255,0.07);
+    border-radius:   var(--radius-lg);
+    text-decoration: none;
+    position:        relative;
+    overflow:        hidden;
+  }
+  .ro-route-card:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.14);
+  }
+  .ro-route-card-label {
+    font-size:      10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color:          var(--color-brand-racurs);
+    font-weight:    600;
+    margin-bottom:  8px;
+  }
+  .ro-route-card-title {
+    font-size:   15px;
+    font-weight: 500;
+    color:       var(--color-text-ondark);
+    margin:      0 0 4px;
+    line-height: 1.3;
+  }
+  .ro-route-card-body {
+    font-size:   13px;
+    color:       rgba(255,255,255,0.55);
+    margin:      0;
+    line-height: 1.5;
+  }
+  .ro-route-card-arrow {
+    position:   absolute;
+    bottom:     14px;
+    right:      14px;
+    font-size:  14px;
+    color:      rgba(255,255,255,0.3);
+    opacity:    0;
+    transition: opacity 150ms ease;
+  }
+  .ro-route-card:hover .ro-route-card-arrow { opacity: 1; }
+
+  .ro-overlay-contacts {
+    padding:        48px 48px 48px 32px;
+    display:        flex;
+    flex-direction: column;
+  }
+  .ro-overlay-contacts-header {
+    font-size:      11px;
+    font-weight:    500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color:          var(--color-brand-racurs);
+    margin:         0 0 16px;
+  }
+  .ro-overlay-contact-list {
+    display:        flex;
+    flex-direction: column;
+    gap:            10px;
+  }
+  .ro-overlay-contact-btn {
+    display:         flex;
+    align-items:     center;
+    gap:             10px;
+    padding:         10px 16px;
+    background:      rgba(255,255,255,0.04);
+    border:          1px solid rgba(255,255,255,0.08);
+    border-radius:   var(--radius-md);
+    color:           var(--color-text-ondark);
+    font-size:       14px;
+    font-weight:     500;
+    text-decoration: none;
+    transition:      background 150ms ease;
+  }
+  .ro-overlay-contact-btn:hover {
+    background: rgba(255,255,255,0.08);
+  }
+  .ro-overlay-contact-btn svg {
+    flex-shrink: 0;
+    color: rgba(255,255,255,0.5);
+    transition: color 150ms ease;
+  }
+  .ro-overlay-contact-btn:hover svg {
+    color: var(--color-brand-racurs);
+  }
+  .ro-overlay-divider {
+    border:       none;
+    border-top:   1px solid rgba(255,255,255,0.08);
+    margin-block: 24px;
+  }
+  .ro-overlay-offices-header {
+    font-size:      11px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color:          rgba(255,255,255,0.5);
+    margin:         0 0 14px;
+  }
+  .ro-overlay-office {
+    display:        flex;
+    align-items:    flex-start;
+    gap:            8px;
+  }
+  .ro-overlay-office svg {
+    color: rgba(255,255,255,0.35);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .ro-overlay-office-city {
+    font-size:   13px;
+    font-weight: 500;
+    color:       var(--color-text-ondark);
+    margin:      0 0 2px;
+  }
+  .ro-overlay-office-addr {
+    font-size:   12px;
+    color:       rgba(255,255,255,0.5);
+    margin:      0;
+    line-height: 1.4;
+  }
+
+  .ro-overlay-footer {
+    position:        relative;
+    z-index:         2;
+    display:         flex;
+    align-items:     center;
+    justify-content: space-between;
+    height:          56px;
+    padding-inline:  48px;
+    border-top:      1px solid rgba(255,255,255,0.06);
+    flex-shrink:     0;
+  }
+  .ro-overlay-footer-back {
+    display:         flex;
+    align-items:     center;
+    gap:             6px;
+    font-size:       13px;
+    color:           rgba(255,255,255,0.5);
+    text-decoration: none;
+    transition:      color 150ms ease;
+  }
+  .ro-overlay-footer-back:hover { color: rgba(255,255,255,0.85); }
+  .ro-overlay-footer-legal {
+    font-size:  12px;
+    color:      rgba(255,255,255,0.4);
+  }
+
+  @media (max-width: 1023px) {
+    .ro-overlay-header { padding-inline: 20px; }
+    .ro-overlay-header-label { display: none; }
+    .ro-overlay-body {
+      grid-template-columns: 1fr;
+      padding-top:           60px;
+    }
+    .ro-overlay-brand { display: none; }
+    .ro-overlay-contacts {
+      padding:      24px 20px;
+      border-right: none;
+      border-top:   1px solid rgba(255,255,255,0.06);
+      order:        2;
+    }
+    .ro-overlay-routes {
+      padding:      24px 20px;
+      order:        1;
+      border-right: none;
+    }
+    .ro-route-cards { grid-template-columns: 1fr; }
+    .ro-route-card  { min-height: 64px; }
+    .ro-overlay-footer { padding-inline: 20px; }
+    .ro-overlay-footer-legal { display: none; }
+  }
+</style>

@@ -1,6 +1,9 @@
 ---
 import '@/styles/global.css';
 import { SITE } from '@/lib/constants';
+import Header from '@/components/Header.astro';
+import RouteMapOverlay from '@/components/RouteMapOverlay.astro';
+import MobileBottomCTA from '@/components/MobileBottomCTA.astro';
 import ModalShell from '@/components/shared/ModalShell';
 
 interface Props {
@@ -43,13 +46,85 @@ const fullTitle = title === SITE.shortName ? title : `${title} — ${SITE.shortN
     <meta name="twitter:description" content={description} />
     {ogImage && <meta name="twitter:image" content={ogImage} />}
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <!-- Yandex.Metrika will be injected here after setup -->
   </head>
 
   <body class="min-h-screen antialiased">
+    <Header />
+    <RouteMapOverlay />
     <slot />
+    <MobileBottomCTA />
     <ModalShell client:load />
+
+    <script>
+      // ── Route Map Overlay controller ──
+      (function() {
+        const header = document.getElementById('site-header');
+        const overlay = document.getElementById('route-map-overlay');
+        const toggleBtn = document.querySelector('[data-nav-toggle]');
+        const closeBtn = document.querySelector('[data-nav-close]');
+
+        if (!overlay || !toggleBtn) return;
+
+        let savedScrollY = 0;
+
+        const openOverlay = () => {
+          savedScrollY = window.scrollY;
+          overlay.dataset.open = 'true';
+          overlay.removeAttribute('inert');
+          toggleBtn.setAttribute('aria-expanded', 'true');
+          if (header) header.dataset.overlay = 'true';
+          document.body.style.position = 'fixed';
+          document.body.style.top = `-${savedScrollY}px`;
+          document.body.style.width = '100%';
+        };
+
+        const closeOverlay = () => {
+          overlay.dataset.open = 'false';
+          overlay.setAttribute('inert', '');
+          toggleBtn.setAttribute('aria-expanded', 'false');
+          if (header) header.dataset.overlay = 'false';
+          document.body.style.position = '';
+          document.body.style.top = '';
+          document.body.style.width = '';
+          window.scrollTo(0, savedScrollY);
+        };
+
+        toggleBtn.addEventListener('click', () => {
+          const isOpen = overlay.dataset.open === 'true';
+          isOpen ? closeOverlay() : openOverlay();
+        });
+
+        if (closeBtn) {
+          closeBtn.addEventListener('click', closeOverlay);
+        }
+
+        // Close on Escape
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && overlay.dataset.open === 'true') {
+            closeOverlay();
+          }
+        });
+
+        // Close on click outside cards (on the overlay background)
+        overlay.addEventListener('click', (e) => {
+          if (e.target === overlay) {
+            closeOverlay();
+          }
+        });
+
+        // Close overlay when clicking on anchor links within the overlay
+        overlay.querySelectorAll('a[href^="#"]').forEach((link) => {
+          link.addEventListener('click', () => {
+            closeOverlay();
+          });
+        });
+      })();
+    </script>
   </body>
 </html>

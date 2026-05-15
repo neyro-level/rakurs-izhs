@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import { EXPERT } from '@/lib/constants';
+import artemiyPhoto from '@/assets/artemiy-nikulin.png';
 
 const checks = [
   'на каком этапе клиент сейчас',
@@ -16,13 +18,13 @@ const checks = [
       <!-- Left: 6 cols — Photo -->
       <div class="col-span-12 lg:col-span-6">
         <div class="relative rounded-[var(--radius-xl)] overflow-hidden bg-[var(--color-bg-surface)] aspect-[4/5] max-w-md mx-auto lg:mx-0">
-          <img
-            src="/artemiy-nikulin.jpg"
+          <Image
+            src={artemiyPhoto}
             alt={`${EXPERT.name}, ${EXPERT.role}`}
             class="absolute inset-0 w-full h-full object-cover"
             loading="lazy"
-            width="600"
-            height="750"
+            width={600}
+            height={750}
           />
           <div class="absolute inset-0 bg-gradient-to-t from-[var(--color-bg-dark)]/60 to-transparent" />
           <div class="absolute bottom-6 left-6 right-6">
