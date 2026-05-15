@@ -144,7 +144,7 @@ export default function RequestModal({ isOpen, onClose, prefillScenario }: Reque
             />
             <span className="text-xs text-[var(--color-text-secondary)]">
               Согласен на обработку персональных данных.{' '}
-              <a href="/privacy/" className="text-[var(--color-accent-primary)] hover:underline">
+              <a href="/politika/" className="text-[var(--color-accent-primary)] hover:underline">
                 Политика конфиденциальности
               </a>.
             </span>

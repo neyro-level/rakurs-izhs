@@ -56,7 +56,7 @@ export default function CookieBanner() {
       <div className="rakurs-cookie__inner">
         <p className="rakurs-cookie__text">
           Сайт использует cookie для анализа посещаемости.{" "}
-          <a href="/privacy/" className="rakurs-cookie__link">
+          <a href="/politika/" className="rakurs-cookie__link">
             Политика конфиденциальности
           </a>
           .
