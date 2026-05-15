@@ -5,6 +5,7 @@ import Header from '@/components/Header.astro';
 import RouteMapOverlay from '@/components/RouteMapOverlay.astro';
 import MobileBottomCTA from '@/components/MobileBottomCTA.astro';
 import ModalShell from '@/components/shared/ModalShell';
+import CookieBanner from '@/components/shared/CookieBanner';
 
 interface Props {
   title: string;
@@ -60,6 +61,7 @@ const fullTitle = title === SITE.shortName ? title : `${title} — ${SITE.shortN
     <slot />
     <MobileBottomCTA />
     <ModalShell client:load />
+    <CookieBanner client:idle />
 
     <script>
       // ── Route Map Overlay controller ──

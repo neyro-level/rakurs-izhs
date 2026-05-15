@@ -1,0 +1,116 @@
+.rakurs-cookie {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1100;
+  width: min(calc(100% - 32px), 720px);
+  padding: 16px 20px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-surface);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.12);
+}
+
+.rakurs-cookie__inner {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.rakurs-cookie__text {
+  flex: 1;
+  min-width: 200px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
+
+.rakurs-cookie__link {
+  color: var(--color-accent-primary);
+  text-decoration: none;
+}
+
+.rakurs-cookie__link:hover {
+  text-decoration: underline;
+}
+
+.rakurs-cookie__actions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.rakurs-cookie__btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  min-width: 48px;
+  padding: 9px 20px;
+  font-family: "Manrope", system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.rakurs-cookie__btn--accept {
+  background: var(--color-accent-primary);
+  color: var(--color-text-ondark);
+  border: 1px solid var(--color-accent-primary);
+}
+
+.rakurs-cookie__btn--accept:hover {
+  background: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+  transform: translateY(-1px);
+}
+
+.rakurs-cookie__btn--reject {
+  background: transparent;
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+}
+
+.rakurs-cookie__btn--reject:hover {
+  background: var(--color-bg-secondary);
+  border-color: var(--color-border-strong);
+}
+
+@media (max-width: 640px) {
+  .rakurs-cookie {
+    bottom: 80px;
+    padding: 14px 16px;
+  }
+
+  .rakurs-cookie__inner {
+    gap: 14px;
+  }
+
+  .rakurs-cookie__actions {
+    width: 100%;
+  }
+
+  .rakurs-cookie__btn {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rakurs-cookie__btn {
+    transition: none;
+  }
+
+  .rakurs-cookie__btn--accept:hover,
+  .rakurs-cookie__btn--reject:hover {
+    transform: none;
+  }
+}
