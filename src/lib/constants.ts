@@ -1,8 +1,8 @@
 export const SITE = {
   name: 'Центр недвижимости «Ракурс»',
   shortName: 'Ракурс ИЖС',
-  domain: 'an-rakurs.ru',
-  url: 'https://an-rakurs.ru',
+  domain: 'rakurs-izhs.ru',
+  url: 'https://rakurs-izhs.ru',
   region: 'Пермь и радиус до 50 км',
   description:
     'Помогаем построить дом в Перми: подобрать участок, проверить смету и выбрать подрядчика',
