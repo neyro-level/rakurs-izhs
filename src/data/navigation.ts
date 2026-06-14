@@ -105,6 +105,6 @@ export const routeMapSections = homeSections;
 export const sitePages = [
   { title: 'Главная', href: '/' },
   { title: 'Политика конфиденциальности', href: '/politika/' },
-  { title: 'Политика использования cookies', href: '/cookies/' },
-  { title: 'Страница благодарности', href: '/thanks/' },
+  { title: 'Правила использования cookie', href: '/cookies/' },
+  { title: 'Карта сайта', href: '/sitemap/' },
 ];

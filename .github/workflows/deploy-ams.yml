@@ -1,0 +1,80 @@
+name: Deploy to AMS Server
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+concurrency:
+  group: ams-deploy-rakurs-izhs
+  cancel-in-progress: true
+
+env:
+  SITE_SLUG: rakurs-izhs
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  PUBLIC_LEADS_API_URL: /api/leads
+  PUBLIC_PROJECT_ID: rakurs-izhs
+
+jobs:
+  deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 11.5.1
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: CI=true pnpm install --frozen-lockfile
+
+      - name: Build
+        env:
+          PUBLIC_LEADS_SITE_KEY: ${{ secrets.PUBLIC_LEADS_SITE_KEY }}
+          PUBLIC_YM_COUNTER_ID: ${{ secrets.PUBLIC_YM_COUNTER_ID }}
+        run: pnpm build
+
+      - name: GEO check
+        run: pnpm geo-check
+
+      - name: SEO check
+        run: pnpm seo-check
+
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "${{ secrets.AMS_SSH_KEY }}" > ~/.ssh/ams_deploy_key
+          chmod 600 ~/.ssh/ams_deploy_key
+          ssh-keyscan -H "${{ secrets.AMS_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Upload release
+        run: |
+          release="$(date -u +%Y%m%d%H%M%S)-${GITHUB_SHA::7}"
+          echo "RELEASE=$release" >> "$GITHUB_ENV"
+          root="${{ secrets.AMS_CLIENT_SITES_ROOT }}/${SITE_SLUG}"
+          ssh -i ~/.ssh/ams_deploy_key "${{ secrets.AMS_USER }}@${{ secrets.AMS_HOST }}" \
+            "mkdir -p '$root/releases/$release' '$root/shared'"
+          rsync -az --delete -e "ssh -i ~/.ssh/ams_deploy_key" dist/ \
+            "${{ secrets.AMS_USER }}@${{ secrets.AMS_HOST }}:$root/releases/$release/"
+
+      - name: Activate release
+        run: |
+          root="${{ secrets.AMS_CLIENT_SITES_ROOT }}/${SITE_SLUG}"
+          ssh -i ~/.ssh/ams_deploy_key "${{ secrets.AMS_USER }}@${{ secrets.AMS_HOST }}" \
+            "ln -sfn '$root/releases/${RELEASE}' '$root/current' && sudo nginx -t && sudo systemctl reload nginx"
+
+      - name: Verify
+        run: |
+          curl --fail --silent --show-error --retry 6 --retry-delay 5 "http://rakurs-izhs.ru/" >/dev/null

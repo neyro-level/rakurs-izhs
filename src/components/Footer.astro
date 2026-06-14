@@ -120,10 +120,24 @@ import { footerNavLinks } from '@/data/navigation';
         <p>
           © 2026 {SITE.name}. ИНН {COMPANY.inn}.
         </p>
-        <div class="flex flex-wrap gap-x-5 gap-y-2">
+        <div class="flex flex-wrap items-center gap-x-5 gap-y-3 md:justify-end">
           <a href="/politika/" class="transition-colors hover:text-[var(--color-text-ondark)]">Политика конфиденциальности</a>
           <a href="/cookies/" class="transition-colors hover:text-[var(--color-text-ondark)]">Политика использования cookies</a>
-          <a href="/sitemap/" class="transition-colors hover:text-[var(--color-text-ondark)]">Карта сайта</a>
+          <a
+            href="https://ams24.ru/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-[rgba(91,199,242,0.18)] bg-[rgba(255,255,255,0.04)] px-3.5 py-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--color-accent-cyan)] transition-all duration-200 hover:-translate-y-px hover:border-[rgba(91,199,242,0.28)] hover:bg-[rgba(255,255,255,0.07)] hover:text-[var(--color-text-ondark)]"
+          >
+            <span class="inline-flex h-5 w-5 items-center justify-center rounded-full bg-[rgba(91,199,242,0.1)] text-[var(--color-accent-cyan)]">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 19h16" />
+                <path d="M4 15.5C4 12 7 9 10.5 9c1.6 0 3.1.6 4.2 1.7L20 16" />
+                <path d="M20 8v8h-8" />
+              </svg>
+            </span>
+            Сайт разработан в АМС
+          </a>
         </div>
       </div>
     </div>

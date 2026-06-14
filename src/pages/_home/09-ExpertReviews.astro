@@ -2,6 +2,14 @@
 import { Image } from 'astro:assets';
 import artemiyPhoto from '@/assets/artemiy-nikulin.png';
 
+const personalChecks = [
+  'Этап клиента и текущую ситуацию',
+  'Участок и юридическую чистоту',
+  'Ипотечный сценарий и требования банка',
+  'Смету и скрытые доплаты',
+  'Вопросы к подрядчику и договору',
+];
+
 const cases = [
   {
     title: 'Семья К., дом 120 м²',
@@ -61,110 +69,90 @@ const reviews = [
       </h2>
     </div>
 
-    <!-- Expert: 6/6 split -->
-    <div class="mt-12 md:mt-16 grid-12 gap-y-10 lg:gap-y-0">
-      
-      <!-- Left: 6 cols — Photo -->
-      <div class="col-span-12 lg:col-span-6 flex flex-col">
-        <div class="fade-in-up relative">
-          <Image
-            src={artemiyPhoto}
-            alt="Артемий Никулин — эксперт по ИЖС Ракурс"
-            width={500}
-            height={600}
-            class="w-full h-auto rounded-[var(--radius-xl)] object-cover shadow-[0_12px_40px_-12px_rgba(0,0,0,0.2)]"
-            style="aspect-ratio: 5/6;"
-            loading="lazy"
-          />
+    <!-- Expert -->
+    <div class="mt-12 md:mt-16 grid-12 items-start gap-y-6 lg:gap-y-0">
+
+      <!-- Left: compact profile rail -->
+      <div class="col-span-12 lg:col-span-4">
+        <div class="fade-in-up rounded-[var(--radius-2xl)] bg-[var(--color-bg-dark)] p-5 md:p-6 text-[var(--color-text-ondark)]">
+          <div class="mx-auto max-w-[220px] sm:max-w-[240px]">
+            <div class="rounded-[var(--radius-xl)] border border-[var(--color-border-ondark)] bg-[var(--color-bg-dark-elev)] p-3 shadow-[0_18px_40px_-24px_rgba(4,18,38,0.75)]">
+              <Image
+                src={artemiyPhoto}
+                alt="Артемий Никулин — эксперт по ИЖС Ракурс"
+                width={360}
+                height={440}
+                class="aspect-[4/5] w-full rounded-[calc(var(--radius-xl)-4px)] object-cover"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          <div class="mt-5 grid gap-3">
+            <a
+              href="tel:+79028000977"
+              class="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-[var(--radius-md)] bg-white px-5 py-3 text-sm font-semibold text-[var(--color-bg-dark)] transition-colors hover:bg-[var(--color-bg-secondary)]"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+              </svg>
+              Позвонить Артемию
+            </a>
+            <a
+              href="https://t.me/rtemii_nikulin"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-[var(--radius-md)] border border-[var(--color-border-ondark)] px-5 py-3 text-sm font-medium text-[var(--color-text-ondark)] transition-colors hover:bg-[rgba(255,255,255,0.06)]"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13" />
+                <polygon points="22 2 15 22 11 13 2 9 22 2" />
+              </svg>
+              Написать в Telegram
+            </a>
+          </div>
         </div>
       </div>
 
-      <!-- Right: 6 cols — Text + Contacts -->
-      <div class="col-span-12 lg:col-span-6 lg:pl-8 flex flex-col">
-        
-        <!-- Category explanation -->
-        <div class="fade-in-up">
-          <p class="text-base md:text-lg text-[var(--color-text-secondary)] leading-relaxed">
+      <!-- Right: editorial explanation -->
+      <div class="col-span-12 lg:col-span-8 lg:pl-8">
+        <div class="fade-in-up rounded-[var(--radius-2xl)] border border-[var(--color-border)] bg-[var(--color-bg-surface)] p-6 md:p-8 lg:p-9">
+          <p class="max-w-3xl text-base leading-relaxed text-[var(--color-text-secondary)] md:text-lg">
             Артемий руководит отделом сопровождения строительства в Ракурс. <strong class="text-[var(--color-text-primary)]">Мы не строим сами</strong> — мы помогаем семье пройти путь от идеи до договора: участок, ипотека, подрядчик, смета. Строит выбранный подрядчик. Мы — на вашей стороне.
           </p>
-        </div>
 
-        <!-- What checks personally -->
-        <div class="fade-in-up mt-6">
-          <p class="text-sm font-semibold uppercase tracking-[0.06em] text-[var(--color-accent-primary)] mb-3">
-            Что проверяет лично
-          </p>
-          <ul class="space-y-2">
-            <li class="flex items-start gap-2 text-sm text-[var(--color-text-secondary)]">
-              <svg class="shrink-0 mt-0.5 text-[var(--color-accent-primary)]" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-              <span>Этап клиента и текущую ситуацию</span>
-            </li>
-            <li class="flex items-start gap-2 text-sm text-[var(--color-text-secondary)]">
-              <svg class="shrink-0 mt-0.5 text-[var(--color-accent-primary)]" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-              <span>Участок и юридическую чистоту</span>
-            </li>
-            <li class="flex items-start gap-2 text-sm text-[var(--color-text-secondary)]">
-              <svg class="shrink-0 mt-0.5 text-[var(--color-accent-primary)]" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-              <span>Ипотечный сценарий и требования банка</span>
-            </li>
-            <li class="flex items-start gap-2 text-sm text-[var(--color-text-secondary)]">
-              <svg class="shrink-0 mt-0.5 text-[var(--color-accent-primary)]" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-              <span>Смету и скрытые доплаты</span>
-            </li>
-            <li class="flex items-start gap-2 text-sm text-[var(--color-text-secondary)]">
-              <svg class="shrink-0 mt-0.5 text-[var(--color-accent-primary)]" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-              <span>Вопросы к подрядчику и договору</span>
-            </li>
-          </ul>
-        </div>
+          <div class="mt-8">
+            <p class="mb-4 text-sm font-semibold uppercase tracking-[0.06em] text-[var(--color-accent-primary)]">
+              Что проверяет лично
+            </p>
 
-        <!-- Contacts -->
-        <div class="fade-in-up mt-8 flex flex-col sm:flex-row gap-3">
-          <a
-            href="tel:+79028000977"
-            class="inline-flex items-center justify-center gap-2 rounded-[var(--radius-md)] bg-[var(--color-accent-primary)] text-white px-6 py-3 text-sm font-semibold hover:bg-[var(--color-accent-hover)] transition-colors min-h-[44px]"
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-            </svg>
-            Позвонить Артемию
-          </a>
-          <a
-            href="https://t.me/rtemii_nikulin"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center justify-center gap-2 rounded-[var(--radius-md)] border border-[var(--color-border-strong)] text-[var(--color-text-primary)] px-6 py-3 text-sm font-medium hover:bg-[var(--color-bg-surface)] transition-colors min-h-[44px]"
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="22" y1="2" x2="11" y2="13" />
-              <polygon points="22 2 15 22 11 13 2 9 22 2" />
-            </svg>
-            Написать в Telegram
-          </a>
-        </div>
+            <ul class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
+              {personalChecks.map((item) => (
+                <li class="rounded-[var(--radius-lg)] bg-[var(--color-bg-surface-low)] px-4 py-4 text-sm leading-[1.55] text-[var(--color-text-secondary)] ring-1 ring-inset ring-[var(--color-border)]">
+                  <span class="flex items-start gap-3">
+                    <span class="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--color-accent-soft)] text-[var(--color-accent-primary)]">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    </span>
+                    <span>{item}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-        <!-- CTA -->
-        <div class="fade-in-up mt-6">
-          <button
-            type="button"
-            data-open-modal
-            data-scenario="dont_know"
-            class="w-full sm:w-auto inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-bg-dark)] text-white px-7 py-4 text-base font-semibold hover:bg-[var(--color-bg-deep)] transition-colors min-h-[48px] shadow-[0_4px_16px_-4px_rgba(0,0,0,0.3)]"
-          >
-            Получить разбор строительства
-          </button>
+          <div class="mt-8">
+            <button
+              type="button"
+              data-open-modal
+              data-scenario="dont_know"
+              class="inline-flex min-h-[48px] w-full items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-bg-dark)] px-7 py-4 text-base font-semibold text-white transition-colors hover:bg-[var(--color-bg-deep)] sm:w-auto"
+            >
+              Получить разбор строительства
+            </button>
+          </div>
         </div>
-
       </div>
 
     </div>

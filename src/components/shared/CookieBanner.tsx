@@ -28,17 +28,40 @@ export default function CookieBanner() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const consent = localStorage.getItem(CONSENT_KEY);
-    if (!consent) {
-      setVisible(true);
-    } else if (consent === 'accepted') {
-      const counterId = import.meta.env.PUBLIC_YM_COUNTER_ID;
-      if (counterId) initYandexMetrika(counterId);
-    }
+    const syncConsent = (value?: string | null) => {
+      const consent = value ?? localStorage.getItem(CONSENT_KEY);
+      if (!consent) {
+        setVisible(true);
+        return;
+      }
+
+      setVisible(false);
+      if (consent === 'accepted') {
+        const counterId = import.meta.env.PUBLIC_YM_COUNTER_ID;
+        if (counterId) initYandexMetrika(counterId);
+      }
+    };
+
+    syncConsent();
+
+    const handleStorage = () => syncConsent();
+    const handleConsentEvent = (event: Event) => {
+      const customEvent = event as CustomEvent<{ value?: string }>;
+      syncConsent(customEvent.detail?.value);
+    };
+
+    window.addEventListener('storage', handleStorage);
+    window.addEventListener('rakurs:cookie-consent', handleConsentEvent);
+
+    return () => {
+      window.removeEventListener('storage', handleStorage);
+      window.removeEventListener('rakurs:cookie-consent', handleConsentEvent);
+    };
   }, []);
 
   const handleAccept = () => {
     localStorage.setItem(CONSENT_KEY, 'accepted');
+    window.dispatchEvent(new CustomEvent('rakurs:cookie-consent', { detail: { value: 'accepted' } }));
     setVisible(false);
     const counterId = import.meta.env.PUBLIC_YM_COUNTER_ID;
     if (counterId) initYandexMetrika(counterId);
@@ -46,6 +69,7 @@ export default function CookieBanner() {
 
   const handleReject = () => {
     localStorage.setItem(CONSENT_KEY, 'rejected');
+    window.dispatchEvent(new CustomEvent('rakurs:cookie-consent', { detail: { value: 'rejected' } }));
     setVisible(false);
   };
 
@@ -56,8 +80,8 @@ export default function CookieBanner() {
       <div className="rakurs-cookie__inner">
         <p className="rakurs-cookie__text">
           Сайт использует cookie для анализа посещаемости.{" "}
-          <a href="/politika/" className="rakurs-cookie__link">
-            Политика конфиденциальности
+          <a href="/cookies/" className="rakurs-cookie__link">
+            Правила использования cookie
           </a>
           .
         </p>

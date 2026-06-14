@@ -7,7 +7,9 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro check && astro build",
+    "geo-check": "node scripts/geo-check.mjs",
+    "seo-check": "node scripts/seo-check.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },

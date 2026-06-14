@@ -1,96 +1,79 @@
 ---
-const faqs = [
-  {
-    question: 'Ракурс сам строит дома?',
-    answer: 'Нет. Ракурс не строительная компания. Подбираем участок из базы 520+, отбираем подрядчика по 6 критериям, разбираем смету, оформляем ипотеку 6%, ведём до понятного решения. Строит выбранный подрядчик.',
-  },
-  {
-    question: 'Почему ваша помощь бесплатна и на чьей вы стороне?',
-    answer: 'Вознаграждение выплачивает подрядчик после сделки. Клиент заранее знает модель. Мы сравниваем сметы и показываем критерии — не навязываем один вариант.',
-  },
-  {
-    question: 'Реально ли построить дом по семейной ипотеке 6% в Перми?',
-    answer: 'Да, при соблюдении требований банка к клиенту, участку, подрядчику, договору и смете. Разбираем до подачи, чтобы не получить отказ.',
-  },
-  {
-    question: 'Если банк откажет в ипотеке, что тогда?',
-    answer: 'Разбираем ипотеку до подачи: проверяем историю, доход, нагрузку, документы. Если один банк откажет — ищем другие. Если лимита 6 млн мало — комбинированный сценарий.',
-  },
-  {
-    question: 'Можно ли обратиться, если участка ещё нет?',
-    answer: 'Да. Подберём участок из базы 520+: локация, коммуникации, подъезд, ограничения, применимость под 6%. Часть участков не в открытом доступе. Не подойдёт — скажем сразу.',
-  },
-  {
-    question: 'Можно ли обратиться, если уже есть сметы от строителей?',
-    answer: 'Да. Сравним построчно: фундамент, коробка, кровля, инженерия, отделка, доставка, этапы оплаты. Покажем, что входит и где доплаты.',
-  },
-  {
-    question: 'Что будет после заявки?',
-    answer: 'Артемий Никулин свяжется, уточнит этап, бюджет, участок, ипотеку или смету и предложит понятный следующий шаг. Без давления и навязчивых звонков.',
-  },
-  {
-    question: 'Вы контролируете стройку?',
-    answer: 'Ракурс помогает на этапе выбора сценария, подрядчика, сметы и договора. Строительный надзор не обещается как часть этого разбора. Поможем организовать контроль, если нужно.',
-  },
-  {
-    question: 'Что если я одновременно плачу аренду и ипотеку на стройку?',
-    answer: 'Это частая ситуация. На разборе считаем реальную нагрузку: сколько месяцев идёт стройка, какой платёж по ипотеке, когда начинается оплата за дом. Планируем переходный период, чтобы бюджет не треснул.',
-  },
-];
+import { homeFaqItems as faqs } from '@/data/home-faq';
 ---
 
-<section id="section-faq" class="bg-[var(--color-bg-surface)] vn-section-padding">
-  <div class="site-container">
-    
-    <!-- Header -->
-    <div class="fade-in-up max-w-3xl">
-      <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.06em] text-[var(--color-accent-primary)]">
-        <span class="block w-6 h-px bg-[var(--color-accent-primary)]" />
-        Важные вопросы перед стартом
-      </span>
+<section id="section-faq" class="relative overflow-hidden bg-[var(--color-bg-surface)] vn-section-padding">
+  <div
+    class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(8,116,196,0.08),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(91,199,242,0.08),transparent_26%)]"
+    aria-hidden="true"
+  />
 
-      <h2 class="mt-5 text-[28px] md:text-[36px] lg:text-[42px] font-bold leading-[1.14] tracking-[-0.01em] text-[var(--color-text-primary)]">
-        Что обычно останавливает перед стартом стройки<br class="hidden md:block" />
-        и как мы это проверяем заранее
-      </h2>
+  <div class="site-container relative">
+    <div class="grid-12 items-start gap-y-8 lg:gap-y-0">
+      <div class="col-span-12 lg:col-span-4">
+        <div class="rounded-[var(--radius-2xl)] border border-[var(--color-border)] bg-[var(--color-bg-primary)] p-6 sm:p-8 lg:sticky lg:top-24 shadow-[0_24px_56px_-40px_rgba(7,27,58,0.14)]">
+          <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.06em] text-[var(--color-accent-primary)]">
+            <span class="block h-px w-6 bg-[var(--color-accent-primary)]" />
+            Важные вопросы перед стартом
+          </span>
 
-      <p class="mt-4 text-base md:text-lg text-[var(--color-text-secondary)] leading-relaxed max-w-[58ch]">
-        Дом по семейной ипотеке 6% начинается не с договора, а с правильных ответов: по участку, банку, подрядчику, смете и следующему шагу.
-      </p>
-    </div>
+          <h2 class="mt-5 text-[28px] font-bold leading-[1.14] tracking-[-0.01em] text-[var(--color-text-primary)] md:text-[36px] lg:text-[40px]">
+            Что обычно останавливает перед стартом стройки
+            <span class="block">и как мы это проверяем заранее</span>
+          </h2>
 
-    <!-- FAQ Accordion -->
-    <div class="mt-12 md:mt-16 max-w-4xl">
-      {faqs.map((faq, i) => (
-        <details class="faq-item fade-in-up-stagger border-b border-[var(--color-border)]" open={i === 0}>
-          <summary class="faq-trigger flex w-full list-none items-center justify-between gap-4 py-6 text-left transition-colors hover:text-[var(--color-accent-primary)]">
-            <span class="text-base md:text-lg font-semibold text-[var(--color-text-primary)] leading-snug">
-              {faq.question}
-            </span>
-            <svg
-              class="faq-icon shrink-0 text-[var(--color-text-tertiary)] transition-transform duration-300"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+          <p class="mt-4 max-w-[34ch] text-base leading-relaxed text-[var(--color-text-secondary)] md:text-lg">
+            Дом по семейной ипотеке 6% начинается не с договора, а с правильных ответов: по участку, банку, подрядчику, смете и следующему шагу.
+          </p>
+        </div>
+      </div>
+
+      <div class="col-span-12 lg:col-span-8 lg:pl-8">
+        <div class="space-y-4 md:space-y-5">
+          {faqs.map((faq, i) => (
+            <details
+              class="faq-item group overflow-hidden rounded-[var(--radius-2xl)] border border-[var(--color-border)] bg-[var(--color-bg-surface)] shadow-[0_20px_48px_-40px_rgba(7,27,58,0.18)] transition-all duration-200 hover:border-[var(--color-border-strong)]"
             >
-              <line x1="12" y1="5" x2="12" y2="19" />
-              <line x1="5" y1="12" x2="19" y2="12" />
-            </svg>
-          </summary>
-          <div class="faq-content pb-6">
-            <p class="text-sm md:text-base text-[var(--color-text-secondary)] leading-[1.6] max-w-[64ch]">
-              {faq.answer}
-            </p>
-          </div>
-        </details>
-      ))}
-    </div>
+              <summary class="faq-trigger grid list-none grid-cols-[auto_1fr_auto] items-start gap-4 px-5 py-5 text-left sm:px-6 sm:py-6 md:gap-5">
+                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-accent-soft)] text-sm font-semibold text-[var(--color-accent-primary)]">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
 
+                <span class="pt-1 text-base font-semibold leading-snug text-[var(--color-text-primary)] md:text-lg">
+                  {faq.question}
+                </span>
+
+                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--color-border)] text-[var(--color-text-tertiary)] transition-colors duration-200 group-hover:border-[var(--color-border-strong)] group-hover:text-[var(--color-accent-primary)]">
+                  <svg
+                    class="faq-icon transition-transform duration-300"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                  </svg>
+                </span>
+              </summary>
+
+              <div class="faq-content px-5 pb-5 sm:px-6 sm:pb-6">
+                <div class="rounded-[var(--radius-xl)] bg-[var(--color-bg-surface-low)] px-4 py-4 sm:px-5 sm:py-5 md:ml-[4rem]">
+                  <p class="text-sm leading-[1.65] text-[var(--color-text-secondary)] md:text-base">
+                    {faq.answer}
+                  </p>
+                </div>
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -142,7 +125,23 @@ const faqs = [
     display: none;
   }
 
+  .faq-item[open] {
+    border-color: var(--color-border-strong);
+    box-shadow: 0 24px 56px -40px rgba(7, 27, 58, 0.22);
+  }
+
   .faq-item[open] .faq-icon {
     transform: rotate(45deg);
+  }
+
+  .faq-item[open] .faq-trigger > span:nth-child(3) {
+    border-color: color-mix(in srgb, var(--color-accent-primary) 22%, var(--color-border));
+    color: var(--color-accent-primary);
+  }
+
+  @media (max-width: 767px) {
+    .faq-content > div {
+      margin-left: 0 !important;
+    }
   }
 </style>

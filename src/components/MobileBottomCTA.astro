@@ -4,12 +4,12 @@ import { EXPERT } from '@/lib/constants';
 const phoneHref = `tel:${EXPERT.phone.replace(/[^\d+]/g, '')}`;
 ---
 
-<div id="mobile-bottom-cta" class="vn-bottom-cta" role="complementary" aria-label="Быстрые действия" data-visible="true">
+<div id="mobile-bottom-cta" class="vn-bottom-cta" role="complementary" aria-label="Быстрые действия" data-visible="false">
   <nav class="vn-bottom-cta__dock" aria-label="Быстрые действия">
     <button
       type="button"
       data-open-modal
-      data-scenario="general"
+      data-scenario="dont_know"
       class="vn-bottom-cta__item"
     >
       <span class="vn-bottom-cta__icon" aria-hidden="true">
@@ -178,13 +178,19 @@ const phoneHref = `tel:${EXPERT.phone.replace(/[^\d+]/g, '')}`;
 
 <script>
   const mobileDock = document.getElementById('mobile-bottom-cta');
+  const COOKIE_CONSENT_KEY = 'rakurs_cookie_consent';
 
   if (mobileDock) {
     let lastScrollY = window.scrollY;
     let idleTimer = 0;
     const minDelta = 6;
     const idleDelay = 520;
+    const showThreshold = 1200;
     const mobileQuery = window.matchMedia('(max-width: 1023px)');
+    const hasCookieDecision = () => {
+      const consent = window.localStorage.getItem(COOKIE_CONSENT_KEY);
+      return consent === 'accepted' || consent === 'rejected';
+    };
 
     const showDock = () => {
       mobileDock.dataset.visible = 'true';
@@ -196,17 +202,30 @@ const phoneHref = `tel:${EXPERT.phone.replace(/[^\d+]/g, '')}`;
 
     const handleScroll = () => {
       if (!mobileQuery.matches) {
-        showDock();
+        hideDock();
+        return;
+      }
+
+      if (!hasCookieDecision()) {
+        hideDock();
+        lastScrollY = Math.max(window.scrollY, 0);
         return;
       }
 
       const currentScrollY = Math.max(window.scrollY, 0);
+      const isPastThreshold = currentScrollY >= showThreshold;
       const delta = currentScrollY - lastScrollY;
 
       window.clearTimeout(idleTimer);
 
+      if (!isPastThreshold) {
+        hideDock();
+        lastScrollY = currentScrollY;
+        return;
+      }
+
       if (Math.abs(delta) > minDelta) {
-        if (delta > 0 && currentScrollY > 80) {
+        if (delta > 0) {
           hideDock();
         } else {
           showDock();
@@ -214,11 +233,17 @@ const phoneHref = `tel:${EXPERT.phone.replace(/[^\d+]/g, '')}`;
         lastScrollY = currentScrollY;
       }
 
-      idleTimer = window.setTimeout(showDock, idleDelay);
+      idleTimer = window.setTimeout(() => {
+        if (mobileQuery.matches && window.scrollY >= showThreshold) {
+          showDock();
+        }
+      }, idleDelay);
     };
 
-    showDock();
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll);
+    window.addEventListener('storage', handleScroll);
+    window.addEventListener('rakurs:cookie-consent', handleScroll);
   }
 </script>

@@ -1,10 +1,13 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef, type ComponentProps } from 'react';
+import { sendLead } from '@/lib/leads';
 
 interface RequestModalProps {
   isOpen: boolean;
   onClose: () => void;
   prefillScenario?: string;
 }
+
+type FormSubmitHandler = NonNullable<ComponentProps<'form'>['onSubmit']>;
 
 const SCENARIOS = [
   { value: 'mortgage', label: 'хочу дом по ипотеке 6%' },
@@ -14,11 +17,44 @@ const SCENARIOS = [
   { value: 'dont_know', label: 'не знаю, с чего начать' },
 ];
 
+const VALID_SCENARIOS = new Set(SCENARIOS.map((scenarioOption) => scenarioOption.value));
+const SCENARIO_LABELS = new Map(SCENARIOS.map((scenarioOption) => [scenarioOption.value, scenarioOption.label]));
+
+function normalizeScenario(value?: string) {
+  if (!value) return 'dont_know';
+  return VALID_SCENARIOS.has(value) ? value : 'dont_know';
+}
+
+function normalizePhone(value: string) {
+  const digits = value.replace(/\D/g, '');
+
+  if (!digits) return '';
+  if (digits.startsWith('8')) return `+7${digits.slice(1, 11)}`;
+  if (digits.startsWith('7')) return `+${digits.slice(0, 11)}`;
+  return `+7${digits.slice(0, 10)}`;
+}
+
+function getUtmPayload() {
+  const params = new URLSearchParams(window.location.search);
+
+  return {
+    utm_source: params.get('utm_source') || '',
+    utm_medium: params.get('utm_medium') || '',
+    utm_campaign: params.get('utm_campaign') || '',
+    utm_content: params.get('utm_content') || '',
+    utm_term: params.get('utm_term') || '',
+  };
+}
+
 export default function RequestModal({ isOpen, onClose, prefillScenario }: RequestModalProps) {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [scenario, setScenario] = useState(prefillScenario || '');
+  const [scenario, setScenario] = useState(normalizeScenario(prefillScenario));
   const [agreed, setAgreed] = useState(false);
+  const [honeypot, setHoneypot] = useState('');
+  const [submitState, setSubmitState] = useState<'idle' | 'loading' | 'error'>('idle');
+  const [submitError, setSubmitError] = useState('');
+  const openedAtRef = useRef(Date.now());
 
   const handleClose = useCallback(() => {
     onClose();
@@ -43,6 +79,50 @@ export default function RequestModal({ isOpen, onClose, prefillScenario }: Reque
       document.body.style.width = '';
     };
   }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    setName('');
+    setPhone('');
+    setScenario(normalizeScenario(prefillScenario));
+    setAgreed(false);
+    setHoneypot('');
+    setSubmitState('idle');
+    setSubmitError('');
+    openedAtRef.current = Date.now();
+  }, [isOpen, prefillScenario]);
+
+  const handleSubmit: FormSubmitHandler = async (event) => {
+    event.preventDefault();
+
+    if (submitState === 'loading') return;
+
+    setSubmitState('loading');
+    setSubmitError('');
+
+    const normalizedPhone = normalizePhone(phone);
+    const normalizedScenario = normalizeScenario(scenario);
+    const scenarioLabel = SCENARIO_LABELS.get(normalizedScenario) ?? SCENARIOS[SCENARIOS.length - 1]?.label ?? '';
+
+    try {
+      await sendLead({
+        form: 'request_modal',
+        name: name.trim(),
+        phone: normalizedPhone,
+        contact: normalizedPhone,
+        message: `Актуальный запрос: ${scenarioLabel}`,
+        source: window.location.href,
+        honeypot,
+        openedAt: openedAtRef.current,
+        utm: getUtmPayload(),
+      });
+
+      window.location.href = '/thanks/';
+    } catch (error) {
+      setSubmitState('error');
+      setSubmitError(error instanceof Error ? error.message : 'Не удалось отправить заявку. Попробуйте ещё раз.');
+    }
+  };
 
   if (!isOpen) return null;
 
@@ -77,10 +157,7 @@ export default function RequestModal({ isOpen, onClose, prefillScenario }: Reque
 
         <form
           className="mt-6 space-y-4"
-          onSubmit={(e) => {
-            e.preventDefault();
-            window.location.href = '/thanks/';
-          }}
+          onSubmit={handleSubmit}
         >
           <div>
             <label htmlFor="rm-name" className="block text-sm font-medium text-[var(--color-text-primary)]">
@@ -150,9 +227,29 @@ export default function RequestModal({ isOpen, onClose, prefillScenario }: Reque
             </span>
           </label>
 
+          <div className="hidden" aria-hidden="true">
+            <label htmlFor="rm-company">Компания</label>
+            <input
+              id="rm-company"
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+            />
+          </div>
+
+          {submitState === 'error' && (
+            <p className="text-sm text-[var(--color-error)]" role="alert">
+              {submitError}
+            </p>
+          )}
+
           <button
             type="submit"
-            className="w-full rounded-[var(--radius-md)] bg-[var(--color-accent-primary)] px-7 py-3.5 text-base font-medium text-white hover:bg-[var(--color-accent-hover)] transition-colors"
+            disabled={submitState === 'loading'}
+            aria-busy={submitState === 'loading'}
+            className="w-full rounded-[var(--radius-md)] bg-[var(--color-accent-primary)] px-7 py-3.5 text-base font-medium text-white transition-colors hover:bg-[var(--color-accent-hover)] disabled:cursor-not-allowed disabled:opacity-70"
           >
             Понять, с чего начать
           </button>

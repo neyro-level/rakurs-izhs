@@ -9,7 +9,12 @@ export default defineConfig({
   output: 'static',
   site: 'https://rakurs-izhs.ru',
   integrations: [
-    sitemap(),
+    sitemap({
+      filter: (page) => {
+        const pathname = new URL(page).pathname;
+        return !['/thanks/', '/sitemap/'].includes(pathname);
+      },
+    }),
     react(),
   ],
   vite: {

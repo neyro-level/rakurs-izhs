@@ -50,7 +50,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
         ← Вернуться на главную
       </a>
 
-      <!-- 4 nav cards -->
+      <!-- Навигационные карточки -->
       <nav class="vn-404__cards" aria-label="Доступные разделы">
         <a href="/" class="vn-404__card">
           <span class="vn-404__card-num">01</span>
@@ -66,6 +66,11 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
           <span class="vn-404__card-num">03</span>
           <span class="vn-404__card-title">Вопросы и ответы</span>
           <span class="vn-404__card-sub">Частые вопросы о разборе</span>
+        </a>
+        <a href="/sitemap/" class="vn-404__card">
+          <span class="vn-404__card-num">04</span>
+          <span class="vn-404__card-title">Карта сайта</span>
+          <span class="vn-404__card-sub">Актуальные разделы проекта</span>
         </a>
       </nav>
     </div>
@@ -138,17 +143,13 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
   }
 
   .vn-404__seeking-dot {
-    animation: vn-seek 3s ease-in-out infinite;
+    animation: vn-pulse 2.8s ease-in-out infinite;
     transform-origin: center;
   }
 
-  @keyframes vn-seek {
-    0%   { transform: translate(0, 0); }
-    20%  { transform: translate(3px, -2px); }
-    40%  { transform: translate(-2px, 3px); }
-    60%  { transform: translate(2px, 2px); }
-    80%  { transform: translate(-3px, -1px); }
-    100% { transform: translate(0, 0); }
+  @keyframes vn-pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.12); opacity: 0.72; }
   }
 
   .vn-404__eyebrow {
@@ -197,9 +198,9 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 
   .vn-404__cards {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 16px;
-    max-width: 560px;
+    max-width: 720px;
     margin: 0 auto;
   }
 
@@ -250,7 +251,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
     }
 
     .vn-404__cards {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 1fr;
     }
 
     .vn-404__cta {

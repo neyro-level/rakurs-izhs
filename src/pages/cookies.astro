@@ -1,7 +1,7 @@
 ---
 import PageLayout from '@/layouts/PageLayout.astro';
 import { SITE } from '@/lib/constants';
-import { breadcrumbSchema } from '@/lib/seo';
+import { breadcrumbSchema, organizationSchema, webSiteSchema } from '@/lib/seo';
 import CookieToggle from '@/components/shared/CookieToggle';
 
 const tocItems = [
@@ -18,16 +18,24 @@ const tocItems = [
   { num: '11', label: 'Обновление Правил', href: '#section-11' },
   { num: '12', label: 'Связь с Политикой ПД', href: '#section-12' },
 ];
+const tocColumns = [
+  tocItems.slice(0, Math.ceil(tocItems.length / 2)),
+  tocItems.slice(Math.ceil(tocItems.length / 2)),
+];
 ---
 
 <PageLayout
-  title="Правила использования Cookie — Ракурс ИЖС"
+  title="Правила использования cookie — Ракурс ИЖС"
   description="Правила использования файлов cookie на сайте Центра недвижимости «Ракурс». Категории cookie, управление согласием, настройки браузеров."
   canonical={`${SITE.url}/cookies/`}
-  schema={breadcrumbSchema([
-    { name: 'Главная', url: `${SITE.url}/` },
-    { name: 'Правила использования Cookie', url: `${SITE.url}/cookies/` },
-  ])}
+  schema={[
+    organizationSchema(),
+    webSiteSchema(),
+    breadcrumbSchema([
+      { name: 'Главная', url: `${SITE.url}/` },
+      { name: 'Правила использования cookie', url: `${SITE.url}/cookies/` },
+    ]),
+  ]}
 >
   {/* A. Document Cover */}
   <section class="vn-section vn-section--dark vn-cookies-cover">
@@ -53,13 +61,19 @@ const tocItems = [
   <section class="vn-section vn-section--secondary vn-cookies-toc">
     <div class="vn-container">
       <div class="vn-grid-12">
-        <div class="vn-cookies-toc__grid" style="grid-column: 1 / -1;">
-          {tocItems.map(item => (
-            <a href={item.href} class="vn-cookies-toc__link">
-              <span class="vn-cookies-toc__dot" aria-hidden="true"></span>
-              <span class="vn-cookies-toc__num">{item.num}.</span>
-              <span class="vn-cookies-toc__label">{item.label}</span>
-            </a>
+        <div class="vn-cookies-toc__panel" style="grid-column: 1 / -1;">
+          {tocColumns.map(column => (
+            <ol class="vn-cookies-toc__column">
+              {column.map(item => (
+                <li class="vn-cookies-toc__row">
+                  <a href={item.href} class="vn-cookies-toc__link">
+                    <span class="vn-cookies-toc__num">{item.num}.</span>
+                    <span class="vn-cookies-toc__label">{item.label}</span>
+                    <span class="vn-cookies-toc__arrow" aria-hidden="true">→</span>
+                  </a>
+                </li>
+              ))}
+            </ol>
           ))}
         </div>
       </div>
@@ -129,8 +143,8 @@ const tocItems = [
             <h2 class="vn-cookies-section__h2">Общие положения</h2>
             <div class="vn-cookies-section__body">
               <p>Настоящие Правила использования файлов cookie определяют порядок применения файлов cookie и аналогичных технологий на сайте.</p>
-              <p>Файлы cookie используются для корректной работы сайта, анализа его посещаемости, улучшения пользовательского опыта, сохранения отдельных пользовательских настроек, а также для оценки эффективности рекламных и информационных материалов.</p>
-              <p>Оператор персональных данных, порядок обработки персональных данных, права пользователей и способы связи с Оператором указаны в Политике обработки персональных данных, размещённой по адресу: /politika.</p>
+              <p>Файлы cookie используются для корректной работы сайта, анализа его посещаемости, улучшения пользовательского опыта и сохранения пользовательских настроек.</p>
+              <p>Оператор персональных данных, порядок обработки персональных данных, права пользователей и способы связи с Оператором указаны в Политике обработки персональных данных, размещённой по адресу: /politika/.</p>
               <p>Используя сайт, пользователь подтверждает, что ознакомился с настоящими Правилами и Политикой обработки персональных данных.</p>
             </div>
           </div>
@@ -165,27 +179,27 @@ const tocItems = [
                   <div role="columnheader">Примерный срок хранения</div>
                 </div>
                 <div class="vn-cookies-table__row" role="row">
-                  <div role="cell"><strong>Технические cookie</strong></div>
-                  <div role="cell">Обеспечивают работу сайта, навигацию, безопасность, корректное отображение страниц и форм</div>
-                  <div role="cell">До закрытия браузера или до 24&nbsp;часов</div>
+                  <div role="cell" data-label="Категория cookie"><strong>Технические cookie</strong></div>
+                  <div role="cell" data-label="Для чего используются">Обеспечивают работу сайта, навигацию, безопасность, корректное отображение страниц и форм</div>
+                  <div role="cell" data-label="Примерный срок хранения">До закрытия браузера или до 24&nbsp;часов</div>
                 </div>
                 <div class="vn-cookies-table__row" role="row">
-                  <div role="cell"><strong>Функциональные cookie</strong></div>
-                  <div role="cell">Запоминают выбранные настройки пользователя, например регион, язык, параметры отображения или ранее введённые данные</div>
-                  <div role="cell">До 12&nbsp;месяцев</div>
+                  <div role="cell" data-label="Категория cookie"><strong>Функциональные cookie</strong></div>
+                  <div role="cell" data-label="Для чего используются">Запоминают выбранные настройки пользователя, например регион, язык, параметры отображения или ранее введённые данные</div>
+                  <div role="cell" data-label="Примерный срок хранения">До 12&nbsp;месяцев</div>
                 </div>
                 <div class="vn-cookies-table__row" role="row">
-                  <div role="cell"><strong>Аналитические cookie</strong></div>
-                  <div role="cell">Помогают анализировать посещаемость сайта, популярные страницы, источники переходов, устройства, браузеры и поведение пользователей</div>
-                  <div role="cell">До 24&nbsp;месяцев</div>
+                  <div role="cell" data-label="Категория cookie"><strong>Аналитические cookie</strong></div>
+                  <div role="cell" data-label="Для чего используются">Помогают анализировать посещаемость сайта, популярные страницы, источники переходов, устройства, браузеры и поведение пользователей</div>
+                  <div role="cell" data-label="Примерный срок хранения">До 24&nbsp;месяцев</div>
                 </div>
                 <div class="vn-cookies-table__row" role="row">
-                  <div role="cell"><strong>Рекламные и маркетинговые cookie</strong></div>
-                  <div role="cell">Используются для оценки эффективности рекламы, настройки рекламных аудиторий, ретаргетинга и ограничения показа нерелевантных объявлений</div>
-                  <div role="cell">До 24&nbsp;месяцев</div>
+                  <div role="cell" data-label="Категория cookie"><strong>Рекламные и маркетинговые cookie</strong></div>
+                  <div role="cell" data-label="Для чего используются">На текущем сайте не используются</div>
+                  <div role="cell" data-label="Примерный срок хранения">Не применяется</div>
                 </div>
               </div>
-              <p>Фактический состав cookie зависит от настроек сайта, подключённых сервисов аналитики, рекламных систем, виджетов, форм, мессенджеров и иных технических инструментов.</p>
+              <p>Фактический состав cookie зависит от настроек сайта и подключённых технических сервисов, используемых на момент посещения.</p>
             </div>
           </div>
         </article>
@@ -221,15 +235,7 @@ const tocItems = [
                 <li>адаптация интерфейса под устройство и браузер пользователя;</li>
                 <li>улучшение качества контента, навигации и форм.</li>
               </ul>
-              <p><strong>4.4. Реклама и маркетинг:</strong></p>
-              <ul class="vn-cookies-list">
-                <li>оценка эффективности рекламных кампаний;</li>
-                <li>анализ действий пользователей после перехода с рекламы;</li>
-                <li>формирование и настройка рекламных аудиторий;</li>
-                <li>ретаргетинг;</li>
-                <li>исключение показа нерелевантной рекламы;</li>
-                <li>улучшение рекламных сообщений и посадочных страниц.</li>
-              </ul>
+              <p><strong>4.4. Реклама и маркетинг:</strong> На текущем сайте рекламные и маркетинговые cookie не используются.</p>
             </div>
           </div>
         </article>
@@ -241,19 +247,15 @@ const tocItems = [
             <span class="vn-cookies-section__badge">§ 5</span>
             <h2 class="vn-cookies-section__h2">Сторонние сервисы</h2>
             <div class="vn-cookies-section__body">
-              <p>На сайте могут использоваться сторонние сервисы аналитики, рекламы, коммуникации, карт, видеоплееров, форм, мессенджеров и иных технических инструментов.</p>
-              <p>Такие сервисы могут устанавливать собственные cookie или получать технические данные о взаимодействии пользователя с сайтом.</p>
-              <p>К таким сервисам могут относиться:</p>
+              <p>На сайте могут использоваться сторонние технические сервисы, необходимые для аналитики посещаемости и перехода в официальные каналы связи.</p>
+              <p>Такие сервисы могут устанавливать собственные cookie или получать технические данные о взаимодействии пользователя с сайтом только в рамках своего функционала.</p>
+              <p>К таким сервисам на текущем сайте относятся:</p>
               <ul class="vn-cookies-list">
                 <li>Яндекс.Метрика;</li>
-                <li>Яндекс.Директ;</li>
-                <li>VK Реклама;</li>
-                <li>Telegram Ads;</li>
-                <li>сервисы обратной связи и онлайн-чата;</li>
-                <li>сервисы карт и навигации;</li>
-                <li>иные сервисы, подключённые к сайту.</li>
+                <li>ссылки на Telegram, Max и ВКонтакте по инициативе пользователя;</li>
+                <li>иные сервисы, если они будут дополнительно подключены к сайту и отражены в актуальной редакции Правил.</li>
               </ul>
-              <p>Использование сторонних сервисов осуществляется в соответствии с их правилами и политиками конфиденциальности. Подробная информация об обработке персональных данных на сайте указывается в Политике обработки персональных данных по адресу: /politika.</p>
+              <p>Использование сторонних сервисов осуществляется в соответствии с их правилами и политиками конфиденциальности. Подробная информация об обработке персональных данных на сайте указывается в Политике обработки персональных данных по адресу: /politika/.</p>
             </div>
           </div>
         </article>
@@ -267,7 +269,7 @@ const tocItems = [
             <div class="vn-cookies-section__body">
               <p>На сайте может использоваться сервис веб-аналитики Яндекс.Метрика.</p>
               <p>Яндекс.Метрика может собирать техническую и статистическую информацию о посещениях сайта, включая сведения о страницах, действиях пользователя, источнике перехода, устройстве, браузере, приблизительной географии и иных параметрах взаимодействия с сайтом.</p>
-              <p>Эти данные используются для анализа работы сайта, улучшения его структуры, содержания, скорости загрузки, удобства навигации и качества рекламных кампаний.</p>
+              <p>Эти данные используются для анализа работы сайта, улучшения его структуры, содержания, скорости загрузки и удобства навигации.</p>
               <p>Пользователь может ограничить сбор данных Яндекс.Метрикой с помощью настроек браузера или специальных инструментов, предоставляемых Яндексом.</p>
             </div>
           </div>
@@ -297,24 +299,24 @@ const tocItems = [
                   <div role="columnheader">Где искать настройки</div>
                 </div>
                 <div class="vn-cookies-table__row" role="row">
-                  <div role="cell"><strong>Google Chrome</strong></div>
-                  <div role="cell">Настройки → Конфиденциальность и безопасность → Файлы cookie и другие данные сайтов</div>
+                  <div role="cell" data-label="Браузер"><strong>Google Chrome</strong></div>
+                  <div role="cell" data-label="Где искать настройки">Настройки → Конфиденциальность и безопасность → Файлы cookie и другие данные сайтов</div>
                 </div>
                 <div class="vn-cookies-table__row" role="row">
-                  <div role="cell"><strong>Яндекс Браузер</strong></div>
-                  <div role="cell">Настройки → Сайты → Расширенные настройки сайтов → Cookie-файлы</div>
+                  <div role="cell" data-label="Браузер"><strong>Яндекс Браузер</strong></div>
+                  <div role="cell" data-label="Где искать настройки">Настройки → Сайты → Расширенные настройки сайтов → Cookie-файлы</div>
                 </div>
                 <div class="vn-cookies-table__row" role="row">
-                  <div role="cell"><strong>Mozilla Firefox</strong></div>
-                  <div role="cell">Настройки → Приватность и защита → Куки и данные сайтов</div>
+                  <div role="cell" data-label="Браузер"><strong>Mozilla Firefox</strong></div>
+                  <div role="cell" data-label="Где искать настройки">Настройки → Приватность и защита → Куки и данные сайтов</div>
                 </div>
                 <div class="vn-cookies-table__row" role="row">
-                  <div role="cell"><strong>Safari</strong></div>
-                  <div role="cell">Настройки → Конфиденциальность → Управление данными сайтов</div>
+                  <div role="cell" data-label="Браузер"><strong>Safari</strong></div>
+                  <div role="cell" data-label="Где искать настройки">Настройки → Конфиденциальность → Управление данными сайтов</div>
                 </div>
                 <div class="vn-cookies-table__row" role="row">
-                  <div role="cell"><strong>Microsoft Edge</strong></div>
-                  <div role="cell">Настройки → Файлы cookie и разрешения сайтов</div>
+                  <div role="cell" data-label="Браузер"><strong>Microsoft Edge</strong></div>
+                  <div role="cell" data-label="Где искать настройки">Настройки → Файлы cookie и разрешения сайтов</div>
                 </div>
               </div>
             </div>
@@ -335,8 +337,8 @@ const tocItems = [
                 <li>формы, всплывающие окна или интерактивные элементы могут работать с ограничениями;</li>
                 <li>сайт может не запомнить выбранные настройки;</li>
                 <li>пользователю может потребоваться повторно вводить данные;</li>
-                <li>аналитика посещений будет менее точной;</li>
-                <li>рекламные материалы могут стать менее релевантными.</li>
+                <li>аналитика посещений будет менее полной;</li>
+                <li>часть технических и аналитических сценариев сайта может перестать корректно работать.</li>
               </ul>
               <p>Технические cookie необходимы для базовой работы сайта. Ограничение технических cookie может привести к невозможности корректного использования отдельных функций сайта.</p>
             </div>
@@ -354,11 +356,10 @@ const tocItems = [
               <p>Пользователь может выразить согласие на использование cookie путём:</p>
               <ul class="vn-cookies-list">
                 <li>нажатия кнопки согласия в cookie-уведомлении;</li>
-                <li>продолжения использования сайта после отображения уведомления, если такой способ предусмотрен интерфейсом сайта;</li>
                 <li>настройки параметров cookie в браузере.</li>
               </ul>
-              <p>Если на сайте реализован механизм выбора категорий cookie, пользователь может принять все cookie, отказаться от необязательных cookie или настроить отдельные категории.</p>
-              <p>Если такой механизм не реализован, пользователь может управлять cookie через настройки браузера.</p>
+              <p>На сайте реализован механизм выбора: пользователь может принять аналитические cookie или оставить только технически необходимые.</p>
+              <p>Дополнительно пользователь может управлять cookie через настройки браузера.</p>
             </div>
           </div>
         </article>
@@ -406,7 +407,7 @@ const tocItems = [
             <h2 class="vn-cookies-section__h2">Связь с Политикой обработки персональных данных</h2>
             <div class="vn-cookies-section__body">
               <p>Настоящие Правила являются частью общего порядка обработки данных пользователей сайта.</p>
-              <p>Во всём, что не урегулировано настоящими Правилами, применяются положения Политики обработки персональных данных, размещённой по адресу: /politika.</p>
+              <p>Во всём, что не урегулировано настоящими Правилами, применяются положения Политики обработки персональных данных, размещённой по адресу: /politika/.</p>
               <p>В Политике обработки персональных данных указываются сведения об Операторе, целях обработки персональных данных, категориях обрабатываемых данных, правах пользователя и порядке направления обращений.</p>
             </div>
           </div>
@@ -484,7 +485,8 @@ const tocItems = [
 
   /* ─── Cover ─── */
   .vn-cookies-cover {
-    padding-block: 56px;
+    padding-top: clamp(104px, 12vw, 136px);
+    padding-bottom: clamp(48px, 7vw, 72px);
   }
   .vn-cookies-cover__left {
     display: flex;
@@ -535,42 +537,112 @@ const tocItems = [
   .vn-cookies-toc {
     padding-block: 48px;
   }
-  .vn-cookies-toc__grid {
+  .vn-cookies-toc__panel {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px 32px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 40px;
+    padding: 20px;
+    background-color: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    position: relative;
   }
-  @media (max-width: 640px) {
-    .vn-cookies-toc__grid {
-      grid-template-columns: 1fr;
-    }
+  .vn-cookies-toc__panel::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    bottom: 20px;
+    left: 50%;
+    width: 1px;
+    background-color: var(--color-border);
+    transform: translateX(-0.5px);
+  }
+  .vn-cookies-toc__column {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .vn-cookies-toc__row {
+    margin: 0;
   }
   .vn-cookies-toc__link {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
-    gap: 10px;
-    padding: 8px 0;
-    color: var(--color-text-secondary);
+    gap: 16px;
+    min-height: 60px;
+    padding: 14px 4px;
+    color: var(--color-text-primary);
     font-size: 14px;
     text-decoration: none;
-    transition: color 0.15s ease;
+    border-bottom: 1px solid var(--color-border);
+    transition:
+      color 0.18s ease,
+      border-color 0.18s ease;
+  }
+  .vn-cookies-toc__row:last-child .vn-cookies-toc__link {
+    border-bottom: none;
   }
   .vn-cookies-toc__link:hover {
-    color: var(--color-accent-cta);
-  }
-  .vn-cookies-toc__dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 999px;
-    background-color: var(--color-accent-cta);
-    flex-shrink: 0;
+    border-color: color-mix(in srgb, var(--color-accent-primary) 24%, var(--color-border));
   }
   .vn-cookies-toc__num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 34px;
+    height: 34px;
+    padding-inline: 8px;
+    border-radius: 999px;
+    background-color: transparent;
+    color: var(--color-accent-primary);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
     font-variant-numeric: tabular-nums;
-    flex-shrink: 0;
   }
   .vn-cookies-toc__label {
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--color-text-primary);
     text-wrap: pretty;
+  }
+  .vn-cookies-toc__arrow {
+    color: var(--color-text-tertiary);
+    font-size: 14px;
+    transition:
+      transform 0.18s ease,
+      color 0.18s ease;
+  }
+  .vn-cookies-toc__link:hover .vn-cookies-toc__arrow {
+    color: var(--color-accent-primary);
+    transform: translateX(3px);
+  }
+  @media (max-width: 640px) {
+    .vn-cookies-toc__panel {
+      grid-template-columns: 1fr;
+      gap: 0;
+      padding: 16px;
+    }
+
+    .vn-cookies-toc__panel::before {
+      display: none;
+    }
+
+    .vn-cookies-toc__link {
+      grid-template-columns: auto 1fr;
+      min-height: 56px;
+      padding: 13px 0;
+    }
+
+    .vn-cookies-toc__column:first-child .vn-cookies-toc__row:last-child .vn-cookies-toc__link {
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .vn-cookies-toc__arrow {
+      display: none;
+    }
   }
 
   /* ─── Cookie-type Cards ─── */
@@ -839,8 +911,8 @@ const tocItems = [
       btn.addEventListener('click', () => {
         const value = btn.getAttribute('data-consent');
         if (value === 'accepted' || value === 'rejected') {
-          localStorage.setItem('vn_cookie_consent', value);
-          window.dispatchEvent(new Event('storage'));
+          localStorage.setItem('rakurs_cookie_consent', value);
+          window.dispatchEvent(new CustomEvent('rakurs:cookie-consent', { detail: { value } }));
           confirmEl.textContent = value === 'accepted'
             ? 'Согласие принято. Аналитические cookie включены.'
             : 'Согласие обновлено. Используются только технические cookie.';

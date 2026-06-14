@@ -16,7 +16,7 @@ export default function CookieToggle() {
     const next = consent === 'accepted' ? 'rejected' : 'accepted';
     localStorage.setItem(CONSENT_KEY, next);
     setConsent(next);
-    window.dispatchEvent(new Event('storage'));
+    window.dispatchEvent(new CustomEvent('rakurs:cookie-consent', { detail: { value: next } }));
   };
 
   return (

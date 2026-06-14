@@ -12,153 +12,231 @@ const zones = [
 ];
 ---
 
-<section id="section-estimate" class="bg-[var(--color-bg-surface)] vn-section-padding">
+<section id="section-estimate" class="bg-[var(--color-bg-secondary)] vn-section-padding">
   <div class="site-container">
-    
-    <!-- Header -->
-    <div class="fade-in-up max-w-3xl">
-      <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.06em] text-[var(--color-accent-primary)]">
-        <span class="block w-6 h-px bg-[var(--color-accent-primary)]" />
-        Разбор сметы
-      </span>
+    <div class="grid-12 items-start gap-y-8 lg:gap-y-0">
+      <div class="col-span-12 lg:col-span-4">
+        <div class="lg:sticky lg:top-24">
+          <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.06em] text-[var(--color-accent-primary)]">
+            <span class="block h-px w-6 bg-[var(--color-accent-primary)]" />
+            Разбор сметы
+          </span>
 
-      <h2 class="mt-5 text-[28px] md:text-[36px] lg:text-[42px] font-bold leading-[1.14] tracking-[-0.01em] text-[var(--color-text-primary)]">
-        Смета выглядит одинаково.<br class="hidden md:block" />
-        Но в одной <span class="text-[var(--color-error)]">не хватает миллиона</span>.<br class="hidden md:block" />
-        Разбираем построчно до подписания договора
-      </h2>
+          <h2 class="mt-5 text-[28px] font-bold leading-[1.14] tracking-[-0.01em] text-[var(--color-text-primary)] md:text-[36px] lg:text-[42px]">
+            Смета выглядит одинаково.<br class="hidden md:block" />
+            Но в одной <span class="text-[var(--color-error)]">не хватает миллиона</span>.<br class="hidden md:block" />
+            Разбираем построчно до подписания договора
+          </h2>
 
-      <p class="mt-4 text-base md:text-lg text-[var(--color-text-secondary)] leading-relaxed max-w-[58ch]">
-        Две сметы по 5 млн — но в одной нет инженерии, доставки и части фундамента. Показываем, что входит и где доплаты.
-      </p>
-    </div>
+          <p class="mt-4 max-w-[58ch] text-base leading-relaxed text-[var(--color-text-secondary)] md:text-lg">
+            Две сметы по 5 млн — но в одной нет инженерии, доставки и части фундамента. Показываем, что входит и где доплаты.
+          </p>
 
-    <!-- Comparison: Two columns -->
-    <div class="fade-in-up mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
-      
-      <!-- Left: Typical estimate (problematic) -->
-      <div class="rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-bg-primary)] overflow-hidden">
-        <!-- Header -->
-        <div class="px-6 py-4 bg-[var(--color-bg-secondary)] border-b border-[var(--color-border)]">
-          <div class="flex items-center gap-3">
-            <div class="flex items-center justify-center w-8 h-8 rounded-full bg-[var(--color-error-container)]">
-              <svg class="text-[var(--color-error)]" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10" />
-                <line x1="15" y1="9" x2="9" y2="15" />
-                <line x1="9" y1="9" x2="15" y2="15" />
-              </svg>
+          <div class="mt-8 rounded-[var(--radius-2xl)] border border-[var(--color-border)] bg-[var(--color-bg-surface)] p-5 shadow-[0_22px_52px_-40px_rgba(7,27,58,0.24)] md:p-6">
+            <div class="flex flex-col gap-3 sm:flex-row lg:flex-col">
+              <button
+                type="button"
+                data-open-modal
+                data-scenario="estimate"
+                class="inline-flex min-h-[48px] w-full items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-accent-primary)] px-7 py-4 text-base font-semibold text-white transition-colors hover:bg-[var(--color-accent-hover)] sm:w-auto lg:w-full"
+              >
+                Разобрать мою смету
+              </button>
+              <button
+                type="button"
+                data-open-modal
+                data-scenario="dont_know"
+                class="inline-flex min-h-[48px] w-full items-center justify-center rounded-[var(--radius-md)] border border-[var(--color-border-strong)] px-7 py-4 text-base font-medium text-[var(--color-text-primary)] transition-colors hover:bg-[var(--color-bg-primary)] sm:w-auto lg:w-full"
+              >
+                Получить расчёт стоимости
+              </button>
             </div>
-            <div>
-              <p class="text-base font-bold text-[var(--color-text-primary)]">Типовая смета</p>
-              <p class="text-xs text-[var(--color-text-tertiary)]">Что обычно пишут строители</p>
-            </div>
-          </div>
-        </div>
 
-        <!-- Zones -->
-        <div class="p-6 space-y-3">
-          {zones.map((z) => (
-            <div class="flex items-start gap-3 py-2 border-b border-[var(--color-border)] last:border-0">
-              <svg class="shrink-0 mt-0.5 text-[var(--color-text-tertiary)]" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10" />
-                <line x1="8" y1="12" x2="16" y2="12" />
-              </svg>
-              <div class="min-w-0">
-                <p class="text-sm font-medium text-[var(--color-text-primary)]">{z.name}</p>
-                <p class="text-xs text-[var(--color-text-tertiary)] mt-0.5">{z.typical}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <!-- Footer -->
-        <div class="px-6 py-4 bg-[var(--color-error-container)]/50 border-t border-[var(--color-error)]/20">
-          <div class="flex items-center justify-between">
-            <span class="text-sm font-semibold text-[var(--color-text-primary)]">Итого: 5 млн ₽</span>
-            <span class="inline-flex items-center gap-1 text-xs font-semibold text-[var(--color-error)]">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-                <line x1="12" y1="9" x2="12" y2="13" />
-                <line x1="12" y1="17" x2="12.01" y2="17" />
-              </svg>
-              +1,2 млн скрытых доплат
-            </span>
+            <p class="mt-4 max-w-[44ch] text-sm text-[var(--color-text-tertiary)]">
+              Если у вас уже есть сметы от строителей — сравним построчно и покажем, где скрытые доплаты
+            </p>
           </div>
         </div>
       </div>
 
-      <!-- Right: Our audit (good) -->
-      <div class="rounded-[var(--radius-xl)] border-2 border-[var(--color-accent-primary)] bg-[var(--color-bg-surface)] overflow-hidden shadow-[0_8px_32px_-8px_rgba(8,116,196,0.15)]">
-        <!-- Header -->
-        <div class="px-6 py-4 bg-[var(--color-accent-soft)] border-b border-[var(--color-accent-primary)]/20">
-          <div class="flex items-center gap-3">
-            <div class="flex items-center justify-center w-8 h-8 rounded-full bg-[var(--color-accent-primary)]">
-              <svg class="text-white" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
+      <div class="col-span-12 lg:col-span-8 lg:pl-8">
+        <div class="hidden lg:block">
+          <div class="overflow-hidden rounded-[var(--radius-2xl)] border border-[var(--color-border)] bg-[var(--color-bg-surface)] shadow-[0_28px_64px_-42px_rgba(7,27,58,0.28)]">
+            <div class="grid grid-cols-[minmax(160px,0.9fr)_minmax(0,0.95fr)_minmax(0,1.2fr)] border-b border-[var(--color-border)]">
+              <div class="bg-[var(--color-bg-surface)] px-5 py-5 xl:px-6">
+                <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.06em] text-[var(--color-text-tertiary)]">
+                  <span class="block h-px w-5 bg-[var(--color-border-strong)]" />
+                  Разбор сметы
+                </span>
+              </div>
+
+              <div class="border-l border-[var(--color-border)] bg-[var(--color-bg-primary)] px-5 py-5 xl:px-6">
+                <div class="flex items-start gap-3">
+                  <span class="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--color-error-container)] text-[var(--color-error)]">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <circle cx="12" cy="12" r="10" />
+                      <line x1="15" y1="9" x2="9" y2="15" />
+                      <line x1="9" y1="9" x2="15" y2="15" />
+                    </svg>
+                  </span>
+                  <div>
+                    <p class="text-base font-bold text-[var(--color-text-primary)]">Типовая смета</p>
+                    <p class="mt-1 text-xs text-[var(--color-text-tertiary)]">Что обычно пишут строители</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="border-l border-[var(--color-border)] bg-[var(--color-accent-soft)] px-5 py-5 xl:px-6">
+                <div class="flex items-start gap-3">
+                  <span class="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--color-accent-primary)] text-white">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  </span>
+                  <div>
+                    <p class="text-base font-bold text-[var(--color-text-primary)]">Построчный аудит Ракурс</p>
+                    <p class="mt-1 text-xs text-[var(--color-text-secondary)]">Что проверяем до подписания</p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div>
-              <p class="text-base font-bold text-[var(--color-text-primary)]">Построчный аудит Ракурс</p>
-              <p class="text-xs text-[var(--color-text-secondary)]">Что проверяем до подписания</p>
+
+            <div class="divide-y divide-[var(--color-border)]">
+              {zones.map((zone) => (
+                <div class="grid grid-cols-[minmax(160px,0.9fr)_minmax(0,0.95fr)_minmax(0,1.2fr)]">
+                  <div class="flex items-center px-5 py-4 xl:px-6">
+                    <p class="text-sm font-semibold leading-[1.45] text-[var(--color-text-primary)]">{zone.name}</p>
+                  </div>
+
+                  <div class="border-l border-[var(--color-border)] bg-[var(--color-bg-surface-low)] px-5 py-4 xl:px-6">
+                    <p class="text-sm leading-[1.5] text-[var(--color-text-secondary)]">{zone.typical}</p>
+                  </div>
+
+                  <div class="border-l border-[var(--color-border)] bg-white px-5 py-4 xl:px-6">
+                    <p class="text-sm leading-[1.5] text-[var(--color-text-primary)]">{zone.audit}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div class="grid grid-cols-[minmax(160px,0.9fr)_minmax(0,0.95fr)_minmax(0,1.2fr)] border-t border-[var(--color-border)]">
+              <div class="bg-[var(--color-bg-surface)] px-5 py-5 xl:px-6" />
+
+              <div class="border-l border-[var(--color-border)] bg-[var(--color-error-container)] px-5 py-5 xl:px-6">
+                <div class="flex flex-col gap-2">
+                  <span class="text-sm font-semibold text-[var(--color-text-primary)]">Итого: 5 млн ₽</span>
+                  <span class="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-error)]">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                      <line x1="12" y1="9" x2="12" y2="13" />
+                      <line x1="12" y1="17" x2="12.01" y2="17" />
+                    </svg>
+                    +1,2 млн скрытых доплат
+                  </span>
+                </div>
+              </div>
+
+              <div class="border-l border-[var(--color-border)] bg-[var(--color-success-container)] px-5 py-5 xl:px-6">
+                <div class="flex flex-col gap-2">
+                  <span class="text-sm font-semibold text-[var(--color-text-primary)]">Итого: 5 млн ₽</span>
+                  <span class="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-success)]">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    Всё учтено
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Zones -->
-        <div class="p-6 space-y-3">
-          {zones.map((z) => (
-            <div class="flex items-start gap-3 py-2 border-b border-[var(--color-border)] last:border-0">
-              <svg class="shrink-0 mt-0.5 text-[var(--color-accent-primary)]" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-              <div class="min-w-0">
-                <p class="text-sm font-medium text-[var(--color-text-primary)]">{z.name}</p>
-                <p class="text-xs text-[var(--color-text-secondary)] mt-0.5">{z.audit}</p>
+        <div class="lg:hidden">
+          <div class="grid auto-cols-[minmax(286px,88%)] grid-flow-col gap-4 overflow-x-auto pb-2 pr-5 snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden sm:auto-cols-auto sm:grid-flow-row sm:grid-cols-2 sm:overflow-visible sm:pb-0 sm:pr-0">
+            <article class="flex h-full snap-start flex-col overflow-hidden rounded-[var(--radius-2xl)] border border-[var(--color-border)] bg-[var(--color-bg-surface)] shadow-[0_22px_48px_-40px_rgba(7,27,58,0.24)]">
+              <div class="border-b border-[var(--color-border)] bg-[var(--color-bg-primary)] px-5 py-4">
+                <div class="flex items-start gap-3">
+                  <span class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--color-error-container)] text-[var(--color-error)]">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <circle cx="12" cy="12" r="10" />
+                      <line x1="15" y1="9" x2="9" y2="15" />
+                      <line x1="9" y1="9" x2="15" y2="15" />
+                    </svg>
+                  </span>
+                  <div>
+                    <p class="text-base font-bold text-[var(--color-text-primary)]">Типовая смета</p>
+                    <p class="mt-1 text-xs text-[var(--color-text-tertiary)]">Что обычно пишут строители</p>
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
 
-        <!-- Footer -->
-        <div class="px-6 py-4 bg-[var(--color-success-container)] border-t border-[var(--color-success)]/20">
-          <div class="flex items-center justify-between">
-            <span class="text-sm font-semibold text-[var(--color-text-primary)]">Итого: 5 млн ₽</span>
-            <span class="inline-flex items-center gap-1 text-xs font-semibold text-[var(--color-success)]">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-              Всё учтено
-            </span>
+              <div class="flex-1 px-5 py-3">
+                <ul class="divide-y divide-[var(--color-border)]">
+                  {zones.map((zone) => (
+                    <li class="grid grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] gap-3 py-3">
+                      <span class="text-sm font-medium leading-[1.45] text-[var(--color-text-primary)]">{zone.name}</span>
+                      <span class="text-xs leading-[1.55] text-[var(--color-text-tertiary)]">{zone.typical}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div class="border-t border-[var(--color-border)] bg-[var(--color-error-container)] px-5 py-4">
+                <div class="flex items-start justify-between gap-3">
+                  <span class="text-sm font-semibold text-[var(--color-text-primary)]">Итого: 5 млн ₽</span>
+                  <span class="inline-flex items-center gap-1.5 text-right text-xs font-semibold text-[var(--color-error)]">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                      <line x1="12" y1="9" x2="12" y2="13" />
+                      <line x1="12" y1="17" x2="12.01" y2="17" />
+                    </svg>
+                    +1,2 млн скрытых доплат
+                  </span>
+                </div>
+              </div>
+            </article>
+
+            <article class="flex h-full snap-start flex-col overflow-hidden rounded-[var(--radius-2xl)] border border-[var(--color-accent-primary)] bg-[var(--color-bg-surface)] shadow-[0_24px_54px_-36px_rgba(8,116,196,0.24)]">
+              <div class="border-b border-[var(--color-accent-primary)]/20 bg-[var(--color-accent-soft)] px-5 py-4">
+                <div class="flex items-start gap-3">
+                  <span class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--color-accent-primary)] text-white">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  </span>
+                  <div>
+                    <p class="text-base font-bold text-[var(--color-text-primary)]">Построчный аудит Ракурс</p>
+                    <p class="mt-1 text-xs text-[var(--color-text-secondary)]">Что проверяем до подписания</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex-1 px-5 py-3">
+                <ul class="divide-y divide-[var(--color-border)]">
+                  {zones.map((zone) => (
+                    <li class="grid grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] gap-3 py-3">
+                      <span class="text-sm font-medium leading-[1.45] text-[var(--color-text-primary)]">{zone.name}</span>
+                      <span class="text-xs leading-[1.55] text-[var(--color-text-secondary)]">{zone.audit}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div class="border-t border-[var(--color-accent-primary)]/15 bg-[var(--color-success-container)] px-5 py-4">
+                <div class="flex items-start justify-between gap-3">
+                  <span class="text-sm font-semibold text-[var(--color-text-primary)]">Итого: 5 млн ₽</span>
+                  <span class="inline-flex items-center gap-1.5 text-right text-xs font-semibold text-[var(--color-success)]">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    Всё учтено
+                  </span>
+                </div>
+              </div>
+            </article>
           </div>
         </div>
       </div>
-
     </div>
-
-    <!-- CTA -->
-    <div class="fade-in-up mt-10 md:mt-12 flex flex-col sm:flex-row gap-3">
-      <button
-        type="button"
-        data-open-modal
-        data-scenario="estimate"
-        class="w-full sm:w-auto inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-accent-primary)] text-white px-7 py-4 text-base font-semibold hover:bg-[var(--color-accent-hover)] transition-colors min-h-[48px] shadow-[0_4px_16px_-4px_rgba(8,116,196,0.4)]"
-      >
-        Разобрать мою смету
-      </button>
-      <button
-        type="button"
-        data-open-modal
-        data-scenario="dont_know"
-        class="w-full sm:w-auto inline-flex items-center justify-center rounded-[var(--radius-md)] border border-[var(--color-border-strong)] text-[var(--color-text-primary)] px-7 py-4 text-base font-medium hover:bg-[var(--color-bg-primary)] transition-colors min-h-[48px]"
-      >
-        Получить расчёт стоимости
-      </button>
-    </div>
-
-    <!-- Microcopy -->
-    <p class="fade-in-up mt-4 text-sm text-[var(--color-text-tertiary)] max-w-[48ch]">
-      Если у вас уже есть сметы от строителей — сравним построчно и покажем, где скрытые доплаты
-    </p>
-
   </div>
 </section>

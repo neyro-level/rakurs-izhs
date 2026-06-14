@@ -1,16 +1,35 @@
 ---
-const projects = [
+import ProjectSlider from './ProjectSlider';
+
+interface ProjectSlide {
+  alt: string;
+  src?: string;
+  type: 'photo' | 'plan';
+}
+
+interface ProjectCard {
+  id: string;
+  name: string;
+  area: string;
+  budget: string;
+  featured: boolean;
+  images: ProjectSlide[];
+  includes: string[];
+  separate: string[];
+}
+
+const projects: ProjectCard[] = [
   {
     id: 'compact',
     name: 'Компактный',
     area: '80 м²',
     budget: 'от 6 млн',
-    highlight: false,
+    featured: false,
     images: [
-      { alt: 'Фасад дома' },
-      { alt: 'Вид сбоку' },
-      { alt: 'Вид сзади' },
-      { alt: 'Планировка' },
+      { alt: 'Фасад дома', type: 'photo' },
+      { alt: 'Вид сбоку', type: 'photo' },
+      { alt: 'Вид сзади', type: 'photo' },
+      { alt: 'Планировка', type: 'plan' },
     ],
     includes: [
       'Фундамент и коробка',
@@ -29,12 +48,12 @@ const projects = [
     name: 'Семейный',
     area: '95 м²',
     budget: 'от 7 млн',
-    highlight: true,
+    featured: true,
     images: [
-      { alt: 'Фасад дома' },
-      { alt: 'Вид сбоку' },
-      { alt: 'Вид сзади' },
-      { alt: 'Планировка' },
+      { alt: 'Фасад дома', type: 'photo' },
+      { alt: 'Вид сбоку', type: 'photo' },
+      { alt: 'Вид сзади', type: 'photo' },
+      { alt: 'Планировка', type: 'plan' },
     ],
     includes: [
       'Фундамент и коробка',
@@ -53,12 +72,12 @@ const projects = [
     name: 'Просторный',
     area: '120 м²',
     budget: 'от 8,5 млн',
-    highlight: false,
+    featured: false,
     images: [
-      { alt: 'Фасад дома' },
-      { alt: 'Вид сбоку' },
-      { alt: 'Вид сзади' },
-      { alt: 'Планировка' },
+      { alt: 'Фасад дома', type: 'photo' },
+      { alt: 'Вид сбоку', type: 'photo' },
+      { alt: 'Вид сзади', type: 'photo' },
+      { alt: 'Планировка', type: 'plan' },
     ],
     includes: [
       'Фундамент и коробка',
@@ -97,178 +116,105 @@ const projects = [
     </div>
 
     <!-- Projects grid -->
-    <div class="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="mt-12 md:mt-16 grid auto-cols-[minmax(280px,88%)] grid-flow-col gap-5 overflow-x-auto pb-2 pr-5 snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden sm:auto-cols-auto sm:grid-flow-row sm:grid-cols-2 sm:overflow-visible sm:pb-0 sm:pr-0 lg:grid-cols-3">
       {projects.map((p) => (
-        <div class={`fade-in-up relative rounded-[var(--radius-xl)] border overflow-hidden transition-all duration-300 ${
-          p.highlight 
-            ? 'bg-[var(--color-bg-dark)] border-[var(--color-accent-primary)] shadow-[0_8px_32px_-8px_rgba(8,116,196,0.3)]' 
-            : 'bg-[var(--color-bg-surface)] border-[var(--color-border)] hover:border-[var(--color-border-strong)] hover:shadow-[0_8px_24px_-8px_rgba(0,0,0,0.12)]'
+        <article class={`fade-in-up flex h-full snap-start flex-col overflow-hidden rounded-[var(--radius-2xl)] border transition-all duration-300 ${
+          p.featured
+            ? 'bg-[var(--color-bg-dark)] border-[var(--color-accent-primary)] shadow-[0_22px_50px_-28px_rgba(8,116,196,0.42)]'
+            : 'bg-[var(--color-bg-surface)] border-[var(--color-border)] shadow-[0_18px_40px_-32px_rgba(7,27,58,0.16)] hover:-translate-y-0.5 hover:border-[var(--color-border-strong)] hover:shadow-[0_22px_44px_-28px_rgba(7,27,58,0.22)]'
         }`}>
-          
-          {/* Slider */}
-          <div class="project-slider relative w-full aspect-[4/3] rounded-t-[var(--radius-xl)] overflow-hidden bg-[var(--color-bg-secondary)]" data-project-id={p.id}>
-            {/* Placeholder images */}
-            <div class="absolute inset-0">
-              {p.images.map((img, index) => (
-                <div
-                  class={`project-slide absolute inset-0 transition-opacity duration-300 ${
-                    index === 0 ? 'opacity-100' : 'opacity-0'
-                  }`}
-                  data-slide-index={index}
-                >
-                  <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-[var(--color-bg-secondary)] to-[var(--color-bg-primary)]">
-                    <div class="text-center">
-                      <svg
-                        class="mx-auto text-[var(--color-text-tertiary)]"
-                        width="48"
-                        height="48"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      >
-                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                        <circle cx="8.5" cy="8.5" r="1.5" />
-                        <polyline points="21 15 16 10 5 21" />
-                      </svg>
-                      <p class="mt-2 text-sm text-[var(--color-text-tertiary)]">{img.alt}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Navigation arrows */}
-            <button
-              type="button"
-              class="project-prev absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 hover:bg-white shadow-lg flex items-center justify-center transition-all"
-              aria-label="Предыдущее фото"
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <polyline points="15 18 9 12 15 6" />
-              </svg>
-            </button>
-            <button
-              type="button"
-              class="project-next absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 hover:bg-white shadow-lg flex items-center justify-center transition-all"
-              aria-label="Следующее фото"
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <polyline points="9 18 15 12 9 6" />
-              </svg>
-            </button>
-
-            {/* Dots */}
-            <div class="project-dots absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
-              {p.images.map((_, index) => (
-                <button
-                  type="button"
-                  class={`project-dot w-2 h-2 rounded-full transition-all ${
-                    index === 0 ? 'bg-white w-6' : 'bg-white/50 hover:bg-white/75'
-                  }`}
-                  data-dot-index={index}
-                  aria-label={`Фото ${index + 1}`}
-                />
-              ))}
-            </div>
-
-            {/* Badge for floor plan */}
-            <div class="project-badge absolute top-3 right-3 px-3 py-1 rounded-full bg-[var(--color-accent-primary)] text-white text-xs font-semibold opacity-0 transition-opacity duration-300">
-              Планировка
-            </div>
-          </div>
-
-          {/* Highlight badge */}
-          {p.highlight && (
-            <div class="absolute top-3 left-3 z-10 inline-flex items-center rounded-[var(--radius-pill)] bg-[var(--color-accent-primary)] px-3 py-1 text-xs font-semibold text-white shadow-lg">
-              Основной бюджет ЦА
-            </div>
-          )}
+          <ProjectSlider client:visible slides={p.images} projectName={p.name} />
 
           {/* Content */}
-          <div class="p-6 md:p-7">
-            {/* Project name */}
-            <h3 class={`text-xl font-bold ${p.highlight ? 'text-[var(--color-text-ondark)]' : 'text-[var(--color-text-primary)]'}`}>
-              {p.name}
-            </h3>
+          <div class="flex flex-1 flex-col p-5 md:p-6">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <h3 class={`text-[26px] font-bold leading-[1.12] tracking-[-0.01em] ${p.featured ? 'text-[var(--color-text-ondark)]' : 'text-[var(--color-text-primary)]'}`}>
+                  {p.name}
+                </h3>
+              </div>
 
-            {/* Area + Budget */}
-            <div class="mt-3 flex items-baseline gap-3">
-              <span class={`text-[32px] font-extrabold leading-none ${p.highlight ? 'text-[var(--color-accent-cyan)]' : 'text-[var(--color-accent-primary)]'}`}>
-                {p.budget}
-              </span>
-              <span class={`text-sm ${p.highlight ? 'text-[var(--color-text-ondark-mute)]' : 'text-[var(--color-text-tertiary)]'}`}>
+              <div class={`inline-flex rounded-[var(--radius-pill)] px-3 py-1 text-sm font-medium ${
+                p.featured
+                  ? 'bg-[rgba(255,255,255,0.08)] text-[var(--color-text-ondark)] border border-[var(--color-border-ondark)]'
+                  : 'bg-[var(--color-accent-soft)] text-[var(--color-accent-primary)]'
+              }`}>
                 {p.area}
-              </span>
+              </div>
             </div>
 
-            {/* Includes */}
-            <div class="mt-6">
-              <p class={`text-xs font-semibold uppercase tracking-[0.06em] ${p.highlight ? 'text-[var(--color-accent-cyan)]' : 'text-[var(--color-accent-primary)]'}`}>
-                Что входит
-              </p>
-              <ul class="mt-3 space-y-2">
-                {p.includes.map((item) => (
-                  <li class="flex items-start gap-2">
-                    <svg class={`shrink-0 mt-0.5 ${p.highlight ? 'text-[var(--color-accent-cyan)]' : 'text-[var(--color-accent-primary)]'}`} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                    <span class={`text-sm ${p.highlight ? 'text-[var(--color-text-ondark)]' : 'text-[var(--color-text-primary)]'}`}>
-                      {item}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+            <div class={`mt-5 rounded-[var(--radius-xl)] border p-4 ${
+              p.featured
+                ? 'border-[var(--color-border-ondark)] bg-[rgba(255,255,255,0.06)]'
+                : 'border-[var(--color-border)] bg-[var(--color-bg-surface-low)]'
+            }`}>
+              <div class="flex items-end justify-between gap-3">
+                <span class={`text-[34px] font-extrabold leading-none ${
+                  p.featured ? 'text-[var(--color-accent-cyan)]' : 'text-[var(--color-accent-primary)]'
+                }`}>
+                  {p.budget}
+                </span>
+              </div>
             </div>
 
-            {/* Separate */}
-            <div class="mt-5">
-              <p class={`text-xs font-semibold uppercase tracking-[0.06em] ${p.highlight ? 'text-[var(--color-text-ondark-soft)]' : 'text-[var(--color-text-tertiary)]'}`}>
-                Считать отдельно
-              </p>
-              <ul class="mt-2 space-y-1.5">
-                {p.separate.map((item) => (
-                  <li class="flex items-start gap-2">
-                    <svg class={`shrink-0 mt-0.5 ${p.highlight ? 'text-[var(--color-text-ondark-soft)]' : 'text-[var(--color-text-tertiary)]'}`} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <circle cx="12" cy="12" r="10" />
-                      <line x1="12" y1="8" x2="12" y2="12" />
-                      <line x1="12" y1="16" x2="12.01" y2="16" />
-                    </svg>
-                    <span class={`text-sm ${p.highlight ? 'text-[var(--color-text-ondark-mute)]' : 'text-[var(--color-text-secondary)]'}`}>
-                      {item}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+            <div class="mt-5 grid gap-3">
+              <div class={`rounded-[var(--radius-xl)] border p-4 ${
+                p.featured
+                  ? 'border-[var(--color-border-ondark)] bg-[rgba(255,255,255,0.04)]'
+                  : 'border-[var(--color-border)] bg-[var(--color-bg-surface)]'
+              }`}>
+                <p class={`text-xs font-semibold uppercase tracking-[0.06em] ${
+                  p.featured ? 'text-[var(--color-accent-cyan)]' : 'text-[var(--color-accent-primary)]'
+                }`}>
+                  Что входит
+                </p>
+                <ul class="mt-3 space-y-2.5">
+                  {p.includes.map((item) => (
+                    <li class="flex items-start gap-2.5">
+                      <svg class={`mt-0.5 shrink-0 ${p.featured ? 'text-[var(--color-accent-cyan)]' : 'text-[var(--color-accent-primary)]'}`} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                      <span class={`text-sm leading-[1.5] ${p.featured ? 'text-[var(--color-text-ondark)]' : 'text-[var(--color-text-primary)]'}`}>
+                        {item}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div class={`rounded-[var(--radius-xl)] border p-4 ${
+                p.featured
+                  ? 'border-[var(--color-border-ondark)] bg-[rgba(255,255,255,0.03)]'
+                  : 'border-[var(--color-border)] bg-[var(--color-bg-surface-low)]'
+              }`}>
+                <p class={`text-xs font-semibold uppercase tracking-[0.06em] ${
+                  p.featured ? 'text-[var(--color-text-ondark-soft)]' : 'text-[var(--color-text-tertiary)]'
+                }`}>
+                  Считать отдельно
+                </p>
+                <ul class="mt-3 space-y-2">
+                  {p.separate.map((item) => (
+                    <li class="flex items-start gap-2.5">
+                      <svg class={`mt-0.5 shrink-0 ${p.featured ? 'text-[var(--color-text-ondark-soft)]' : 'text-[var(--color-text-tertiary)]'}`} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="8" x2="12" y2="12" />
+                        <line x1="12" y1="16" x2="12.01" y2="16" />
+                      </svg>
+                      <span class={`text-sm leading-[1.5] ${p.featured ? 'text-[var(--color-text-ondark-mute)]' : 'text-[var(--color-text-secondary)]'}`}>
+                        {item}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
 
-            {/* CTA */}
             <button
               type="button"
               data-open-modal
               data-scenario="dont_know"
-              class={`mt-7 w-full inline-flex items-center justify-center rounded-[var(--radius-md)] px-5 py-3 text-sm font-semibold transition-colors min-h-[44px] ${
-                p.highlight
+              class={`mt-auto inline-flex min-h-[48px] w-full items-center justify-center rounded-[var(--radius-md)] px-5 py-3 text-sm font-semibold transition-colors ${
+                p.featured
                   ? 'bg-white text-[var(--color-bg-dark)] hover:bg-[var(--color-bg-secondary)]'
                   : 'bg-[var(--color-accent-primary)] text-white hover:bg-[var(--color-accent-hover)]'
               }`}
@@ -276,67 +222,18 @@ const projects = [
               Подобрать проект дома
             </button>
           </div>
-        </div>
+        </article>
       ))}
     </div>
 
     {/* Bottom note */}
-    <div class="fade-in-up mt-10 md:mt-12 text-center">
-      <p class="text-sm text-[var(--color-text-tertiary)] max-w-[60ch] mx-auto">
+    <div class="fade-in-up mt-10 md:mt-12">
+      <div class="mx-auto max-w-[64rem] rounded-[var(--radius-2xl)] border border-[var(--color-border)] bg-[var(--color-bg-surface-low)] px-5 py-4 text-center shadow-[0_18px_40px_-34px_rgba(7,27,58,0.14)] md:px-6">
+        <p class="mx-auto max-w-[60ch] text-sm text-[var(--color-text-tertiary)]">
         Это ориентировочные бюджеты. Точная цена зависит от участка, подрядчика, комплектации и ипотеки. Считаем на разборе — без давления и навязывания.
-      </p>
+        </p>
+      </div>
     </div>
 
   </div>
 </section>
-
-<script>
-  // Project sliders
-  document.querySelectorAll('.project-slider').forEach((slider) => {
-    const slides = slider.querySelectorAll('.project-slide');
-    const prevBtn = slider.querySelector('.project-prev');
-    const nextBtn = slider.querySelector('.project-next');
-    const dots = slider.querySelectorAll('.project-dot');
-    const badge = slider.querySelector('.project-badge');
-    let currentIndex = 0;
-
-    const updateSlider = () => {
-      slides.forEach((slide, index) => {
-        slide.classList.toggle('opacity-100', index === currentIndex);
-        slide.classList.toggle('opacity-0', index !== currentIndex);
-      });
-
-      dots.forEach((dot, index) => {
-        if (index === currentIndex) {
-          dot.classList.add('bg-white', 'w-6');
-          dot.classList.remove('bg-white/50');
-        } else {
-          dot.classList.remove('bg-white', 'w-6');
-          dot.classList.add('bg-white/50');
-        }
-      });
-
-      if (badge) {
-        badge.classList.toggle('opacity-0', currentIndex !== 3);
-        badge.classList.toggle('opacity-100', currentIndex === 3);
-      }
-    };
-
-    prevBtn?.addEventListener('click', () => {
-      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-      updateSlider();
-    });
-
-    nextBtn?.addEventListener('click', () => {
-      currentIndex = (currentIndex + 1) % slides.length;
-      updateSlider();
-    });
-
-    dots.forEach((dot, index) => {
-      dot.addEventListener('click', () => {
-        currentIndex = index;
-        updateSlider();
-      });
-    });
-  });
-</script>
