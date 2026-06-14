@@ -1,0 +1,164 @@
+---
+const zones = [
+  { name: 'Фундамент', typical: '«Включён»', audit: 'Тип, объём, материалы, подготовка' },
+  { name: 'Коробка', typical: '«Включена»', audit: 'Стены, перекрытия, конструктив, утепление' },
+  { name: 'Кровля', typical: '«Включена»', audit: 'Материал, утепление, водостоки, доборные элементы' },
+  { name: 'Окна и двери', typical: '«По проекту»', audit: 'Входят ли в цену, какие характеристики' },
+  { name: 'Инженерия', typical: 'Не включена', audit: 'Электрика, отопление, водоснабжение, канализация' },
+  { name: 'Отделка', typical: '«Черновая»', audit: 'Черновая, предчистовая, чистовая — что включено' },
+  { name: 'Доставка и техника', typical: 'Не включена', audit: 'Доставка, кран, спецтехника' },
+  { name: 'Этапы оплаты', typical: 'Предоплата 50%', audit: 'Когда и за что платите' },
+  { name: 'Исключения', typical: 'Не указаны', audit: 'Что не входит и может стать доплатой' },
+];
+---
+
+<section id="section-estimate" class="bg-[var(--color-bg-surface)] vn-section-padding">
+  <div class="site-container">
+    
+    <!-- Header -->
+    <div class="fade-in-up max-w-3xl">
+      <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.06em] text-[var(--color-accent-primary)]">
+        <span class="block w-6 h-px bg-[var(--color-accent-primary)]" />
+        Разбор сметы
+      </span>
+
+      <h2 class="mt-5 text-[28px] md:text-[36px] lg:text-[42px] font-bold leading-[1.14] tracking-[-0.01em] text-[var(--color-text-primary)]">
+        Смета выглядит одинаково.<br class="hidden md:block" />
+        Но в одной <span class="text-[var(--color-error)]">не хватает миллиона</span>.<br class="hidden md:block" />
+        Разбираем построчно до подписания договора
+      </h2>
+
+      <p class="mt-4 text-base md:text-lg text-[var(--color-text-secondary)] leading-relaxed max-w-[58ch]">
+        Две сметы по 5 млн — но в одной нет инженерии, доставки и части фундамента. Показываем, что входит и где доплаты.
+      </p>
+    </div>
+
+    <!-- Comparison: Two columns -->
+    <div class="fade-in-up mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+      
+      <!-- Left: Typical estimate (problematic) -->
+      <div class="rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-bg-primary)] overflow-hidden">
+        <!-- Header -->
+        <div class="px-6 py-4 bg-[var(--color-bg-secondary)] border-b border-[var(--color-border)]">
+          <div class="flex items-center gap-3">
+            <div class="flex items-center justify-center w-8 h-8 rounded-full bg-[var(--color-error-container)]">
+              <svg class="text-[var(--color-error)]" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="15" y1="9" x2="9" y2="15" />
+                <line x1="9" y1="9" x2="15" y2="15" />
+              </svg>
+            </div>
+            <div>
+              <p class="text-base font-bold text-[var(--color-text-primary)]">Типовая смета</p>
+              <p class="text-xs text-[var(--color-text-tertiary)]">Что обычно пишут строители</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Zones -->
+        <div class="p-6 space-y-3">
+          {zones.map((z) => (
+            <div class="flex items-start gap-3 py-2 border-b border-[var(--color-border)] last:border-0">
+              <svg class="shrink-0 mt-0.5 text-[var(--color-text-tertiary)]" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="8" y1="12" x2="16" y2="12" />
+              </svg>
+              <div class="min-w-0">
+                <p class="text-sm font-medium text-[var(--color-text-primary)]">{z.name}</p>
+                <p class="text-xs text-[var(--color-text-tertiary)] mt-0.5">{z.typical}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- Footer -->
+        <div class="px-6 py-4 bg-[var(--color-error-container)]/50 border-t border-[var(--color-error)]/20">
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-semibold text-[var(--color-text-primary)]">Итого: 5 млн ₽</span>
+            <span class="inline-flex items-center gap-1 text-xs font-semibold text-[var(--color-error)]">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                <line x1="12" y1="9" x2="12" y2="13" />
+                <line x1="12" y1="17" x2="12.01" y2="17" />
+              </svg>
+              +1,2 млн скрытых доплат
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Our audit (good) -->
+      <div class="rounded-[var(--radius-xl)] border-2 border-[var(--color-accent-primary)] bg-[var(--color-bg-surface)] overflow-hidden shadow-[0_8px_32px_-8px_rgba(8,116,196,0.15)]">
+        <!-- Header -->
+        <div class="px-6 py-4 bg-[var(--color-accent-soft)] border-b border-[var(--color-accent-primary)]/20">
+          <div class="flex items-center gap-3">
+            <div class="flex items-center justify-center w-8 h-8 rounded-full bg-[var(--color-accent-primary)]">
+              <svg class="text-white" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </div>
+            <div>
+              <p class="text-base font-bold text-[var(--color-text-primary)]">Построчный аудит Ракурс</p>
+              <p class="text-xs text-[var(--color-text-secondary)]">Что проверяем до подписания</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Zones -->
+        <div class="p-6 space-y-3">
+          {zones.map((z) => (
+            <div class="flex items-start gap-3 py-2 border-b border-[var(--color-border)] last:border-0">
+              <svg class="shrink-0 mt-0.5 text-[var(--color-accent-primary)]" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              <div class="min-w-0">
+                <p class="text-sm font-medium text-[var(--color-text-primary)]">{z.name}</p>
+                <p class="text-xs text-[var(--color-text-secondary)] mt-0.5">{z.audit}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- Footer -->
+        <div class="px-6 py-4 bg-[var(--color-success-container)] border-t border-[var(--color-success)]/20">
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-semibold text-[var(--color-text-primary)]">Итого: 5 млн ₽</span>
+            <span class="inline-flex items-center gap-1 text-xs font-semibold text-[var(--color-success)]">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              Всё учтено
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CTA -->
+    <div class="fade-in-up mt-10 md:mt-12 flex flex-col sm:flex-row gap-3">
+      <button
+        type="button"
+        data-open-modal
+        data-scenario="estimate"
+        class="w-full sm:w-auto inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-accent-primary)] text-white px-7 py-4 text-base font-semibold hover:bg-[var(--color-accent-hover)] transition-colors min-h-[48px] shadow-[0_4px_16px_-4px_rgba(8,116,196,0.4)]"
+      >
+        Разобрать мою смету
+      </button>
+      <button
+        type="button"
+        data-open-modal
+        data-scenario="dont_know"
+        class="w-full sm:w-auto inline-flex items-center justify-center rounded-[var(--radius-md)] border border-[var(--color-border-strong)] text-[var(--color-text-primary)] px-7 py-4 text-base font-medium hover:bg-[var(--color-bg-primary)] transition-colors min-h-[48px]"
+      >
+        Получить расчёт стоимости
+      </button>
+    </div>
+
+    <!-- Microcopy -->
+    <p class="fade-in-up mt-4 text-sm text-[var(--color-text-tertiary)] max-w-[48ch]">
+      Если у вас уже есть сметы от строителей — сравним построчно и покажем, где скрытые доплаты
+    </p>
+
+  </div>
+</section>

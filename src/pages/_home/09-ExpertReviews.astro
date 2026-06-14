@@ -1,0 +1,275 @@
+---
+import { Image } from 'astro:assets';
+import artemiyPhoto from '@/assets/artemiy-nikulin.png';
+
+const cases = [
+  {
+    title: 'Семья К., дом 120 м²',
+    situation: 'Хотели дом по семейной ипотеке 6%, участка не было. Боялись, что ипотеку не одобрят.',
+    solution: 'Подобрали участок из базы Ракурс, проверили под требования банка, нашли аккредитованного подрядчика, разобрали смету.',
+    result: 'Ипотека одобрена, стройка начата в срок, бюджет зафиксирован.',
+  },
+  {
+    title: 'Алексей, участок в пригороде',
+    situation: 'Купил участок самостоятельно. Получил 2 сметы от строителей — разница 1,2 млн при одинаковой площади.',
+    solution: 'Разобрали обе сметы построчно. В дешёвой смете не было инженерии, доставки и части фундамента.',
+    result: 'Выбрал подрядчика с полной сметой. Доплат после договора не было.',
+  },
+  {
+    title: 'Семья Д., дом 95 м²',
+    situation: 'Думали, что 8 млн хватит только на коробку. Не знали, с чего начать.',
+    solution: 'Собрали полный сценарий: участок + дом + коммуникации + оформление. Показали, что входит в бюджет, а что отдельно.',
+    result: 'Поняли реальный бюджет, выбрали проект и подрядчика, оформили ипотеку 6%.',
+  },
+];
+
+const reviews = [
+  {
+    name: 'Илья Нем',
+    date: '15 апреля 2025',
+    quote: 'Было много подводных камней и сложных вопросов',
+    proof: 'Ракурс умеет работать со сложными сценариями и не бросает клиента',
+  },
+  {
+    name: 'Оксана Е.',
+    date: '18 сентября 2025',
+    quote: 'Это была сделка, с которой не каждый специалист справится',
+    proof: 'Ракурс сопровождает сделки, где важны документы, банк и ответственность',
+  },
+  {
+    name: 'Александр Бестужев',
+    date: '26 января',
+    quote: 'Была с нами до самого завершения оформления ипотеки',
+    proof: 'Ракурс ведёт клиента от пожеланий до документов и оформления',
+  },
+];
+---
+
+<section id="section-expert" class="bg-[var(--color-bg-primary)] vn-section-padding">
+  <div class="site-container">
+    
+    <!-- Header -->
+    <div class="fade-in-up max-w-3xl">
+      <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.06em] text-[var(--color-accent-primary)]">
+        <span class="block w-6 h-px bg-[var(--color-accent-primary)]" />
+        Ваш эксперт
+      </span>
+
+      <h2 class="mt-5 text-[28px] md:text-[36px] lg:text-[42px] font-bold leading-[1.14] tracking-[-0.01em] text-[var(--color-text-primary)]">
+        Разбор ведёт <span class="text-[var(--color-accent-primary)]">Артемий Никулин</span><br class="hidden md:block" />
+        эксперт по ИЖС Ракурс
+      </h2>
+    </div>
+
+    <!-- Expert: 6/6 split -->
+    <div class="mt-12 md:mt-16 grid-12 gap-y-10 lg:gap-y-0">
+      
+      <!-- Left: 6 cols — Photo -->
+      <div class="col-span-12 lg:col-span-6 flex flex-col">
+        <div class="fade-in-up relative">
+          <Image
+            src={artemiyPhoto}
+            alt="Артемий Никулин — эксперт по ИЖС Ракурс"
+            width={500}
+            height={600}
+            class="w-full h-auto rounded-[var(--radius-xl)] object-cover shadow-[0_12px_40px_-12px_rgba(0,0,0,0.2)]"
+            style="aspect-ratio: 5/6;"
+            loading="lazy"
+          />
+        </div>
+      </div>
+
+      <!-- Right: 6 cols — Text + Contacts -->
+      <div class="col-span-12 lg:col-span-6 lg:pl-8 flex flex-col">
+        
+        <!-- Category explanation -->
+        <div class="fade-in-up">
+          <p class="text-base md:text-lg text-[var(--color-text-secondary)] leading-relaxed">
+            Артемий руководит отделом сопровождения строительства в Ракурс. <strong class="text-[var(--color-text-primary)]">Мы не строим сами</strong> — мы помогаем семье пройти путь от идеи до договора: участок, ипотека, подрядчик, смета. Строит выбранный подрядчик. Мы — на вашей стороне.
+          </p>
+        </div>
+
+        <!-- What checks personally -->
+        <div class="fade-in-up mt-6">
+          <p class="text-sm font-semibold uppercase tracking-[0.06em] text-[var(--color-accent-primary)] mb-3">
+            Что проверяет лично
+          </p>
+          <ul class="space-y-2">
+            <li class="flex items-start gap-2 text-sm text-[var(--color-text-secondary)]">
+              <svg class="shrink-0 mt-0.5 text-[var(--color-accent-primary)]" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              <span>Этап клиента и текущую ситуацию</span>
+            </li>
+            <li class="flex items-start gap-2 text-sm text-[var(--color-text-secondary)]">
+              <svg class="shrink-0 mt-0.5 text-[var(--color-accent-primary)]" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              <span>Участок и юридическую чистоту</span>
+            </li>
+            <li class="flex items-start gap-2 text-sm text-[var(--color-text-secondary)]">
+              <svg class="shrink-0 mt-0.5 text-[var(--color-accent-primary)]" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              <span>Ипотечный сценарий и требования банка</span>
+            </li>
+            <li class="flex items-start gap-2 text-sm text-[var(--color-text-secondary)]">
+              <svg class="shrink-0 mt-0.5 text-[var(--color-accent-primary)]" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              <span>Смету и скрытые доплаты</span>
+            </li>
+            <li class="flex items-start gap-2 text-sm text-[var(--color-text-secondary)]">
+              <svg class="shrink-0 mt-0.5 text-[var(--color-accent-primary)]" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              <span>Вопросы к подрядчику и договору</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Contacts -->
+        <div class="fade-in-up mt-8 flex flex-col sm:flex-row gap-3">
+          <a
+            href="tel:+79028000977"
+            class="inline-flex items-center justify-center gap-2 rounded-[var(--radius-md)] bg-[var(--color-accent-primary)] text-white px-6 py-3 text-sm font-semibold hover:bg-[var(--color-accent-hover)] transition-colors min-h-[44px]"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+            </svg>
+            Позвонить Артемию
+          </a>
+          <a
+            href="https://t.me/rtemii_nikulin"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center gap-2 rounded-[var(--radius-md)] border border-[var(--color-border-strong)] text-[var(--color-text-primary)] px-6 py-3 text-sm font-medium hover:bg-[var(--color-bg-surface)] transition-colors min-h-[44px]"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13" />
+              <polygon points="22 2 15 22 11 13 2 9 22 2" />
+            </svg>
+            Написать в Telegram
+          </a>
+        </div>
+
+        <!-- CTA -->
+        <div class="fade-in-up mt-6">
+          <button
+            type="button"
+            data-open-modal
+            data-scenario="dont_know"
+            class="w-full sm:w-auto inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-bg-dark)] text-white px-7 py-4 text-base font-semibold hover:bg-[var(--color-bg-deep)] transition-colors min-h-[48px] shadow-[0_4px_16px_-4px_rgba(0,0,0,0.3)]"
+          >
+            Получить разбор строительства
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Cases -->
+    <div class="mt-16 md:mt-20">
+      <div class="fade-in-up mb-8">
+        <h3 class="text-[24px] md:text-[28px] font-bold text-[var(--color-text-primary)] leading-tight">
+          Кейсы отдела загородного строительства
+        </h3>
+        <p class="mt-2 text-sm text-[var(--color-text-tertiary)]">
+          Рабочие примеры сопровождения строительства домов
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
+        {cases.map((c, i) => (
+          <div class="fade-in-up-stagger rounded-[var(--radius-xl)] bg-[var(--color-bg-surface)] border border-[var(--color-border)] p-6 transition-all duration-300 hover:shadow-[0_8px_24px_-8px_rgba(8,116,196,0.12)] hover:border-[var(--color-border-strong)]" data-delay={i * 100}>
+            
+            {/* Title */}
+            <h4 class="text-base font-semibold text-[var(--color-text-primary)] leading-snug mb-4">
+              {c.title}
+            </h4>
+
+            {/* Situation */}
+            <div class="mb-4">
+              <p class="text-xs font-semibold uppercase tracking-[0.06em] text-[var(--color-text-tertiary)] mb-2">
+                Ситуация
+              </p>
+              <p class="text-sm text-[var(--color-text-secondary)] leading-[1.5]">
+                {c.situation}
+              </p>
+            </div>
+
+            {/* Solution */}
+            <div class="mb-4">
+              <p class="text-xs font-semibold uppercase tracking-[0.06em] text-[var(--color-accent-primary)] mb-2">
+                Что сделали
+              </p>
+              <p class="text-sm text-[var(--color-text-secondary)] leading-[1.5]">
+                {c.solution}
+              </p>
+            </div>
+
+            {/* Result */}
+            <div class="pt-4 border-t border-[var(--color-border)]">
+              <p class="text-xs font-semibold uppercase tracking-[0.06em] text-[var(--color-success)] mb-2">
+                Результат
+              </p>
+              <p class="text-sm font-medium text-[var(--color-text-primary)] leading-[1.5]">
+                {c.result}
+              </p>
+            </div>
+
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Reviews -->
+    <div class="mt-16 md:mt-20">
+      <div class="fade-in-up mb-8">
+        <h3 class="text-[24px] md:text-[28px] font-bold text-[var(--color-text-primary)] leading-tight">
+          Отзывы о работе Ракурс
+        </h3>
+        <p class="mt-2 text-sm text-[var(--color-text-tertiary)]">
+          Источник: Яндекс / карточка RACURS
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
+        {reviews.map((r, i) => (
+          <div class="fade-in-up-stagger rounded-[var(--radius-xl)] bg-[var(--color-bg-surface)] border border-[var(--color-border)] p-6 transition-all duration-300 hover:shadow-[0_8px_24px_-8px_rgba(8,116,196,0.12)] hover:border-[var(--color-border-strong)]" data-delay={i * 100}>
+            
+            {/* Quote */}
+            <div class="mb-4">
+              <svg class="text-[var(--color-accent-primary)] mb-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+              </svg>
+              <p class="text-base font-medium text-[var(--color-text-primary)] leading-[1.5] italic">
+                «{r.quote}»
+              </p>
+            </div>
+
+            {/* Author */}
+            <div class="pt-4 border-t border-[var(--color-border)]">
+              <p class="text-sm font-semibold text-[var(--color-text-primary)]">
+                {r.name}
+              </p>
+              <p class="text-xs text-[var(--color-text-tertiary)] mt-0.5">
+                {r.date}
+              </p>
+            </div>
+
+            {/* Proof */}
+            <div class="mt-4 pt-4 border-t border-[var(--color-border)]">
+              <p class="text-xs text-[var(--color-text-secondary)] leading-[1.5]">
+                {r.proof}
+              </p>
+            </div>
+
+          </div>
+        ))}
+      </div>
+    </div>
+
+  </div>
+</section>

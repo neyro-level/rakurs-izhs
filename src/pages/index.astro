@@ -1,52 +1,36 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Footer from '@/components/Footer.astro';
-
-import Hero from './_home/01-Hero.astro';
-import Scenarios from './_home/02-Scenarios.astro';
-import Pain from './_home/03-Pain.astro';
-import ScenarioReview from './_home/04-ScenarioReview.astro';
-import Expert from './_home/05-Expert.astro';
-import PaymentModel from './_home/06-PaymentModel.astro';
-import Mortgage from './_home/07-Mortgage.astro';
-import Estimate from './_home/08-Estimate.astro';
-import Land from './_home/09-Land.astro';
-import Contractors from './_home/10-Contractors.astro';
-import Path from './_home/11-Path.astro';
-import Reviews from './_home/12-Reviews.astro';
-import Fit from './_home/13-Fit.astro';
-import LeadForm from './_home/14-LeadForm.astro';
-import FAQ from './_home/15-FAQ.astro';
-import FinalCTA from './_home/16-FinalCTA.astro';
-
 import { SITE } from '@/lib/constants';
 import { jsonLd } from '@/data/home';
+import Hero from './_home/01-Hero.astro';
+import WhatWeDoPainMirror from './_home/02-WhatWeDoPainMirror.astro';
+import Projects from './_home/03-Projects.astro';
+import MortgageAccent from './_home/04-MortgageAccent.astro';
+import EstimateCompare from './_home/05-EstimateCompare.astro';
+import Contractors from './_home/06-Contractors.astro';
+import WhyFree from './_home/07-WhyFree.astro';
+import Path from './_home/08-Path.astro';
+import ExpertReviews from './_home/09-ExpertReviews.astro';
+import FAQFinalCTA from './_home/10-FAQFinalCTA.astro';
 ---
 
 <BaseLayout
-  title="Дом по ипотеке 6% в Перми — проверка сценария"
+  title="Строительство домов в Перми: ипотека 6% и проверенный подрядчик"
   description={SITE.description}
+  schema={jsonLd}
 >
-  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
-
   <main>
     <Hero />
-    <Scenarios />
-    <Pain />
-    <ScenarioReview />
-    <Expert />
-    <PaymentModel />
-    <Mortgage />
-    <Estimate />
-    <Land />
+    <WhatWeDoPainMirror />
+    <Projects />
+    <MortgageAccent />
+    <EstimateCompare />
     <Contractors />
+    <WhyFree />
     <Path />
-    <Reviews />
-    <Fit />
-    <LeadForm />
-    <FAQ />
-    <FinalCTA />
+    <ExpertReviews />
+    <FAQFinalCTA />
   </main>
-
   <Footer />
 </BaseLayout>

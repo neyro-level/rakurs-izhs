@@ -1,103 +1,123 @@
 ---
+import { Image } from 'astro:assets';
+import heroPhoto from '@/assets/hero-rakurs.png';
 
-
-const checks = [
-  { label: 'Бюджет и ипотека', status: 'проверяем' },
-  { label: 'Участок', status: 'сравниваем' },
-  { label: 'Подрядчик', status: 'уточняем' },
-  { label: 'Смета', status: 'проверяем' },
-  { label: 'Возможные доплаты', status: 'сравниваем' },
-];
-
-const trusts = [
-  'Проверяем ипотечный сценарий',
-  'Сравниваем сметы до договора',
-  'Помогаем с участком и подрядчиком',
-  'Для клиента без отдельной оплаты',
+const bullets = [
+  'Ипотека на строительство от 6% (семейная)',
+  'Проверка подрядчика и сметы до договора',
+  'Поэтапная оплата: вы контролируете бюджет',
 ];
 ---
 
 <section id="section-hero" class="relative bg-[var(--color-bg-dark)] text-[var(--color-text-ondark)] overflow-hidden">
-  <!-- Decorative grid + gradient -->
+  <!-- Decorative gradient -->
   <div class="absolute inset-0 opacity-30"
     style="background-image: radial-gradient(circle at 20% 10%, rgba(91,199,242,0.22) 0%, rgba(91,199,242,0.08) 32%, transparent 68%);"
   />
+  <!-- Decorative grid -->
   <div class="absolute inset-0"
     style="background-image: linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px); background-size: 64px 64px;"
   />
 
-  <div class="site-container relative vn-section-padding-lg pt-28 md:pt-36 lg:pt-44">
-    <div class="grid-12 items-center">
-      <!-- Left: 7 cols -->
-      <div class="col-span-12 lg:col-span-7 flex flex-col gap-6">
-        <h1 class="text-4xl md:text-[44px] lg:text-[52px] font-extrabold leading-[1.08] tracking-[-0.02em]">
-          Построить дом в Перми <span class="text-[var(--color-accent-cyan)]">без ошибки</span> в участке, подрядчике и смете
+  <div class="site-container relative vn-section-padding-lg pt-20 md:pt-32 lg:pt-40 pb-16 md:pb-28 lg:pb-36">
+    <div class="grid-12 items-center gap-y-10 lg:gap-y-0">
+
+      <!-- Left: 7 cols — Text + CTA -->
+      <div class="col-span-12 lg:col-span-7 flex flex-col gap-5 lg:gap-6">
+
+        <!-- Eyebrow -->
+        <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.06em] text-[var(--color-accent-cyan)]">
+          <span class="block w-6 h-px bg-[var(--color-accent-cyan)]" />
+          Строительство домов в Перми
+        </span>
+
+        <!-- H1 -->
+        <h1 class="text-[36px] md:text-[44px] lg:text-[52px] font-extrabold leading-[1.08] tracking-[-0.02em]">
+          Построим дом в Перми под ключ с ипотекой от <span class="text-[var(--color-accent-cyan)]">6%</span> и проверенным подрядчиком
         </h1>
 
-        <p class="text-base md:text-lg text-[var(--color-text-ondark-mute)] max-w-2xl leading-relaxed">
-          Помогаем понять, какой дом можно построить по вашему бюджету: подбираем участок, проверяем подрядчика, сравниваем смету и показываем расходы до договора.
+        <!-- Lead -->
+        <p class="text-base md:text-lg text-[var(--color-text-ondark-mute)] max-w-[52ch] leading-relaxed">
+          Подберём участок, проверим смету и организуем семейную ипотеку на строительство. Вы платите за результат, а не за чужие ошибки.
         </p>
 
-        <div class="flex flex-wrap gap-4 mt-2">
+        <!-- CTA row -->
+        <div class="flex flex-col sm:flex-row gap-3 mt-1">
           <button
             type="button"
             data-open-modal
-            class="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-white text-[var(--color-bg-dark)] px-7 py-4 text-base font-medium hover:bg-[var(--color-bg-secondary)] transition-colors"
+            class="w-full sm:w-auto inline-flex items-center justify-center rounded-[var(--radius-md)] bg-white text-[var(--color-bg-dark)] px-7 py-4 text-base font-semibold hover:bg-[var(--color-bg-secondary)] transition-colors min-h-[48px]"
           >
-            Понять, с чего начать
+            Рассчитать стоимость дома и ипотеки
           </button>
-          <button
-            type="button"
-            data-open-modal
-            data-scenario="estimate"
-            class="inline-flex items-center justify-center rounded-[var(--radius-md)] border border-[var(--color-border-ondark)] text-[var(--color-text-ondark)] px-7 py-4 text-base font-medium hover:bg-white/5 transition-colors"
+          <a
+            href="#section-mortgage"
+            class="w-full sm:w-auto inline-flex items-center justify-center rounded-[var(--radius-md)] border border-[var(--color-border-ondark)] text-[var(--color-text-ondark)] px-7 py-4 text-base font-medium hover:bg-white/5 transition-colors min-h-[48px]"
           >
-            Уже есть смета
-          </button>
+            Помощь с ипотекой 6%
+            <svg class="ml-2 shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </a>
         </div>
 
-        <div class="mt-4 flex flex-wrap gap-x-6 gap-y-2">
-          {trusts.map((t) => (
-            <span class="flex items-center gap-2 text-sm text-[var(--color-text-ondark-soft)]">
+        <!-- Microcopy -->
+        <p class="text-sm text-[var(--color-text-ondark-soft)] max-w-[40ch]">
+          Сначала короткий разбор, потом конкретный шаг. Без давления.
+        </p>
+
+        <!-- Bullet points -->
+        <div class="mt-2 flex flex-col sm:flex-row sm:flex-wrap gap-x-5 gap-y-2 sm:gap-y-3">
+          {bullets.map((b) => (
+            <span class="flex items-center gap-2 text-sm text-[var(--color-text-ondark-mute)]">
               <svg class="shrink-0 text-[var(--color-accent-cyan)]" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
-              {t}
+              {b}
             </span>
           ))}
         </div>
       </div>
 
-      <!-- Right: 5 cols — Scenario Panel -->
-      <div class="col-span-12 lg:col-span-5 mt-10 lg:mt-0">
-        <div class="rounded-[var(--radius-xl)] bg-[var(--color-bg-dark-elev)] border border-[var(--color-border-ondark)] p-6 md:p-8">
-          <h2 class="text-lg font-semibold text-[var(--color-text-ondark)]">
-            Что проверим до договора
-          </h2>
-          <p class="mt-1 text-sm text-[var(--color-text-ondark-soft)]">
-            Ракурс не строит сам, а помогает проверить сценарий
-          </p>
+      <!-- Right: 5 cols — Hero Photo -->
+      <div class="col-span-12 lg:col-span-5 lg:pl-4">
+        <div class="relative rounded-[var(--radius-2xl)] overflow-hidden border border-[var(--color-border-ondark)] shadow-[0_24px_64px_-16px_rgba(0,0,0,0.5)]">
+          <!-- Photo -->
+          <Image
+            src={heroPhoto}
+            alt="Эксперт Ракурс показывает клиентам проекты домов в коттеджном посёлке Перми"
+            width={600}
+            height={800}
+            loading="eager"
+            fetchpriority="high"
+            class="w-full h-auto object-cover block max-h-[280px] lg:max-h-none"
+            sizes="(max-width: 1023px) 100vw, 40vw"
+          />
 
-          <div class="mt-6 space-y-3">
-            {checks.map((c) => (
-              <div class="flex items-center justify-between gap-4 rounded-[var(--radius-md)] bg-[rgba(255,255,255,0.04)] px-4 py-3">
-                <span class="text-sm text-[var(--color-text-ondark)]">{c.label}</span>
-                <span class="shrink-0 rounded-[var(--radius-sm)] bg-[var(--color-accent-soft)] px-2 py-1 text-xs font-semibold uppercase tracking-wider text-[var(--color-accent-primary)]">
-                  {c.status}
-                </span>
-              </div>
-            ))}
+          <!-- Gradient overlay bottom -->
+          <div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[var(--color-bg-dark)]/80 via-[var(--color-bg-dark)]/20 to-transparent pointer-events-none" />
+
+          <!-- Bottom badge -->
+          <div class="absolute bottom-4 left-4 right-4 flex items-center gap-3 rounded-[var(--radius-md)] bg-[var(--color-bg-dark-elev)]/90 backdrop-blur-sm border border-[var(--color-border-ondark)] px-4 py-3">
+            <div class="flex items-center justify-center w-10 h-10 rounded-full bg-[var(--color-accent-primary)]/20 shrink-0">
+              <svg class="text-[var(--color-accent-cyan)]" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+              </svg>
+            </div>
+            <div class="min-w-0">
+              <p class="text-sm font-semibold text-[var(--color-text-ondark)] leading-tight">
+                Разбор сценария строительства
+              </p>
+              <p class="text-xs text-[var(--color-text-ondark-soft)] leading-tight mt-0.5">
+                Участок · Ипотека 6% · Подрядчик · Смета
+              </p>
+            </div>
           </div>
-
-          <button
-            type="button"
-            data-open-modal
-            class="mt-6 w-full inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-accent-primary)] text-white px-5 py-3 text-sm font-medium hover:bg-[var(--color-accent-hover)] transition-colors"
-          >
-            Получить разбор
-          </button>
         </div>
       </div>
+
     </div>
   </div>
 </section>

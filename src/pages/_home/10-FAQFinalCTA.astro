@@ -1,0 +1,148 @@
+---
+const faqs = [
+  {
+    question: 'Ракурс сам строит дома?',
+    answer: 'Нет. Ракурс не строительная компания. Подбираем участок из базы 520+, отбираем подрядчика по 6 критериям, разбираем смету, оформляем ипотеку 6%, ведём до понятного решения. Строит выбранный подрядчик.',
+  },
+  {
+    question: 'Почему ваша помощь бесплатна и на чьей вы стороне?',
+    answer: 'Вознаграждение выплачивает подрядчик после сделки. Клиент заранее знает модель. Мы сравниваем сметы и показываем критерии — не навязываем один вариант.',
+  },
+  {
+    question: 'Реально ли построить дом по семейной ипотеке 6% в Перми?',
+    answer: 'Да, при соблюдении требований банка к клиенту, участку, подрядчику, договору и смете. Разбираем до подачи, чтобы не получить отказ.',
+  },
+  {
+    question: 'Если банк откажет в ипотеке, что тогда?',
+    answer: 'Разбираем ипотеку до подачи: проверяем историю, доход, нагрузку, документы. Если один банк откажет — ищем другие. Если лимита 6 млн мало — комбинированный сценарий.',
+  },
+  {
+    question: 'Можно ли обратиться, если участка ещё нет?',
+    answer: 'Да. Подберём участок из базы 520+: локация, коммуникации, подъезд, ограничения, применимость под 6%. Часть участков не в открытом доступе. Не подойдёт — скажем сразу.',
+  },
+  {
+    question: 'Можно ли обратиться, если уже есть сметы от строителей?',
+    answer: 'Да. Сравним построчно: фундамент, коробка, кровля, инженерия, отделка, доставка, этапы оплаты. Покажем, что входит и где доплаты.',
+  },
+  {
+    question: 'Что будет после заявки?',
+    answer: 'Артемий Никулин свяжется, уточнит этап, бюджет, участок, ипотеку или смету и предложит понятный следующий шаг. Без давления и навязчивых звонков.',
+  },
+  {
+    question: 'Вы контролируете стройку?',
+    answer: 'Ракурс помогает на этапе выбора сценария, подрядчика, сметы и договора. Строительный надзор не обещается как часть этого разбора. Поможем организовать контроль, если нужно.',
+  },
+  {
+    question: 'Что если я одновременно плачу аренду и ипотеку на стройку?',
+    answer: 'Это частая ситуация. На разборе считаем реальную нагрузку: сколько месяцев идёт стройка, какой платёж по ипотеке, когда начинается оплата за дом. Планируем переходный период, чтобы бюджет не треснул.',
+  },
+];
+---
+
+<section id="section-faq" class="bg-[var(--color-bg-surface)] vn-section-padding">
+  <div class="site-container">
+    
+    <!-- Header -->
+    <div class="fade-in-up max-w-3xl">
+      <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.06em] text-[var(--color-accent-primary)]">
+        <span class="block w-6 h-px bg-[var(--color-accent-primary)]" />
+        Важные вопросы перед стартом
+      </span>
+
+      <h2 class="mt-5 text-[28px] md:text-[36px] lg:text-[42px] font-bold leading-[1.14] tracking-[-0.01em] text-[var(--color-text-primary)]">
+        Что обычно останавливает перед стартом стройки<br class="hidden md:block" />
+        и как мы это проверяем заранее
+      </h2>
+
+      <p class="mt-4 text-base md:text-lg text-[var(--color-text-secondary)] leading-relaxed max-w-[58ch]">
+        Дом по семейной ипотеке 6% начинается не с договора, а с правильных ответов: по участку, банку, подрядчику, смете и следующему шагу.
+      </p>
+    </div>
+
+    <!-- FAQ Accordion -->
+    <div class="mt-12 md:mt-16 max-w-4xl">
+      {faqs.map((faq, i) => (
+        <details class="faq-item fade-in-up-stagger border-b border-[var(--color-border)]" open={i === 0}>
+          <summary class="faq-trigger flex w-full list-none items-center justify-between gap-4 py-6 text-left transition-colors hover:text-[var(--color-accent-primary)]">
+            <span class="text-base md:text-lg font-semibold text-[var(--color-text-primary)] leading-snug">
+              {faq.question}
+            </span>
+            <svg
+              class="faq-icon shrink-0 text-[var(--color-text-tertiary)] transition-transform duration-300"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+          </summary>
+          <div class="faq-content pb-6">
+            <p class="text-sm md:text-base text-[var(--color-text-secondary)] leading-[1.6] max-w-[64ch]">
+              {faq.answer}
+            </p>
+          </div>
+        </details>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<!-- Final CTA -->
+<section id="section-final-cta" class="bg-[var(--color-bg-dark)] vn-section-padding relative overflow-hidden">
+  <!-- Static gradient background -->
+  <div class="absolute inset-0 opacity-20" aria-hidden="true">
+    <div class="absolute inset-0 bg-gradient-to-br from-[var(--color-accent-primary)] via-transparent to-[var(--color-accent-cyan)]"></div>
+  </div>
+
+  <!-- Decorative grid -->
+  <div class="absolute inset-0 opacity-[0.03]" aria-hidden="true"
+    style="background-image: linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px); background-size: 48px 48px;"
+  />
+
+  <div class="site-container relative">
+    <div class="fade-in-up max-w-3xl mx-auto text-center">
+      
+      <h2 class="text-[28px] md:text-[36px] lg:text-[42px] font-bold leading-[1.14] tracking-[-0.01em] text-[var(--color-text-ondark)]">
+        Перед тем как подписывать договор со строителем,<br class="hidden md:block" />
+        <span class="text-[var(--color-accent-cyan)]">разберите смету, участок и ипотеку</span>
+      </h2>
+
+      <p class="mt-4 text-base md:text-lg text-[var(--color-text-ondark-mute)] leading-relaxed max-w-[52ch] mx-auto">
+        Получите понятный план действий от эксперта по ИЖС. Без обязательств и давления.
+      </p>
+
+      <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+        <button
+          type="button"
+          data-open-modal
+          data-scenario="dont_know"
+          class="w-full sm:w-auto inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-accent-primary)] text-white px-8 py-4 text-base font-semibold hover:bg-[var(--color-accent-hover)] transition-colors min-h-[48px] shadow-[0_4px_16px_-4px_rgba(8,116,196,0.4)]"
+        >
+          Получить разбор строительства
+        </button>
+      </div>
+
+      <p class="mt-4 text-sm text-[var(--color-text-ondark-soft)]">
+        Бесплатная консультация. Без обязательств.
+      </p>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-trigger::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+  }
+</style>

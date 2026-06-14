@@ -1,27 +1,9 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-
-const sections = [
-  { title: 'Ипотека 6%', href: '#mortgage', desc: 'Проверка ипотечного сценария' },
-  { title: 'Разобрать смету', href: '#estimate', desc: 'Сравнение смет строителей' },
-  { title: 'Выбрать строителя', href: '#contractors', desc: 'Критерии подрядчиков' },
-  { title: 'Проверить участок', href: '#section-land', desc: 'Проверка участка перед покупкой' },
-  { title: 'Что будет после заявки', href: '#path', desc: 'Путь клиента в 4 шага' },
-  { title: 'Доверие', href: '#reviews', desc: 'Отзывы о Ракурс' },
-  { title: 'FAQ', href: '#faq', desc: 'Частые вопросы о разборе' },
-  { title: 'Модель оплаты', href: '#section-payment-model', desc: 'Кто оплачивает работу Ракурс' },
-  { title: 'Эксперт', href: '#section-expert', desc: 'Артемий Никулин' },
-  { title: 'Сценарии', href: '#section-scenarios', desc: 'Выберите свой этап' },
-];
-
-const pages = [
-  { title: 'Главная', href: '/' },
-  { title: 'Политика конфиденциальности', href: '/politika/' },
-  { title: 'Страница благодарности', href: '/thanks/' },
-];
+import { routeMapSections, sitePages } from '@/data/navigation';
 ---
 
-<BaseLayout title="Карта сайта" noindex>
+<BaseLayout title="Карта сайта" description="Актуальная карта сайта Ракурс ИЖС: разделы главной страницы и служебные страницы проекта." noindex>
   <div class="site-container py-16 md:py-24">
     <h1 class="text-3xl md:text-4xl font-bold text-[var(--color-text-primary)]">Карта сайта</h1>
 
@@ -29,11 +11,11 @@ const pages = [
       <div>
         <h2 class="text-sm font-semibold uppercase tracking-wider text-[var(--color-text-tertiary)] mb-4">Разделы лендинга</h2>
         <ul class="space-y-3">
-          {sections.map((s) => (
+          {routeMapSections.map((section) => (
             <li>
-              <a href={`/${s.href}`} class="group flex flex-col gap-0.5">
-                <span class="text-base font-medium text-[var(--color-text-primary)] group-hover:text-[var(--color-accent-primary)] transition-colors">{s.title}</span>
-                <span class="text-sm text-[var(--color-text-secondary)]">{s.desc}</span>
+              <a href={section.href} class="group flex flex-col gap-0.5">
+                <span class="text-base font-medium text-[var(--color-text-primary)] group-hover:text-[var(--color-accent-primary)] transition-colors">{section.title}</span>
+                <span class="text-sm text-[var(--color-text-secondary)]">{section.desc}</span>
               </a>
             </li>
           ))}
@@ -43,9 +25,9 @@ const pages = [
       <div>
         <h2 class="text-sm font-semibold uppercase tracking-wider text-[var(--color-text-tertiary)] mb-4">Страницы</h2>
         <ul class="space-y-3">
-          {pages.map((p) => (
+          {sitePages.map((page) => (
             <li>
-              <a href={p.href} class="text-base font-medium text-[var(--color-text-primary)] hover:text-[var(--color-accent-primary)] transition-colors">{p.title}</a>
+              <a href={page.href} class="text-base font-medium text-[var(--color-text-primary)] hover:text-[var(--color-accent-primary)] transition-colors">{page.title}</a>
             </li>
           ))}
         </ul>

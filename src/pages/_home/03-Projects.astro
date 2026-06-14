@@ -1,0 +1,342 @@
+---
+const projects = [
+  {
+    id: 'compact',
+    name: 'Компактный',
+    area: '80 м²',
+    budget: 'от 6 млн',
+    highlight: false,
+    images: [
+      { alt: 'Фасад дома' },
+      { alt: 'Вид сбоку' },
+      { alt: 'Вид сзади' },
+      { alt: 'Планировка' },
+    ],
+    includes: [
+      'Фундамент и коробка',
+      'Кровля и окна',
+      'Черновая отделка',
+      'Инженерия (электрика, отопление)',
+    ],
+    separate: [
+      'Участок',
+      'Чистовая отделка',
+      'Ландшафт',
+    ],
+  },
+  {
+    id: 'family',
+    name: 'Семейный',
+    area: '95 м²',
+    budget: 'от 7 млн',
+    highlight: true,
+    images: [
+      { alt: 'Фасад дома' },
+      { alt: 'Вид сбоку' },
+      { alt: 'Вид сзади' },
+      { alt: 'Планировка' },
+    ],
+    includes: [
+      'Фундамент и коробка',
+      'Кровля и окна',
+      'Черновая отделка',
+      'Инженерия (электрика, отопление, вода)',
+      'Предчистовая отделка',
+    ],
+    separate: [
+      'Участок',
+      'Чистовая отделка',
+    ],
+  },
+  {
+    id: 'spacious',
+    name: 'Просторный',
+    area: '120 м²',
+    budget: 'от 8,5 млн',
+    highlight: false,
+    images: [
+      { alt: 'Фасад дома' },
+      { alt: 'Вид сбоку' },
+      { alt: 'Вид сзади' },
+      { alt: 'Планировка' },
+    ],
+    includes: [
+      'Фундамент и коробка',
+      'Кровля и окна',
+      'Черновая отделка',
+      'Инженерия (полный комплект)',
+      'Предчистовая отделка',
+      'Терраса',
+    ],
+    separate: [
+      'Участок',
+      'Чистовая отделка',
+    ],
+  },
+];
+---
+
+<section id="section-projects" class="bg-[var(--color-bg-surface)] vn-section-padding">
+  <div class="site-container">
+    
+    <!-- Header -->
+    <div class="fade-in-up max-w-3xl">
+      <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.06em] text-[var(--color-accent-primary)]">
+        <span class="block w-6 h-px bg-[var(--color-accent-primary)]" />
+        Проекты домов
+      </span>
+
+      <h2 class="mt-5 text-[28px] md:text-[36px] lg:text-[42px] font-bold leading-[1.14] tracking-[-0.01em] text-[var(--color-text-primary)]">
+        Какой дом реально построить<br class="hidden md:block" />
+        под ваш бюджет и ипотеку 6%
+      </h2>
+
+      <p class="mt-4 text-base md:text-lg text-[var(--color-text-secondary)] leading-relaxed max-w-[58ch]">
+        Три типовых проекта с разбивкой по составу работ. Точная цена зависит от участка, подрядчика и комплектации — считаем на разборе.
+      </p>
+    </div>
+
+    <!-- Projects grid -->
+    <div class="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+      {projects.map((p) => (
+        <div class={`fade-in-up relative rounded-[var(--radius-xl)] border overflow-hidden transition-all duration-300 ${
+          p.highlight 
+            ? 'bg-[var(--color-bg-dark)] border-[var(--color-accent-primary)] shadow-[0_8px_32px_-8px_rgba(8,116,196,0.3)]' 
+            : 'bg-[var(--color-bg-surface)] border-[var(--color-border)] hover:border-[var(--color-border-strong)] hover:shadow-[0_8px_24px_-8px_rgba(0,0,0,0.12)]'
+        }`}>
+          
+          {/* Slider */}
+          <div class="project-slider relative w-full aspect-[4/3] rounded-t-[var(--radius-xl)] overflow-hidden bg-[var(--color-bg-secondary)]" data-project-id={p.id}>
+            {/* Placeholder images */}
+            <div class="absolute inset-0">
+              {p.images.map((img, index) => (
+                <div
+                  class={`project-slide absolute inset-0 transition-opacity duration-300 ${
+                    index === 0 ? 'opacity-100' : 'opacity-0'
+                  }`}
+                  data-slide-index={index}
+                >
+                  <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-[var(--color-bg-secondary)] to-[var(--color-bg-primary)]">
+                    <div class="text-center">
+                      <svg
+                        class="mx-auto text-[var(--color-text-tertiary)]"
+                        width="48"
+                        height="48"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                        <circle cx="8.5" cy="8.5" r="1.5" />
+                        <polyline points="21 15 16 10 5 21" />
+                      </svg>
+                      <p class="mt-2 text-sm text-[var(--color-text-tertiary)]">{img.alt}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Navigation arrows */}
+            <button
+              type="button"
+              class="project-prev absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 hover:bg-white shadow-lg flex items-center justify-center transition-all"
+              aria-label="Предыдущее фото"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="15 18 9 12 15 6" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              class="project-next absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 hover:bg-white shadow-lg flex items-center justify-center transition-all"
+              aria-label="Следующее фото"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            </button>
+
+            {/* Dots */}
+            <div class="project-dots absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
+              {p.images.map((_, index) => (
+                <button
+                  type="button"
+                  class={`project-dot w-2 h-2 rounded-full transition-all ${
+                    index === 0 ? 'bg-white w-6' : 'bg-white/50 hover:bg-white/75'
+                  }`}
+                  data-dot-index={index}
+                  aria-label={`Фото ${index + 1}`}
+                />
+              ))}
+            </div>
+
+            {/* Badge for floor plan */}
+            <div class="project-badge absolute top-3 right-3 px-3 py-1 rounded-full bg-[var(--color-accent-primary)] text-white text-xs font-semibold opacity-0 transition-opacity duration-300">
+              Планировка
+            </div>
+          </div>
+
+          {/* Highlight badge */}
+          {p.highlight && (
+            <div class="absolute top-3 left-3 z-10 inline-flex items-center rounded-[var(--radius-pill)] bg-[var(--color-accent-primary)] px-3 py-1 text-xs font-semibold text-white shadow-lg">
+              Основной бюджет ЦА
+            </div>
+          )}
+
+          {/* Content */}
+          <div class="p-6 md:p-7">
+            {/* Project name */}
+            <h3 class={`text-xl font-bold ${p.highlight ? 'text-[var(--color-text-ondark)]' : 'text-[var(--color-text-primary)]'}`}>
+              {p.name}
+            </h3>
+
+            {/* Area + Budget */}
+            <div class="mt-3 flex items-baseline gap-3">
+              <span class={`text-[32px] font-extrabold leading-none ${p.highlight ? 'text-[var(--color-accent-cyan)]' : 'text-[var(--color-accent-primary)]'}`}>
+                {p.budget}
+              </span>
+              <span class={`text-sm ${p.highlight ? 'text-[var(--color-text-ondark-mute)]' : 'text-[var(--color-text-tertiary)]'}`}>
+                {p.area}
+              </span>
+            </div>
+
+            {/* Includes */}
+            <div class="mt-6">
+              <p class={`text-xs font-semibold uppercase tracking-[0.06em] ${p.highlight ? 'text-[var(--color-accent-cyan)]' : 'text-[var(--color-accent-primary)]'}`}>
+                Что входит
+              </p>
+              <ul class="mt-3 space-y-2">
+                {p.includes.map((item) => (
+                  <li class="flex items-start gap-2">
+                    <svg class={`shrink-0 mt-0.5 ${p.highlight ? 'text-[var(--color-accent-cyan)]' : 'text-[var(--color-accent-primary)]'}`} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    <span class={`text-sm ${p.highlight ? 'text-[var(--color-text-ondark)]' : 'text-[var(--color-text-primary)]'}`}>
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Separate */}
+            <div class="mt-5">
+              <p class={`text-xs font-semibold uppercase tracking-[0.06em] ${p.highlight ? 'text-[var(--color-text-ondark-soft)]' : 'text-[var(--color-text-tertiary)]'}`}>
+                Считать отдельно
+              </p>
+              <ul class="mt-2 space-y-1.5">
+                {p.separate.map((item) => (
+                  <li class="flex items-start gap-2">
+                    <svg class={`shrink-0 mt-0.5 ${p.highlight ? 'text-[var(--color-text-ondark-soft)]' : 'text-[var(--color-text-tertiary)]'}`} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10" />
+                      <line x1="12" y1="8" x2="12" y2="12" />
+                      <line x1="12" y1="16" x2="12.01" y2="16" />
+                    </svg>
+                    <span class={`text-sm ${p.highlight ? 'text-[var(--color-text-ondark-mute)]' : 'text-[var(--color-text-secondary)]'}`}>
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* CTA */}
+            <button
+              type="button"
+              data-open-modal
+              data-scenario="dont_know"
+              class={`mt-7 w-full inline-flex items-center justify-center rounded-[var(--radius-md)] px-5 py-3 text-sm font-semibold transition-colors min-h-[44px] ${
+                p.highlight
+                  ? 'bg-white text-[var(--color-bg-dark)] hover:bg-[var(--color-bg-secondary)]'
+                  : 'bg-[var(--color-accent-primary)] text-white hover:bg-[var(--color-accent-hover)]'
+              }`}
+            >
+              Подобрать проект дома
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    {/* Bottom note */}
+    <div class="fade-in-up mt-10 md:mt-12 text-center">
+      <p class="text-sm text-[var(--color-text-tertiary)] max-w-[60ch] mx-auto">
+        Это ориентировочные бюджеты. Точная цена зависит от участка, подрядчика, комплектации и ипотеки. Считаем на разборе — без давления и навязывания.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  // Project sliders
+  document.querySelectorAll('.project-slider').forEach((slider) => {
+    const slides = slider.querySelectorAll('.project-slide');
+    const prevBtn = slider.querySelector('.project-prev');
+    const nextBtn = slider.querySelector('.project-next');
+    const dots = slider.querySelectorAll('.project-dot');
+    const badge = slider.querySelector('.project-badge');
+    let currentIndex = 0;
+
+    const updateSlider = () => {
+      slides.forEach((slide, index) => {
+        slide.classList.toggle('opacity-100', index === currentIndex);
+        slide.classList.toggle('opacity-0', index !== currentIndex);
+      });
+
+      dots.forEach((dot, index) => {
+        if (index === currentIndex) {
+          dot.classList.add('bg-white', 'w-6');
+          dot.classList.remove('bg-white/50');
+        } else {
+          dot.classList.remove('bg-white', 'w-6');
+          dot.classList.add('bg-white/50');
+        }
+      });
+
+      if (badge) {
+        badge.classList.toggle('opacity-0', currentIndex !== 3);
+        badge.classList.toggle('opacity-100', currentIndex === 3);
+      }
+    };
+
+    prevBtn?.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+      updateSlider();
+    });
+
+    nextBtn?.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % slides.length;
+      updateSlider();
+    });
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        currentIndex = index;
+        updateSlider();
+      });
+    });
+  });
+</script>

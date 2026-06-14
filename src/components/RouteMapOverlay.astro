@@ -1,21 +1,8 @@
 ---
 import { EXPERT, COMPANY } from '@/lib/constants';
+import { routeMapSections, sitePages } from '@/data/navigation';
 
 const phoneClean = EXPERT.phone.replace(/[^\d+]/g, '');
-
-const sections = [
-  { num: '01', title: 'Ипотека', href: '#mortgage', desc: 'Проверка ипотечного сценария под строительство дома.' },
-  { num: '02', title: 'Участки', href: '#land', desc: 'Проверим документы, коммуникации и ограничения.' },
-  { num: '03', title: 'Дома', href: '#contractors', desc: 'Критерии выбора: аккредитация, опыт, смета, договор.' },
-  { num: '04', title: 'Ремонты', href: '#renovation', desc: 'Разбор сметы и контроль качества работ.' },
-];
-
-const pages = [
-  { title: 'Политика конфиденциальности', href: '/politika/' },
-  { title: 'Карта сайта', href: '/sitemap/' },
-];
-
-const cardDelays = [80, 120, 160, 200];
 ---
 
 <div
@@ -36,31 +23,31 @@ const cardDelays = [80, 120, 160, 200];
     <!-- Left: Brand -->
     <aside class="ro-overlay-brand">
       <div class="ro-overlay-brand-desc">
-        Центр недвижимости «Ракурс» в Перми
+        Ракурс ИЖС в Перми
       </div>
       <p class="ro-overlay-brand-body">
-        Помогаем построить дом: подобрать участок, проверить смету и выбрать подрядчика. Реальные расходы до договора.
+        Помогаем пройти путь к дому: участок, ипотека 6%, подрядчик и смета до договора.
       </p>
-      <button type="button" data-open-modal class="ro-overlay-brand-cta">
-        Получить консультацию
+      <button type="button" data-open-modal data-scenario="dont_know" class="ro-overlay-brand-cta">
+        Получить разбор строительства
       </button>
       <div class="ro-overlay-legal">
-        {pages.map((p) => <a href={p.href} class="ro-overlay-legal-link">{p.title}</a>)}
+        {sitePages.map((page) => <a href={page.href} class="ro-overlay-legal-link">{page.title}</a>)}
       </div>
     </aside>
 
     <!-- Center: Sections -->
     <section class="ro-overlay-routes" aria-label="Разделы">
       <div class="ro-route-cards">
-        {sections.map((s, i) => (
+        {routeMapSections.map((section, i) => (
           <a
-            href={s.href}
+            href={section.href}
             class="ro-route-card"
-            style={`transition-delay: ${cardDelays[i]}ms`}
+            style={`transition-delay: ${80 + i * 40}ms`}
           >
-            <span class="ro-route-card-label">{s.num}</span>
-            <h3 class="ro-route-card-title">{s.title}</h3>
-            <p class="ro-route-card-body">{s.desc}</p>
+            <span class="ro-route-card-label">{section.num}</span>
+            <h3 class="ro-route-card-title">{section.title}</h3>
+            <p class="ro-route-card-body">{section.desc}</p>
             <span class="ro-route-card-arrow" aria-hidden="true">→</span>
           </a>
         ))}

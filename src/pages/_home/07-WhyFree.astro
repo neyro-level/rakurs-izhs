@@ -1,0 +1,138 @@
+---
+const points = [
+  {
+    icon: 'handshake',
+    title: 'Как это работает',
+    text: 'Мы работаем с подрядчиками на условиях партнёрства. Они платят нам комиссию за приведённого клиента — как реклама, только результативная.',
+  },
+  {
+    icon: 'shield-check',
+    title: 'Почему это честно',
+    text: 'Вы заранее знаете модель. Мы сравниваем сметы и показываем критерии — не навязываем один вариант.',
+  },
+  {
+    icon: 'gift',
+    title: 'Что вы получаете',
+    text: 'Бесплатную консультацию, разбор сметы, подбор подрядчика. Без скрытых наценок в вашей смете.',
+  },
+  {
+    icon: 'alert-circle',
+    title: 'Чего мы не обещаем',
+    text: 'Не гарантируем работу подрядчика за него. Не подменяем строительный надзор.',
+  },
+];
+---
+
+<section id="section-whyfree" class="relative bg-[var(--color-bg-dark)] vn-section-padding overflow-hidden">
+  <!-- Static gradient background -->
+  <div class="absolute inset-0 opacity-20" aria-hidden="true">
+    <div class="absolute inset-0 bg-gradient-to-br from-[var(--color-accent-primary)] via-transparent to-[var(--color-accent-cyan)]"></div>
+  </div>
+
+  <!-- Decorative grid -->
+  <div class="absolute inset-0 opacity-[0.03]" aria-hidden="true"
+    style="background-image: linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px); background-size: 48px 48px;"
+  />
+
+  <div class="site-container relative">
+    <div class="grid-12 gap-y-10 lg:gap-y-0">
+
+      <!-- Left: 5 cols — Text + CTA -->
+      <div class="col-span-12 lg:col-span-5 flex flex-col">
+        
+        <!-- Eyebrow -->
+        <span class="fade-in-up inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.06em] text-[var(--color-accent-cyan)]">
+          <span class="block w-6 h-px bg-[var(--color-accent-cyan)]" />
+          Модель оплаты
+        </span>
+
+        <!-- H2 -->
+        <h2 class="fade-in-up mt-5 text-[28px] md:text-[36px] lg:text-[42px] font-bold leading-[1.14] tracking-[-0.01em] text-[var(--color-text-ondark)]">
+          Вы не платите за сопровождение.<br class="hidden md:block" />
+          Мы зарабатываем на <span class="text-[var(--color-accent-cyan)]">объёме</span>,<br class="hidden md:block" />
+          а не на вашей смете
+        </h2>
+
+        <!-- Lead -->
+        <p class="fade-in-up mt-4 text-base md:text-lg text-[var(--color-text-ondark-mute)] leading-relaxed max-w-[48ch]">
+          Наша работа для вас бесплатная. Вот почему мы можем себе это позволить.
+        </p>
+
+        <!-- CTA -->
+        <div class="fade-in-up mt-8">
+          <button
+            type="button"
+            data-open-modal
+            data-scenario="dont_know"
+            class="w-full sm:w-auto inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-accent-primary)] text-white px-7 py-4 text-base font-semibold hover:bg-[var(--color-accent-hover)] transition-colors min-h-[48px] shadow-[0_4px_16px_-4px_rgba(8,116,196,0.4)]"
+          >
+            Получить разбор строительства
+          </button>
+        </div>
+
+        <!-- Trust badge -->
+        <div class="fade-in-up mt-4 inline-flex items-center gap-2 text-sm text-[var(--color-text-ondark-soft)]">
+          <svg class="shrink-0 text-[var(--color-accent-cyan)]" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          </svg>
+          <span>Прозрачная модель. Без скрытых наценок.</span>
+        </div>
+      </div>
+
+      <!-- Right: 7 cols — 4 cards -->
+      <div class="col-span-12 lg:col-span-7 lg:pl-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
+          {points.map((p, i) => (
+            <div class={`fade-in-up-stagger group relative rounded-[var(--radius-lg)] bg-[var(--color-bg-dark-elev)] border border-[var(--color-border-ondark)] p-6 transition-all duration-300 hover:border-[var(--color-accent-primary)]/30 hover:shadow-[0_8px_24px_-8px_rgba(8,116,196,0.2)] hover:-translate-y-1`} style={`animation-delay: ${i * 100}ms`}>
+              
+              {/* Glow effect on hover */}
+              <div class="absolute inset-0 rounded-[var(--radius-lg)] bg-gradient-to-br from-[var(--color-accent-primary)]/0 to-[var(--color-accent-cyan)]/0 group-hover:from-[var(--color-accent-primary)]/5 group-hover:to-[var(--color-accent-cyan)]/5 transition-all duration-300 pointer-events-none" />
+
+              {/* Icon */}
+              <div class="relative flex items-center justify-center w-12 h-12 rounded-[var(--radius-md)] bg-[rgba(91,199,242,0.1)] mb-4">
+                {p.icon === 'handshake' && (
+                  <svg class="text-[var(--color-accent-cyan)]" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z" />
+                  </svg>
+                )}
+                {p.icon === 'shield-check' && (
+                  <svg class="text-[var(--color-accent-cyan)]" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    <polyline points="9 12 11 14 15 10" />
+                  </svg>
+                )}
+                {p.icon === 'gift' && (
+                  <svg class="text-[var(--color-accent-cyan)]" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 12 20 22 4 22 4 12" />
+                    <rect x="2" y="7" width="20" height="5" />
+                    <line x1="12" y1="22" x2="12" y2="7" />
+                    <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" />
+                    <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
+                  </svg>
+                )}
+                {p.icon === 'alert-circle' && (
+                  <svg class="text-[var(--color-accent-cyan)]" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="8" x2="12" y2="12" />
+                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                  </svg>
+                )}
+              </div>
+
+              {/* Title */}
+              <h3 class="relative text-base font-semibold text-[var(--color-text-ondark)] leading-snug mb-2">
+                {p.title}
+              </h3>
+
+              {/* Description */}
+              <p class="relative text-sm text-[var(--color-text-ondark-mute)] leading-[1.5]">
+                {p.text}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

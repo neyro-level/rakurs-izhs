@@ -1,12 +1,5 @@
 ---
-const navItems = [
-  { label: 'ИПОТЕКА', href: '#mortgage' },
-  { label: 'УЧАСТКИ', href: '#land' },
-  { label: 'ДОМА', href: '#contractors' },
-  { label: 'РЕМОНТЫ', href: '#renovation' },
-];
-
-
+import { headerNavItems } from '@/data/navigation';
 ---
 
 <header
@@ -26,12 +19,12 @@ const navItems = [
 
     <!-- Desktop nav -->
     <nav class="vn-header__nav" aria-label="Основная навигация">
-      {navItems.map((item) => (
+      {headerNavItems.map((item) => (
         <a
           href={item.href}
           class="vn-header__nav-link"
         >
-          {item.label}
+          {item.menuLabel}
         </a>
       ))}
     </nav>
