@@ -6,7 +6,7 @@
 **Тип страницы:** Commercial + Lead + Trust  
 **Версия:** 2.0  
 **Дата:** 2026-06-14  
-**Статус:** ФИНАЛЬНЫЙ БРИФ. Источник правды для копирайтинга и разработки.  
+**Статус:** ФИНАЛЬНЫЙ БРИФ. Актуален as-built на 2026-06-14 и является источником правды для копирайтинга и разработки.
 **Методология:** Page Method 8 этапов (00–08), адаптировано из `PAGE_STROITELSTVO.md` (Союз Ростов)  
 **Аннулирует:** v1.0 от 2026-05-15 (16-блочная структура)  
 **Домен:** `rakurs-izhs.ru`
@@ -635,46 +635,38 @@
 
 ---
 
-## 19. Передача в техническую сборку
+## 19. Техническая фиксация as-built
 
-### 19.1. Файлы для создания (10 блоков)
-
-```
-src/pages/_home/
-├── 01-Hero.astro (пересобрать)
-├── 02-WhatWeDoPainMirror.astro (новый)
-├── 03-Projects.astro (новый)
-├── 04-MortgageAccent.astro (новый)
-├── 05-EstimateCompare.astro (новый)
-├── 06-Contractors.astro (новый)
-├── 07-WhyFree.astro (новый)
-├── 08-Path.astro (новый)
-├── 09-ExpertReviews.astro (новый)
-└── 10-FAQFinalCTA.astro (новый)
-```
-
-### 19.2. Файлы для удаления (старые блоки)
+### 19.1. Актуальный набор блоков (10 блоков)
 
 ```
 src/pages/_home/
-├── 02-Scenarios.astro → удалить
-├── 03-Pain.astro → заменить 02-WhatWeDoPainMirror
-├── 04-ScenarioReview.astro → удалить
-├── 06-PaymentModel.astro → заменить 07-WhyFree
-├── 11-Path.astro → заменить 08-Path
-├── 12-Reviews.astro → объединить в 09-ExpertReviews
-├── 13-Fit.astro → удалить
-├── 14-LeadForm.astro → объединить в 10-FAQFinalCTA
-├── 15-FAQ.astro → объединить в 10-FAQFinalCTA
-└── 16-FinalCTA.astro → объединить в 10-FAQFinalCTA
+├── 01-Hero.astro
+├── 02-WhatWeDoPainMirror.astro
+├── 03-Projects.astro
+├── 04-MortgageAccent.astro
+├── 05-EstimateCompare.astro
+├── 06-Contractors.astro
+├── 07-WhyFree.astro
+├── 08-Path.astro
+├── 09-ExpertReviews.astro
+└── 10-FAQFinalCTA.astro
 ```
 
-### 19.3. Файл `src/pages/index.astro` — обновить роут
+### 19.2. Legacy-контур старой структуры
+
+- Старые секции предыдущей архитектуры в рабочем контуре больше не используются.
+- `02-Scenarios.astro` и `03-Pain.astro` удалены как неактуальные legacy-файлы.
+- Новые правки главной нужно вносить только в активные блоки `01-10`, перечисленные выше.
+
+### 19.3. Файл `src/pages/index.astro` — актуальный роут
 
 ```astro
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Footer from '@/components/Footer.astro';
+import { SITE } from '@/lib/constants';
+import { jsonLd } from '@/data/home';
 
 import Hero from './_home/01-Hero.astro';
 import WhatWeDoPainMirror from './_home/02-WhatWeDoPainMirror.astro';
@@ -686,17 +678,14 @@ import WhyFree from './_home/07-WhyFree.astro';
 import Path from './_home/08-Path.astro';
 import ExpertReviews from './_home/09-ExpertReviews.astro';
 import FAQFinalCTA from './_home/10-FAQFinalCTA.astro';
-
-import { SITE } from '@/lib/constants';
-import { jsonLd } from '@/data/home';
 ---
 
 <BaseLayout
   title="Строительство домов в Перми: ипотека 6% и проверенный подрядчик"
   description={SITE.description}
+  ogImage={`${SITE.url}/og/rakurs-izhs-default.png`}
+  schema={jsonLd}
 >
-  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
-
   <main>
     <Hero />
     <WhatWeDoPainMirror />
@@ -728,13 +717,9 @@ import { jsonLd } from '@/data/home';
 
 ## 20. Что дальше
 
-1. ✓ Утверждение `PAGE_HOME.md` v2.0
-2. Обновить `PROJECT_JOURNAL.md` — зафиксировать новую структуру
-3. ~~Обновить `SITE_ARCHITECTURE.md`~~ — файл удалён, `PAGE_HOME.md` v2.0 является единственным источником правды
-4. Поблочная сборка: 10 новых `.astro` файлов
-5. Удалить старые блоки
-6. Обновить `WORKLOG.md`
-7. Проверка `pnpm build` + browser (desktop 1440 / mobile 375)
+1. Любые новые тексты на главной согласовывать отдельно; без согласования менять их нельзя.
+2. Новые SEO/коммерческие страницы оформлять отдельными `PAGE_*.md` с опорой на архитектуру роста, уже зафиксированную в `PROJECT_JOURNAL.md`.
+3. После визуальных и технических правок обновлять `PROJECT_JOURNAL.md`, `WORKLOG.md` и запускать `pnpm build` + browser-проверку.
 
 ---
 
