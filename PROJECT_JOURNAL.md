@@ -41,6 +41,41 @@
 
 ## Утвержденные решения
 
+### 2026-06-14 — Production поднят на AMS-сервере через GitHub Actions
+
+**Статус:** выполнено.
+
+**Решение:**
+
+- Для проекта принят и реализован production-контур:
+  - GitHub repo `neyro-level/rakurs-izhs`;
+  - workflow `.github/workflows/deploy-ams.yml`;
+  - static Astro build;
+  - release-деплой в `/var/www/client-sites/rakurs-izhs/releases/...`;
+  - symlink `current`;
+  - Nginx site `rakurs-izhs.ru`;
+  - SSL через Let's Encrypt.
+- Production-адреса:
+  - `https://rakurs-izhs.ru`
+  - `https://www.rakurs-izhs.ru`
+- HTTP-версии домена принудительно редиректят на HTTPS.
+- В сайт подключена реальная отправка заявок через `AMS Leads API`, а не редирект-only поведение.
+- Для форм используется `PUBLIC_LEADS_SITE_KEY`, передаваемый в build только через GitHub Actions secrets и серверный registry `AMS Leads API`.
+
+**Источник правды:**
+
+- `.github/workflows/deploy-ams.yml`
+- `src/lib/leads.ts`
+- `src/components/shared/RequestModal.tsx`
+- серверный Nginx-конфиг `rakurs-izhs.ru.conf`
+- registry `AMS Leads API` на сервере
+
+**Важно:**
+
+- Сертификат для `rakurs-izhs.ru` и `www.rakurs-izhs.ru` выпущен `2026-06-14` и действует до `2026-09-12`.
+- В `AMS Leads API` проект зарегистрирован как `rakurs-izhs`.
+- Telegram-доставка для этого проекта пока не включена, потому что проектный `RAKURS_IZHS_TELEGRAM_CHAT_ID` не был подтверждён. Это осознанное временное решение: формы авторизуются и принимаются, но уведомления требуют отдельной привязки.
+
 ### 2026-06-14 — Footer badge «Сайт разработан в АМС»
 
 **Статус:** рабочая реализация по запросу пользователя.

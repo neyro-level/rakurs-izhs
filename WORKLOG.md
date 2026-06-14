@@ -1,21 +1,47 @@
 # WORKLOG — Сайт Ракурс ИЖС
 
 ## Текущий статус
-- Главная страница собрана по `PAGE_HOME.md` v2.0 и проходит текущий build baseline.
+- Главная страница собрана по `PAGE_HOME.md` v2.0 и опубликована в production.
+- Production live: `https://rakurs-izhs.ru` и `https://www.rakurs-izhs.ru`.
 - Юридические и служебные страницы синхронизированы с проектом Ракурс ИЖС: `politika`, `cookies`, `thanks`, `404`, `sitemap`.
-- Публикационный baseline готов: favicon-комплект, OG-изображение, `llms.txt`, `geo-check`, `seo-check`, обновлённый `robots.txt`, исключения из XML sitemap.
+- Публикационный baseline доведён до боевого состояния: favicon-комплект, OG-изображение, `llms.txt`, `geo-check`, `seo-check`, route-level `robots.txt`, исключения из XML sitemap, GitHub Actions deploy, Nginx, SSL и AMS Leads API.
 
 ## Следующие шаги
-- Актуализировать подтверждаемые факты перед публикацией: условия семейной ипотеки 6%, проекты домов, кейсы и число участков в базе.
-- После деплоя проверить production-домен на favicon, OG, sitemap и robots уже по живому URL.
+- Подключить отдельный `RAKURS_IZHS_TELEGRAM_CHAT_ID`, если уведомления по заявкам должны приходить в Telegram, а не только логироваться через AMS Leads API.
+- Актуализировать подтверждаемые факты на живом сайте: условия семейной ипотеки 6%, проекты домов, кейсы и число участков в базе.
 - На базе `SITE_DEVELOPMENT_STRATEGY.md` принять финальный состав Phase 1 SEO-страниц и начать их проектирование как единой архитектуры роста сайта.
 
 ## Открытые вопросы
 - Конкретные проекты домов и визуалы для блока 03-Projects — требуют подтверждения от клиента.
 - Кейсы по домам в блоке 09 — рабочие примеры, требуют подтверждения или замены реальными данными.
 - Актуальность условий семейной ипотеки 6% на дату публикации.
+- Нужен ли проекту отдельный Telegram-чат для лидов `Ракурс ИЖС` или пока достаточно серверного логирования заявок.
 
 ## Журнал
+
+### 2026-06-14 (43)
+- Сделано: сайт опубликован в production через GitHub Actions на AMS-сервер.
+- Изменено:
+  - добавлен workflow `.github/workflows/deploy-ams.yml` под контур `GitHub -> AMS Server`;
+  - в репозитории настроены GitHub Actions secrets для production-деплоя и site key формы;
+  - на сервере создан сайт `rakurs-izhs` в `/var/www/client-sites/rakurs-izhs` с release-структурой и symlink `current`;
+  - в `nginx` поднят боевой конфиг `rakurs-izhs.ru` с проксированием `/api/leads` в `AMS Leads API`;
+  - в `AMS Leads API` зарегистрирован проект `rakurs-izhs` и подключена авторизация форм через `PUBLIC_LEADS_SITE_KEY`;
+  - модалка `RequestModal` переведена с простого редиректа на реальную отправку заявок в `AMS Leads API`, без изменения текстов формы;
+  - для доменов `rakurs-izhs.ru` и `www.rakurs-izhs.ru` выпущен и установлен SSL-сертификат Let's Encrypt.
+- Важно:
+  - production-URL: `https://rakurs-izhs.ru`;
+  - release на сервере: `20260614191302-10e6087`;
+  - сертификат действителен до `2026-09-12`;
+  - уведомления в Telegram для проекта пока намеренно не включены, потому что отдельный `RAKURS_IZHS_TELEGRAM_CHAT_ID` не был задан; при этом endpoint заявок работает и принимает авторизованные формы.
+- Проверка:
+  - `pnpm build` — успешно;
+  - `pnpm geo-check` — успешно;
+  - `pnpm seo-check` — успешно;
+  - GitHub Actions run `27509175623` — успешно;
+  - `http://rakurs-izhs.ru` и `http://www.rakurs-izhs.ru` -> `301` на HTTPS;
+  - `https://rakurs-izhs.ru` и `https://www.rakurs-izhs.ru` -> `200 OK`;
+  - фильтрованный тестовый POST на `https://rakurs-izhs.ru/api/leads` вернул `{\"ok\":true,\"filtered\":true}` без создания боевого лида.
 
 ### 2026-06-14 (42)
 - Сделано: в нижнем legal-слое `Footer.astro` ссылка `Карта сайта` заменена на внешний брендовый бейдж.
