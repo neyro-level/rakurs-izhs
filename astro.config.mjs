@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import partytown from '@astrojs/partytown';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
@@ -9,6 +10,11 @@ export default defineConfig({
   output: 'static',
   site: 'https://rakurs-izhs.ru',
   integrations: [
+    partytown({
+      config: {
+        forward: ['ym'],
+      },
+    }),
     sitemap({
       filter: (page) => {
         const pathname = new URL(page).pathname;

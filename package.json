@@ -8,12 +8,14 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro check && astro build",
+    "preflight": "node scripts/preflight.cjs",
     "geo-check": "node scripts/geo-check.mjs",
     "seo-check": "node scripts/seo-check.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/partytown": "^2.1.7",
     "@astrojs/react": "^5.0.5",
     "@astrojs/sitemap": "^3.7.2",
     "@tailwindcss/vite": "^4.3.0",
@@ -23,7 +25,8 @@
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "sharp": "^0.34.5",
-    "tailwindcss": "^4.3.0"
+    "tailwindcss": "^4.3.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",

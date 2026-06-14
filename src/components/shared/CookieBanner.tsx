@@ -1,27 +1,12 @@
 import { useEffect, useState } from 'react';
 import '@/styles/cookie-banner.css';
-
-const CONSENT_KEY = 'rakurs_cookie_consent';
+import { COOKIE_CONSENT_KEY } from '@/lib/analytics';
 
 declare global {
   interface Window {
-    ym?: (...args: unknown[]) => void;
+    rakursInitAnalytics?: () => void;
+    __rakursAnalyticsReady?: boolean;
   }
-}
-
-function initYandexMetrika(counterId: string) {
-  if (window.ym) return;
-
-  const script = document.createElement('script');
-  script.innerHTML = `
-    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-    m[i].l=1*new Date();
-    for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
-    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-    (window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
-    ym(${counterId},"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});
-  `;
-  document.head.appendChild(script);
 }
 
 export default function CookieBanner() {
@@ -29,17 +14,20 @@ export default function CookieBanner() {
 
   useEffect(() => {
     const syncConsent = (value?: string | null) => {
-      const consent = value ?? localStorage.getItem(CONSENT_KEY);
+      const consent = value ?? localStorage.getItem(COOKIE_CONSENT_KEY);
       if (!consent) {
+        window.__rakursAnalyticsReady = false;
         setVisible(true);
         return;
       }
 
       setVisible(false);
       if (consent === 'accepted') {
-        const counterId = import.meta.env.PUBLIC_YM_COUNTER_ID;
-        if (counterId) initYandexMetrika(counterId);
+        window.rakursInitAnalytics?.();
+        return;
       }
+
+      window.__rakursAnalyticsReady = false;
     };
 
     syncConsent();
@@ -60,15 +48,15 @@ export default function CookieBanner() {
   }, []);
 
   const handleAccept = () => {
-    localStorage.setItem(CONSENT_KEY, 'accepted');
+    localStorage.setItem(COOKIE_CONSENT_KEY, 'accepted');
+    window.rakursInitAnalytics?.();
     window.dispatchEvent(new CustomEvent('rakurs:cookie-consent', { detail: { value: 'accepted' } }));
     setVisible(false);
-    const counterId = import.meta.env.PUBLIC_YM_COUNTER_ID;
-    if (counterId) initYandexMetrika(counterId);
   };
 
   const handleReject = () => {
-    localStorage.setItem(CONSENT_KEY, 'rejected');
+    localStorage.setItem(COOKIE_CONSENT_KEY, 'rejected');
+    window.__rakursAnalyticsReady = false;
     window.dispatchEvent(new CustomEvent('rakurs:cookie-consent', { detail: { value: 'rejected' } }));
     setVisible(false);
   };

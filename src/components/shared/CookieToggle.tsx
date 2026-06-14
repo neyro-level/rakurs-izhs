@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
-
-const CONSENT_KEY = 'rakurs_cookie_consent';
+import { COOKIE_CONSENT_KEY } from '@/lib/analytics';
 
 export default function CookieToggle() {
   const [consent, setConsent] = useState<'accepted' | 'rejected' | null>(null);
 
   useEffect(() => {
-    const stored = localStorage.getItem(CONSENT_KEY);
+    const stored = localStorage.getItem(COOKIE_CONSENT_KEY);
     if (stored === 'accepted' || stored === 'rejected') {
       setConsent(stored);
     }
@@ -14,7 +13,7 @@ export default function CookieToggle() {
 
   const toggle = () => {
     const next = consent === 'accepted' ? 'rejected' : 'accepted';
-    localStorage.setItem(CONSENT_KEY, next);
+    localStorage.setItem(COOKIE_CONSENT_KEY, next);
     setConsent(next);
     window.dispatchEvent(new CustomEvent('rakurs:cookie-consent', { detail: { value: next } }));
   };

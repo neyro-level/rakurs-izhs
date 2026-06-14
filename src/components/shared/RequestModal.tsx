@@ -1,5 +1,8 @@
 import { useState, useCallback, useEffect, useRef, type ComponentProps } from 'react';
 import { sendLead } from '@/lib/leads';
+import { track } from '@/lib/analytics';
+import { z } from 'zod';
+import { RequestLeadSchema } from '@/lib/validation';
 
 interface RequestModalProps {
   isOpen: boolean;
@@ -8,6 +11,11 @@ interface RequestModalProps {
 }
 
 type FormSubmitHandler = NonNullable<ComponentProps<'form'>['onSubmit']>;
+type FormErrors = {
+  name?: string;
+  phone?: string;
+  agreed?: string;
+};
 
 const SCENARIOS = [
   { value: 'mortgage', label: 'хочу дом по ипотеке 6%' },
@@ -25,13 +33,42 @@ function normalizeScenario(value?: string) {
   return VALID_SCENARIOS.has(value) ? value : 'dont_know';
 }
 
-function normalizePhone(value: string) {
+function normalizePhoneDigits(value: string) {
   const digits = value.replace(/\D/g, '');
 
-  if (!digits) return '';
-  if (digits.startsWith('8')) return `+7${digits.slice(1, 11)}`;
-  if (digits.startsWith('7')) return `+${digits.slice(0, 11)}`;
-  return `+7${digits.slice(0, 10)}`;
+  if (digits.startsWith('8')) {
+    return `7${digits.slice(1)}`.slice(0, 11);
+  }
+
+  if (digits.startsWith('7')) {
+    return digits.slice(0, 11);
+  }
+
+  return `7${digits}`.slice(0, 11);
+}
+
+function formatPhone(value: string) {
+  const digits = normalizePhoneDigits(value);
+
+  if (digits.length <= 1) {
+    return value.replace(/\D/g, '').length === 0 ? '' : '+7';
+  }
+
+  const body = digits.slice(1);
+  const part1 = body.slice(0, 3);
+  const part2 = body.slice(3, 6);
+  const part3 = body.slice(6, 8);
+  const part4 = body.slice(8, 10);
+
+  let result = '+7';
+
+  if (part1) result += ` (${part1}`;
+  if (part1.length === 3) result += ')';
+  if (part2) result += ` ${part2}`;
+  if (part3) result += `-${part3}`;
+  if (part4) result += `-${part4}`;
+
+  return result;
 }
 
 function getUtmPayload() {
@@ -54,6 +91,7 @@ export default function RequestModal({ isOpen, onClose, prefillScenario }: Reque
   const [honeypot, setHoneypot] = useState('');
   const [submitState, setSubmitState] = useState<'idle' | 'loading' | 'error'>('idle');
   const [submitError, setSubmitError] = useState('');
+  const [errors, setErrors] = useState<FormErrors>({});
   const openedAtRef = useRef(Date.now());
 
   const handleClose = useCallback(() => {
@@ -89,6 +127,7 @@ export default function RequestModal({ isOpen, onClose, prefillScenario }: Reque
     setHoneypot('');
     setSubmitState('idle');
     setSubmitError('');
+    setErrors({});
     openedAtRef.current = Date.now();
   }, [isOpen, prefillScenario]);
 
@@ -97,12 +136,40 @@ export default function RequestModal({ isOpen, onClose, prefillScenario }: Reque
 
     if (submitState === 'loading') return;
 
+    const validationResult = RequestLeadSchema.safeParse({
+      name,
+      phone,
+      agreed,
+    });
+
+    if (!validationResult.success) {
+      const fieldErrors = z.flattenError(validationResult.error).fieldErrors;
+      track('lead_submit_error', {
+        form: 'request_modal',
+        type: 'validation',
+        fields: Object.keys(fieldErrors).filter((field) => fieldErrors[field as keyof typeof fieldErrors]?.length).join(',') || 'unknown',
+      });
+      setErrors({
+        name: fieldErrors.name?.[0],
+        phone: fieldErrors.phone?.[0],
+        agreed: fieldErrors.agreed?.[0],
+      });
+      setSubmitState('idle');
+      return;
+    }
+
     setSubmitState('loading');
     setSubmitError('');
+    setErrors({});
 
-    const normalizedPhone = normalizePhone(phone);
+    const normalizedPhone = `+${normalizePhoneDigits(phone)}`;
     const normalizedScenario = normalizeScenario(scenario);
     const scenarioLabel = SCENARIO_LABELS.get(normalizedScenario) ?? SCENARIOS[SCENARIOS.length - 1]?.label ?? '';
+
+    track('lead_submit_attempt', {
+      form: 'request_modal',
+      scenario: normalizedScenario,
+    });
 
     try {
       await sendLead({
@@ -117,8 +184,20 @@ export default function RequestModal({ isOpen, onClose, prefillScenario }: Reque
         utm: getUtmPayload(),
       });
 
-      window.location.href = '/thanks/';
+      const tracked = track('lead_submit_success', {
+        form: 'request_modal',
+        scenario: normalizedScenario,
+      });
+
+      window.setTimeout(() => {
+        window.location.href = '/thanks/';
+      }, tracked ? 150 : 0);
     } catch (error) {
+      track('lead_submit_error', {
+        form: 'request_modal',
+        type: 'request',
+        scenario: normalizedScenario,
+      });
       setSubmitState('error');
       setSubmitError(error instanceof Error ? error.message : 'Не удалось отправить заявку. Попробуйте ещё раз.');
     }
@@ -168,10 +247,22 @@ export default function RequestModal({ isOpen, onClose, prefillScenario }: Reque
               type="text"
               required
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              aria-invalid={Boolean(errors.name)}
+              aria-describedby={errors.name ? 'rm-name-error' : undefined}
+              onChange={(e) => {
+                setName(e.target.value);
+                if (errors.name) {
+                  setErrors((current) => ({ ...current, name: undefined }));
+                }
+              }}
               className="mt-1 w-full rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-white px-4 py-3 text-base text-[var(--color-text-primary)] focus:border-[var(--color-accent-primary)] focus:outline-none focus:ring-[3px] focus:ring-[var(--color-accent-cta-soft)]"
               placeholder="Ваше имя"
             />
+            {errors.name && (
+              <p id="rm-name-error" className="mt-2 text-sm text-[var(--color-error)]">
+                {errors.name}
+              </p>
+            )}
           </div>
 
           <div>
@@ -183,10 +274,23 @@ export default function RequestModal({ isOpen, onClose, prefillScenario }: Reque
               type="tel"
               required
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              inputMode="tel"
+              aria-invalid={Boolean(errors.phone)}
+              aria-describedby={errors.phone ? 'rm-phone-error' : undefined}
+              onChange={(e) => {
+                setPhone(formatPhone(e.target.value));
+                if (errors.phone) {
+                  setErrors((current) => ({ ...current, phone: undefined }));
+                }
+              }}
               className="mt-1 w-full rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-white px-4 py-3 text-base text-[var(--color-text-primary)] focus:border-[var(--color-accent-primary)] focus:outline-none focus:ring-[3px] focus:ring-[var(--color-accent-cta-soft)]"
               placeholder="+7 (___) ___-__-__"
             />
+            {errors.phone && (
+              <p id="rm-phone-error" className="mt-2 text-sm text-[var(--color-error)]">
+                {errors.phone}
+              </p>
+            )}
           </div>
 
           <div>
@@ -216,7 +320,14 @@ export default function RequestModal({ isOpen, onClose, prefillScenario }: Reque
               type="checkbox"
               required
               checked={agreed}
-              onChange={(e) => setAgreed(e.target.checked)}
+              aria-invalid={Boolean(errors.agreed)}
+              aria-describedby={errors.agreed ? 'rm-agreed-error' : undefined}
+              onChange={(e) => {
+                setAgreed(e.target.checked);
+                if (errors.agreed) {
+                  setErrors((current) => ({ ...current, agreed: undefined }));
+                }
+              }}
               className="mt-0.5 h-4 w-4 accent-[var(--color-accent-primary)]"
             />
             <span className="text-xs text-[var(--color-text-secondary)]">
@@ -226,6 +337,11 @@ export default function RequestModal({ isOpen, onClose, prefillScenario }: Reque
               </a>.
             </span>
           </label>
+          {errors.agreed && (
+            <p id="rm-agreed-error" className="text-sm text-[var(--color-error)]">
+              {errors.agreed}
+            </p>
+          )}
 
           <div className="hidden" aria-hidden="true">
             <label htmlFor="rm-company">Компания</label>
@@ -251,7 +367,7 @@ export default function RequestModal({ isOpen, onClose, prefillScenario }: Reque
             aria-busy={submitState === 'loading'}
             className="w-full rounded-[var(--radius-md)] bg-[var(--color-accent-primary)] px-7 py-3.5 text-base font-medium text-white transition-colors hover:bg-[var(--color-accent-hover)] disabled:cursor-not-allowed disabled:opacity-70"
           >
-            Понять, с чего начать
+            {submitState === 'loading' ? 'Отправляем...' : 'Понять, с чего начать'}
           </button>
         </form>
       </div>

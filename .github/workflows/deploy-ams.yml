@@ -39,6 +39,9 @@ jobs:
       - name: Install dependencies
         run: CI=true pnpm install --frozen-lockfile
 
+      - name: Preflight
+        run: pnpm preflight
+
       - name: Build
         env:
           PUBLIC_LEADS_SITE_KEY: ${{ secrets.PUBLIC_LEADS_SITE_KEY }}

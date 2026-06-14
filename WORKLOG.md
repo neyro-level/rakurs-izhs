@@ -19,6 +19,54 @@
 
 ## Журнал
 
+### 2026-06-14 (45)
+- Сделано: проведена точечная ревизия проекта `C:\Users\User\Desktop\Сборка АМС\Союз Ростов (AMS)` и перенесён только analytics-слой, который реально усиливает `Ракурс ИЖС`.
+- Найдено:
+  - в `Союз Ростов` полезным для переноса оказался не весь инфраструктурный пакет, а именно связка `Partytown + consent-aware analytics`;
+  - у `Ракурс ИЖС` до этой задачи Метрика запускалась после cookie-согласия, но без `Partytown` и без единого event-layer;
+  - переносить `ClientRouter`, `astro-loading-indicator`, `@playform/compress`, `astro-icon` и другие heavier-модули из `Союз Ростов` на этот этап нецелесообразно: для текущего one-page сайта это лишний риск без прямой коммерческой отдачи.
+- Изменено:
+  - в `astro.config.mjs` подключён `@astrojs/partytown` с `forward: ['ym']`;
+  - добавлен `src/lib/analytics.ts` как единый consent-aware transport для ключевых событий;
+  - `BaseLayout.astro` усилен analytics bootstrap-слоем: Метрика подготавливается через `Partytown`, но фактически стартует только после consent;
+  - `CookieBanner.tsx` переведён с прямой вставки обычного `<script>` на вызов нового analytics bootstrap;
+  - `CookieToggle.tsx`, `ModalShell.tsx` и `RequestModal.tsx` подключены к единому analytics-layer;
+  - добавлен tracking для базовых конверсионных сценариев: `cta_click`, `modal_open`, `modal_close`, `lead_submit_attempt`, `lead_submit_success`, `lead_submit_error`, `phone_click`, `messenger_click`, `faq_open`, `scroll_depth`;
+  - `scripts/preflight.cjs` расширен проверками аналитического слоя.
+- Важно:
+  - тексты сайта не менялись;
+  - analytics-слой построен по AMS-канону: consent-aware, performance-aware, без запуска Метрики до согласия;
+  - после отказа от cookie пользовательский event-layer также перестаёт отправлять новые события, даже если Метрика уже была загружена ранее в сессии.
+- Проверка:
+  - `pnpm install` — успешно;
+  - `pnpm preflight` — успешно;
+  - `pnpm build` — успешно;
+  - `pnpm geo-check` — успешно;
+  - `pnpm seo-check` — успешно;
+  - отдельная локальная сборка с тестовым `PUBLIC_YM_COUNTER_ID=12345678` — успешно; в `dist/index.html` подтверждены `meta[name="ym-counter-id"]`, `rakursInitAnalytics`, `text/partytown` и `ptupdate`;
+  - локальный preview `http://127.0.0.1:4326/` и `http://127.0.0.1:4326/cookies/` открываются корректно;
+  - в браузерной консоли после подключения нового слоя нет критичных ошибок, только стандартная подсказка React DevTools в dev-режиме.
+
+### 2026-06-14 (44)
+- Сделано: выполнена ревизия образцового Astro-шаблона АМС и выборочно перенесены только те модули, которые реально усиливают текущий сайт `Ракурс ИЖС` без переписывания контентной архитектуры.
+- Найдено:
+  - канонический SEO/GEO-модуль на сайте уже установлен и работает корректно: `src/lib/geo/*`, SEO registry, route-level `robots.txt`, `llms.txt`, `geo-check`, `seo-check` уже присутствуют и проходят проверку;
+  - переносить из стартового шаблона блог, каталог, webhook-контур и дополнительные data-модули сейчас нецелесообразно, потому что проект остаётся коммерческим Astro-лендингом без отдельного контентного раздела и без новых утверждённых страниц.
+- Изменено:
+  - добавлен единый `preflight` quality gate: `scripts/preflight.cjs` + `pnpm preflight` + запуск в `.github/workflows/deploy-ams.yml`;
+  - добавлен `src/lib/validation.ts` на `zod` для более надёжной client-side валидации формы заявки;
+  - `RequestModal.tsx` усилен: форматирование телефона, явные сообщения об ошибках, безопасная отправка только после прохождения схемы;
+  - `BaseLayout.astro` и `ModalShell.tsx` усилены bridge-механикой открытия модалки, чтобы CTA стабильно открывали `RequestModal`, даже если клик произошёл до полной гидратации React-island.
+- Важно:
+  - коммерческие тексты сайта не менялись;
+  - внедрение выполнено как точечное техническое усиление, без разрушения уже собранного SEO/GEO-слоя;
+  - текущий SEO/GEO-модуль не только стоит корректно, но теперь дополнительно защищён автоматическим `preflight` перед production deploy.
+- Проверка:
+  - `pnpm preflight` — успешно;
+  - `pnpm build` — успешно;
+  - `pnpm geo-check` — успешно;
+  - `pnpm seo-check` — успешно.
+
 ### 2026-06-14 (43)
 - Сделано: сайт опубликован в production через GitHub Actions на AMS-сервер.
 - Изменено:
