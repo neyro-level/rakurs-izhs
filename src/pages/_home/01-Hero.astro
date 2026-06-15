@@ -9,7 +9,13 @@ const bullets = [
 ];
 ---
 
-<section id="section-hero" class="relative bg-[var(--color-bg-dark)] text-[var(--color-text-ondark)] overflow-hidden">
+<section
+  id="section-hero"
+  data-review-id="home-hero"
+  data-review-title="Главная: первый экран"
+  data-review-path="src/pages/_home/01-Hero.astro"
+  class="relative overflow-hidden bg-[var(--color-bg-dark)] text-[var(--color-text-ondark)]"
+>
   <!-- Decorative gradient -->
   <div class="absolute inset-0 opacity-30"
     style="background-image: radial-gradient(circle at 20% 10%, rgba(91,199,242,0.22) 0%, rgba(91,199,242,0.08) 32%, transparent 68%);"

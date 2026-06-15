@@ -15,6 +15,10 @@ env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   PUBLIC_LEADS_API_URL: /api/leads
   PUBLIC_PROJECT_ID: rakurs-izhs
+  PUBLIC_REVIEW_API_URL: https://review.ams-cloud.ru/v1/comments
+  PUBLIC_REVIEW_PROJECT_ID: rakurs-izhs
+  PUBLIC_REVIEW_ENABLE_PRODUCTION: true
+  PUBLIC_REVIEW_ENABLE_PRODUCTION_UNTIL: 2026-06-22T23:59:59+03:00
 
 jobs:
   deploy:
@@ -46,6 +50,7 @@ jobs:
         env:
           PUBLIC_LEADS_SITE_KEY: ${{ secrets.PUBLIC_LEADS_SITE_KEY }}
           PUBLIC_YM_COUNTER_ID: ${{ secrets.PUBLIC_YM_COUNTER_ID }}
+          PUBLIC_REVIEW_SITE_KEY: ${{ secrets.PUBLIC_REVIEW_SITE_KEY }}
         run: pnpm build
 
       - name: GEO check

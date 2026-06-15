@@ -5,8 +5,10 @@ import { getSeoEntry } from '@/lib/seo/registry';
 import Header from '@/components/Header.astro';
 import RouteMapOverlay from '@/components/RouteMapOverlay.astro';
 import MobileBottomCTA from '@/components/MobileBottomCTA.astro';
+import ReviewWidget from '@/components/shared/ReviewWidget';
 import ModalShell from '@/components/shared/ModalShell';
 import CookieBanner from '@/components/shared/CookieBanner';
+import '@/styles/review.css';
 
 interface Props {
   title: string;
@@ -127,6 +129,7 @@ ym(${counterLiteral},"init",{clickmap:true,trackLinks:true,accurateTrackBounce:t
     <RouteMapOverlay />
     <slot />
     {showMobileCTA && <MobileBottomCTA />}
+    <ReviewWidget client:load />
     <ModalShell client:load />
     <CookieBanner client:idle />
 

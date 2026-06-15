@@ -20,6 +20,26 @@
 
 ## Журнал
 
+### 2026-06-15 (49)
+- Сделано: на production-домен `https://rakurs-izhs.ru` временно установлен review-виджет для клиентских комментариев по текстам.
+- Изменено:
+  - добавлены `src/components/shared/ReviewWidget.tsx`, `src/lib/review.ts`, `src/styles/review.css`;
+  - `BaseLayout.astro` подключает review-island глобально, но на боевом домене он активируется только при разрешённом production-окне;
+  - на ключевые секции главной проставлены стабильные `data-review-id`, `data-review-title`, `data-review-path`;
+  - в `.env.example` и `.github/workflows/deploy-ams.yml` добавлены `PUBLIC_REVIEW_*` переменные;
+  - прод-окно ограничено до `2026-06-22T23:59:59+03:00`, аварийное скрытие доступно через `?review=0`.
+- Инфраструктура:
+  - проект `rakurs-izhs` добавлен в registry `ams-review-api`;
+  - для GitHub-репозитория установлен `PUBLIC_REVIEW_SITE_KEY`;
+  - production origins `rakurs-izhs.ru` и `www.rakurs-izhs.ru` авторизованы на сервере review API.
+- Важно:
+  - тексты и коммерческая структура сайта не менялись;
+  - это временный feedback-слой для недельной клиентской вычитки.
+- Проверка:
+  - `pnpm build` — успешно;
+  - `pnpm geo-check` — успешно;
+  - `pnpm seo-check` — успешно.
+
 ### 2026-06-15 (48)
 - Сделано: на mobile отшлифован верхний ритм Hero-блока.
 - Изменено:

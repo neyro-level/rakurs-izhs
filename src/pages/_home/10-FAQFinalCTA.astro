@@ -2,7 +2,13 @@
 import { homeFaqItems as faqs } from '@/data/home-faq';
 ---
 
-<section id="section-faq" class="relative overflow-hidden bg-[var(--color-bg-surface)] vn-section-padding">
+<section
+  id="section-faq"
+  data-review-id="home-faq"
+  data-review-title="Главная: FAQ"
+  data-review-path="src/pages/_home/10-FAQFinalCTA.astro"
+  class="relative overflow-hidden bg-[var(--color-bg-surface)] vn-section-padding"
+>
   <div
     class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(8,116,196,0.08),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(91,199,242,0.08),transparent_26%)]"
     aria-hidden="true"
@@ -78,7 +84,13 @@ import { homeFaqItems as faqs } from '@/data/home-faq';
 </section>
 
 <!-- Final CTA -->
-<section id="section-final-cta" class="bg-[var(--color-bg-dark)] vn-section-padding relative overflow-hidden">
+<section
+  id="section-final-cta"
+  data-review-id="home-final-cta"
+  data-review-title="Главная: финальный CTA"
+  data-review-path="src/pages/_home/10-FAQFinalCTA.astro"
+  class="relative overflow-hidden bg-[var(--color-bg-dark)] vn-section-padding"
+>
   <!-- Static gradient background -->
   <div class="absolute inset-0 opacity-20" aria-hidden="true">
     <div class="absolute inset-0 bg-gradient-to-br from-[var(--color-accent-primary)] via-transparent to-[var(--color-accent-cyan)]"></div>
