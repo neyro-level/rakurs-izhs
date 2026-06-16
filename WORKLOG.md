@@ -22,6 +22,24 @@
 
 ## Журнал
 
+### 2026-06-16 (52)
+- Сделано: финальная production-публикация текущих правок сайта через GitHub Actions.
+- Изменено:
+  - опубликован commit `81ebf58` (`Publish project visuals and smart captcha`);
+  - на боевом домене подтверждены проекты `82 м²`, `102 м²`, `108 м²` и assets `spacious-108-*`;
+  - review-виджет остаётся включённым на production до `2026-06-22T23:59:59+03:00`.
+- Проверка:
+  - локально перед пушем: `pnpm preflight`, `pnpm build`, `pnpm geo-check`, `pnpm seo-check` — успешно;
+  - GitHub Actions run `27610636865` — успешно, шаги `Preflight`, `Build`, `GEO check`, `SEO check`, `Upload release`, `Activate release`, `Verify` зелёные;
+  - `https://rakurs-izhs.ru/` отвечает `200`, в HTML есть `data-review-id="home-hero"` и `data-review-id="home-projects"`;
+  - production-бандл `ReviewWidget` содержит `review.ams-cloud.ru`, `X-AMS-Site-Key` и интерфейс `Комментарии по блокам`;
+  - тестовый POST в `https://review.ams-cloud.ru/v1/comments` принят: `ok=true`, `commentId=review_33e556ef-3aa0-4f99-a03e-873f3d25ca09`.
+- Важно:
+  - Telegram-доставка review-комментариев сейчас не проходит: `delivery.telegram=telegram_error`;
+  - серверная диагностика показала, что `ams-review-api` активен, Telegram bot token и chat id в server env есть, проект `rakurs-izhs` зарегистрирован;
+  - причина ошибки — исходящий сетевой маршрут AMS Server до `api.telegram.org`: `curl https://api.telegram.org/` и TCP `149.154.166.110:443` с сервера уходят в timeout, при этом `google.com` и `ya.ru` доступны;
+  - для восстановления доставки нужен `HTTPS_PROXY` / `ALL_PROXY` / внешний relay/VPN для `ams-review-api`; в Doppler `ams-research/prd` proxy-переменные сейчас отсутствуют.
+
 ### 2026-06-16 (51)
 - Сделано: в блок 03 `Projects` добавлены реальные визуалы из клиентских PDF для карточек `Компактный`, `Семейный` и `Просторный`.
 - Изменено:
