@@ -93,7 +93,7 @@ export default function ProjectSlider({ slides, projectName }: Props) {
             <img
               src={slide.src}
               alt={slide.alt}
-              className="h-full w-full object-cover"
+              className={`h-full w-full ${slide.type === 'plan' ? 'bg-white object-contain' : 'object-cover'}`}
               loading="lazy"
             />
           ) : (

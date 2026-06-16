@@ -49,6 +49,7 @@ jobs:
       - name: Build
         env:
           PUBLIC_LEADS_SITE_KEY: ${{ secrets.PUBLIC_LEADS_SITE_KEY }}
+          PUBLIC_SMARTCAPTCHA_CLIENT_KEY: ${{ secrets.PUBLIC_SMARTCAPTCHA_CLIENT_KEY }}
           PUBLIC_YM_COUNTER_ID: ${{ secrets.PUBLIC_YM_COUNTER_ID }}
           PUBLIC_REVIEW_SITE_KEY: ${{ secrets.PUBLIC_REVIEW_SITE_KEY }}
         run: pnpm build

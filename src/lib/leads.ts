@@ -16,6 +16,7 @@ export type SendLeadPayload = {
   source?: string;
   honeypot?: string;
   openedAt?: number;
+  smartCaptchaToken?: string;
   utm?: LeadUtmPayload;
 };
 
@@ -56,6 +57,7 @@ export async function sendLead(payload: SendLeadPayload): Promise<SendLeadResult
       source: payload.source ?? window.location.href,
       honeypot: payload.honeypot,
       openedAt: payload.openedAt,
+      smartCaptchaToken: payload.smartCaptchaToken,
       utm: payload.utm,
       meta: {
         page_title: document.title,

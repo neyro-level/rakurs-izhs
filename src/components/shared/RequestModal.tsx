@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect, useRef, type ComponentProps } from 'react';
+import { InvisibleSmartCaptcha } from '@yandex/smart-captcha';
 import { sendLead } from '@/lib/leads';
 import { track } from '@/lib/analytics';
 import { z } from 'zod';
@@ -27,6 +28,7 @@ const SCENARIOS = [
 
 const VALID_SCENARIOS = new Set(SCENARIOS.map((scenarioOption) => scenarioOption.value));
 const SCENARIO_LABELS = new Map(SCENARIOS.map((scenarioOption) => [scenarioOption.value, scenarioOption.label]));
+const SMARTCAPTCHA_CLIENT_KEY = (import.meta.env.PUBLIC_SMARTCAPTCHA_CLIENT_KEY || '').trim();
 
 function normalizeScenario(value?: string) {
   if (!value) return 'dont_know';
@@ -89,10 +91,13 @@ export default function RequestModal({ isOpen, onClose, prefillScenario }: Reque
   const [scenario, setScenario] = useState(normalizeScenario(prefillScenario));
   const [agreed, setAgreed] = useState(false);
   const [honeypot, setHoneypot] = useState('');
+  const [captchaVisible, setCaptchaVisible] = useState(false);
+  const [isCaptchaPending, setIsCaptchaPending] = useState(false);
   const [submitState, setSubmitState] = useState<'idle' | 'loading' | 'error'>('idle');
   const [submitError, setSubmitError] = useState('');
   const [errors, setErrors] = useState<FormErrors>({});
   const openedAtRef = useRef(Date.now());
+  const isSubmittingLeadRef = useRef(false);
 
   const handleClose = useCallback(() => {
     onClose();
@@ -125,11 +130,71 @@ export default function RequestModal({ isOpen, onClose, prefillScenario }: Reque
     setScenario(normalizeScenario(prefillScenario));
     setAgreed(false);
     setHoneypot('');
+    setCaptchaVisible(false);
+    setIsCaptchaPending(false);
     setSubmitState('idle');
     setSubmitError('');
     setErrors({});
     openedAtRef.current = Date.now();
   }, [isOpen, prefillScenario]);
+
+  const submitLead = async (smartCaptchaToken?: string) => {
+    isSubmittingLeadRef.current = true;
+    setSubmitState('loading');
+    setSubmitError('');
+
+    const normalizedPhone = `+${normalizePhoneDigits(phone)}`;
+    const normalizedScenario = normalizeScenario(scenario);
+    const scenarioLabel = SCENARIO_LABELS.get(normalizedScenario) ?? SCENARIOS[SCENARIOS.length - 1]?.label ?? '';
+
+    track('lead_submit_attempt', {
+      form: 'request_modal',
+      scenario: normalizedScenario,
+    });
+
+    try {
+      await sendLead({
+        form: 'request_modal',
+        name: name.trim(),
+        phone: normalizedPhone,
+        contact: normalizedPhone,
+        message: `Актуальный запрос: ${scenarioLabel}`,
+        source: window.location.href,
+        honeypot,
+        openedAt: openedAtRef.current,
+        smartCaptchaToken,
+        utm: getUtmPayload(),
+      });
+
+      const tracked = track('lead_submit_success', {
+        form: 'request_modal',
+        scenario: normalizedScenario,
+      });
+
+      window.setTimeout(() => {
+        window.location.href = '/thanks/';
+      }, tracked ? 150 : 0);
+    } catch (error) {
+      track('lead_submit_error', {
+        form: 'request_modal',
+        type: 'request',
+        scenario: normalizedScenario,
+      });
+      setSubmitState('error');
+      setSubmitError(error instanceof Error ? error.message : 'Не удалось отправить заявку. Попробуйте ещё раз.');
+    } finally {
+      isSubmittingLeadRef.current = false;
+      setCaptchaVisible(false);
+      setIsCaptchaPending(false);
+    }
+  };
+
+  const handleCaptchaFailure = (message: string) => {
+    setCaptchaVisible(false);
+    setIsCaptchaPending(false);
+    setSubmitState('error');
+    setSubmitError(message);
+  };
 
   const handleSubmit: FormSubmitHandler = async (event) => {
     event.preventDefault();
@@ -158,49 +223,18 @@ export default function RequestModal({ isOpen, onClose, prefillScenario }: Reque
       return;
     }
 
-    setSubmitState('loading');
-    setSubmitError('');
     setErrors({});
+    setSubmitError('');
 
-    const normalizedPhone = `+${normalizePhoneDigits(phone)}`;
-    const normalizedScenario = normalizeScenario(scenario);
-    const scenarioLabel = SCENARIO_LABELS.get(normalizedScenario) ?? SCENARIOS[SCENARIOS.length - 1]?.label ?? '';
-
-    track('lead_submit_attempt', {
-      form: 'request_modal',
-      scenario: normalizedScenario,
-    });
-
-    try {
-      await sendLead({
-        form: 'request_modal',
-        name: name.trim(),
-        phone: normalizedPhone,
-        contact: normalizedPhone,
-        message: `Актуальный запрос: ${scenarioLabel}`,
-        source: window.location.href,
-        honeypot,
-        openedAt: openedAtRef.current,
-        utm: getUtmPayload(),
-      });
-
-      const tracked = track('lead_submit_success', {
-        form: 'request_modal',
-        scenario: normalizedScenario,
-      });
-
-      window.setTimeout(() => {
-        window.location.href = '/thanks/';
-      }, tracked ? 150 : 0);
-    } catch (error) {
-      track('lead_submit_error', {
-        form: 'request_modal',
-        type: 'request',
-        scenario: normalizedScenario,
-      });
-      setSubmitState('error');
-      setSubmitError(error instanceof Error ? error.message : 'Не удалось отправить заявку. Попробуйте ещё раз.');
+    if (SMARTCAPTCHA_CLIENT_KEY) {
+      setSubmitState('loading');
+      setIsCaptchaPending(true);
+      setCaptchaVisible(false);
+      window.setTimeout(() => setCaptchaVisible(true), 0);
+      return;
     }
+
+    await submitLead();
   };
 
   if (!isOpen) return null;
@@ -238,6 +272,28 @@ export default function RequestModal({ isOpen, onClose, prefillScenario }: Reque
           className="mt-6 space-y-4"
           onSubmit={handleSubmit}
         >
+          {SMARTCAPTCHA_CLIENT_KEY && (
+            <InvisibleSmartCaptcha
+              sitekey={SMARTCAPTCHA_CLIENT_KEY}
+              language="ru"
+              visible={captchaVisible}
+              shieldPosition="bottom-right"
+              onChallengeHidden={() => {
+                setCaptchaVisible(false);
+                if (isCaptchaPending && !isSubmittingLeadRef.current) {
+                  setIsCaptchaPending(false);
+                  setSubmitState('idle');
+                }
+              }}
+              onNetworkError={() => handleCaptchaFailure('Не удалось запустить SmartCaptcha. Попробуйте ещё раз.')}
+              onTokenExpired={() => handleCaptchaFailure('Проверка SmartCaptcha истекла. Попробуйте ещё раз.')}
+              onJavascriptError={() => handleCaptchaFailure('SmartCaptcha временно недоступна. Попробуйте ещё раз.')}
+              onSuccess={(token) => {
+                if (!isCaptchaPending) return;
+                void submitLead(token);
+              }}
+            />
+          )}
           <div>
             <label htmlFor="rm-name" className="block text-sm font-medium text-[var(--color-text-primary)]">
               Имя
@@ -369,6 +425,12 @@ export default function RequestModal({ isOpen, onClose, prefillScenario }: Reque
           >
             {submitState === 'loading' ? 'Отправляем...' : 'Понять, с чего начать'}
           </button>
+
+          <p className="text-xs text-[var(--color-text-secondary)]">
+            {SMARTCAPTCHA_CLIENT_KEY
+              ? 'Форма защищена Yandex SmartCaptcha. Без спама, только связь по вашей задаче.'
+              : 'Без спама. Только чтобы связаться по вашей задаче.'}
+          </p>
         </form>
       </div>
     </div>

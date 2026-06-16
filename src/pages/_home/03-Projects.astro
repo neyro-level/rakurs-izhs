@@ -1,5 +1,17 @@
 ---
 import ProjectSlider from './ProjectSlider';
+import compact82Plan from '@/assets/projects/compact-82-plan.webp';
+import compact82View1 from '@/assets/projects/compact-82-view-1.webp';
+import compact82View2 from '@/assets/projects/compact-82-view-2.webp';
+import compact82View3 from '@/assets/projects/compact-82-view-3.webp';
+import family102Plan from '@/assets/projects/family-102-plan.webp';
+import family102View1 from '@/assets/projects/family-102-view-1.webp';
+import family102View2 from '@/assets/projects/family-102-view-2.webp';
+import family102View3 from '@/assets/projects/family-102-view-3.webp';
+import spacious108Plan from '@/assets/projects/spacious-108-plan.webp';
+import spacious108View1 from '@/assets/projects/spacious-108-view-1.webp';
+import spacious108View2 from '@/assets/projects/spacious-108-view-2.webp';
+import spacious108View3 from '@/assets/projects/spacious-108-view-3.webp';
 
 interface ProjectSlide {
   alt: string;
@@ -22,14 +34,14 @@ const projects: ProjectCard[] = [
   {
     id: 'compact',
     name: 'Компактный',
-    area: '80 м²',
+    area: '82 м²',
     budget: 'от 6 млн',
     featured: false,
     images: [
-      { alt: 'Фасад дома', type: 'photo' },
-      { alt: 'Вид сбоку', type: 'photo' },
-      { alt: 'Вид сзади', type: 'photo' },
-      { alt: 'Планировка', type: 'plan' },
+      { alt: 'Проект компактного дома 82 м² — фасад со стороны входа', src: compact82View1.src, type: 'photo' },
+      { alt: 'Проект компактного дома 82 м² — боковой вид с террасной зоной', src: compact82View2.src, type: 'photo' },
+      { alt: 'Проект компактного дома 82 м² — боковой фасад', src: compact82View3.src, type: 'photo' },
+      { alt: 'Планировка компактного дома 82 м²', src: compact82Plan.src, type: 'plan' },
     ],
     includes: [
       'Фундамент и коробка',
@@ -46,14 +58,14 @@ const projects: ProjectCard[] = [
   {
     id: 'family',
     name: 'Семейный',
-    area: '95 м²',
+    area: '102 м²',
     budget: 'от 7 млн',
     featured: true,
     images: [
-      { alt: 'Фасад дома', type: 'photo' },
-      { alt: 'Вид сбоку', type: 'photo' },
-      { alt: 'Вид сзади', type: 'photo' },
-      { alt: 'Планировка', type: 'plan' },
+      { alt: 'Проект семейного дома 102 м² — фасад со стороны входа', src: family102View1.src, type: 'photo' },
+      { alt: 'Проект семейного дома 102 м² — вид с террасной зоной', src: family102View2.src, type: 'photo' },
+      { alt: 'Проект семейного дома 102 м² — боковой фасад', src: family102View3.src, type: 'photo' },
+      { alt: 'Планировка семейного дома 102 м²', src: family102Plan.src, type: 'plan' },
     ],
     includes: [
       'Фундамент и коробка',
@@ -70,14 +82,14 @@ const projects: ProjectCard[] = [
   {
     id: 'spacious',
     name: 'Просторный',
-    area: '120 м²',
+    area: '108 м²',
     budget: 'от 8,5 млн',
     featured: false,
     images: [
-      { alt: 'Фасад дома', type: 'photo' },
-      { alt: 'Вид сбоку', type: 'photo' },
-      { alt: 'Вид сзади', type: 'photo' },
-      { alt: 'Планировка', type: 'plan' },
+      { alt: 'Проект просторного дома 108 м² — фасад со стороны входа', src: spacious108View1.src, type: 'photo' },
+      { alt: 'Проект просторного дома 108 м² — вид со стороны террасы', src: spacious108View2.src, type: 'photo' },
+      { alt: 'Проект просторного дома 108 м² — фасад с террасной зоной', src: spacious108View3.src, type: 'photo' },
+      { alt: 'Планировка просторного дома 108 м²', src: spacious108Plan.src, type: 'plan' },
     ],
     includes: [
       'Фундамент и коробка',
